@@ -23,19 +23,17 @@ interface LinkColumnProps {
 
 const LINK_SECTIONS: { title: string; links: LinkItem[] }[] = [
   {
-    title: 'Getting Started',
+    title: 'BX Team',
     links: [
-      { href: '/downloads', label: 'Downloads' },
+      { href: '/team', label: 'Our team' },
       { href: 'https://docs.bx-team.space', label: 'Documentation' },
+      { href: 'https://status.bx-team.space', label: 'Status' },
+      { href: 'https://repo.bx-team.space', label: 'Maven Repo' },
     ],
   },
   {
     title: 'Community',
     links: [{ href: siteConfig.links.discord, label: 'Discord' }],
-  },
-  {
-    title: 'BX Team',
-    links: [{ href: '/team', label: 'Team' }],
   },
 ];
 

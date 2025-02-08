@@ -20,7 +20,6 @@ type NavLink = {
 
 const LINKS = {
   nav: [
-    { href: '/projects', label: 'Projects' },
     { href: '/team', label: 'Team' },
     { href: 'https://docs.bx-team.space', label: 'Docs', external: true },
     { href: 'https://status.bx-team.space', label: 'Status', external: true },

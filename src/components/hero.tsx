@@ -9,6 +9,14 @@ import { Button } from '@/components/ui/button';
 import { GradientBackground } from '@/components/ui/gradient-background';
 
 export function Hero() {
+  const scrollToProjects = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    document.getElementById('projects')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    });
+  };
+
   return (
     <section className='relative isolate'>
       <GradientBackground />
@@ -24,7 +32,7 @@ export function Hero() {
 
           <div className='mt-8 flex flex-col items-center justify-center gap-4 sm:mt-10 sm:flex-row'>
             <Button asChild className='w-full sm:w-auto'>
-              <Link href='/projects'>Our projects</Link>
+              <Link href='#projects' onClick={scrollToProjects}>Our projects</Link>
             </Button>
             <Button asChild variant='ghost' className='w-full sm:w-auto'>
               <a
