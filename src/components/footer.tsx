@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { siteConfig } from '@/siteconfig';
+import { siteConfig } from '@/config/site';
 
 interface LinkItem {
   href: string;
