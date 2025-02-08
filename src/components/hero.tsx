@@ -32,7 +32,9 @@ export function Hero() {
 
           <div className='mt-8 flex flex-col items-center justify-center gap-4 sm:mt-10 sm:flex-row'>
             <Button asChild className='w-full sm:w-auto'>
-              <Link href='#projects' onClick={scrollToProjects}>Our projects</Link>
+              <Link href='#projects' onClick={scrollToProjects}>
+                Our projects
+              </Link>
             </Button>
             <Button asChild variant='ghost' className='w-full sm:w-auto'>
               <a

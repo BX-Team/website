@@ -1,6 +1,7 @@
 # BX Team Website [![Discord](https://img.shields.io/discord/931595732752953375.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/p7cxhw7E2M)
 
 This repository contains the source code for the main BX Team website. The website is built using this techo stack:
+
 - [Next.js](https://nextjs.org)
 - [Tailwind CSS v4](https://tailwindcss.com)
 - [Lucide Icons](https://lucide.dev)

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabaseClient';
+
 import { uploadToR2 } from '@/lib/r2Client';
+import { supabase } from '@/lib/supabaseClient';
 
 export async function POST(request: Request) {
   const token = request.headers.get('Authorization');
@@ -29,11 +30,7 @@ export async function POST(request: Request) {
   const fileExtension = csData.file_extension || 'jar';
 
   const buildId = csData.build_id;
-  const { data: buildData, error: buildError } = await supabase
-    .from('build')
-    .select('*')
-    .eq('id', buildId)
-    .single();
+  const { data: buildData, error: buildError } = await supabase.from('build').select('*').eq('id', buildId).single();
   if (buildError || !buildData) {
     return NextResponse.json({ error: 'Build not found' }, { status: 404 });
   }
@@ -64,13 +61,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'File upload failed' }, { status: 500 });
   }
 
-  const { error: fileError } = await supabase
-    .from('file')
-    .insert({
-      content_type: contentType,
-      file_extension: fileExtension,
-      build_id: buildData.id,
-    });
+  const { error: fileError } = await supabase.from('file').insert({
+    content_type: contentType,
+    file_extension: fileExtension,
+    build_id: buildData.id,
+  });
   if (fileError) {
     return NextResponse.json({ error: fileError.message }, { status: 500 });
   }

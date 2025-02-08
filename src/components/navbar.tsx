@@ -8,8 +8,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { cn } from '@/lib/utils';
 import { siteConfig } from '@/config/site';
+import { cn } from '@/lib/utils';
 
 type NavLink = {
   href: string;

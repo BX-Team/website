@@ -38,7 +38,10 @@ const projects: Project[] = [
 
 function ProjectCard({ name, description, downloadUrl, docUrl, sourceUrl }: Project) {
   return (
-    <Card className='flex flex-col items-start justify-between p-8 transition-all hover:bg-neutral-800/50 hover:ring-1 hover:ring-neutral-700 md:flex-row md:items-center' id='projects'>
+    <Card
+      className='flex flex-col items-start justify-between p-8 transition-all hover:bg-neutral-800/50 hover:ring-1 hover:ring-neutral-700 md:flex-row md:items-center'
+      id='projects'
+    >
       <div className='flex-1'>
         <h3 className='text-3xl font-bold sm:text-2xl lg:text-3xl'>{name}</h3>
         <p className='mt-4 text-base text-neutral-300'>{description}</p>

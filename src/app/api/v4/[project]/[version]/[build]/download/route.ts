@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabaseClient';
+
 import { getR2FileStream } from '@/lib/r2Client';
+import { supabase } from '@/lib/supabaseClient';
 
 export async function GET(
   request: Request,
-  {
-    params,
-  }: { params: { project: string; version: string; build: string } }
+  { params }: { params: { project: string; version: string; build: string } },
 ) {
   const { project, version, build } = params;
 

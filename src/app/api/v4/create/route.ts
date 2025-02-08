@@ -1,6 +1,8 @@
-import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
+
+import { NextResponse } from 'next/server';
+
+import { supabase } from '@/lib/supabaseClient';
 
 export async function POST(request: Request) {
   const token = request.headers.get('Authorization');
@@ -15,18 +17,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
   }
 
-  const {
-    project,
-    version,
-    build,
-    result,
-    timestamp,
-    duration,
-    hash,
-    commits,
-    metadata,
-    file_extension,
-  } = body;
+  const { project, version, build, result, timestamp, duration, hash, commits, metadata, file_extension } = body;
   if (!project || !version || !build || !result || !timestamp || !duration || !hash) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
   }
@@ -37,10 +28,7 @@ export async function POST(request: Request) {
     .eq('name', project)
     .single();
   if (projectError || !projectData) {
-    const { data, error } = await supabase
-      .from('project')
-      .insert({ name: project })
-      .select();
+    const { data, error } = await supabase.from('project').insert({ name: project }).select();
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
@@ -84,40 +72,34 @@ export async function POST(request: Request) {
   if (commits && Array.isArray(commits)) {
     for (const commit of commits) {
       const { author, email, description, hash: commitHash, timestamp: commitTimestamp } = commit;
-      await supabase
-        .from('commit')
-        .insert({
-          author,
-          email,
-          description,
-          hash: commitHash,
-          timestamp: commitTimestamp,
-          build_id: buildData.id,
-        });
+      await supabase.from('commit').insert({
+        author,
+        email,
+        description,
+        hash: commitHash,
+        timestamp: commitTimestamp,
+        build_id: buildData.id,
+      });
     }
   }
 
   if (metadata && typeof metadata === 'object') {
     for (const key in metadata) {
       const p_value = metadata[key];
-      await supabase
-        .from('metadata')
-        .insert({
-          name: key,
-          p_value,
-          build_id: buildData.id,
-        });
+      await supabase.from('metadata').insert({
+        name: key,
+        p_value,
+        build_id: buildData.id,
+      });
     }
   }
 
   const uploadKey = uuidv4();
-  const { error: csError } = await supabase
-    .from('creation_state')
-    .insert({
-      id: uploadKey, 
-      file_extension: file_extension || null,
-      build_id: buildData.id,
-    });
+  const { error: csError } = await supabase.from('creation_state').insert({
+    id: uploadKey,
+    file_extension: file_extension || null,
+    build_id: buildData.id,
+  });
   if (csError) {
     return NextResponse.json({ error: csError.message }, { status: 500 });
   }

@@ -1,10 +1,8 @@
 import { NextResponse } from 'next/server';
+
 import { supabase } from '@/lib/supabaseClient';
 
-export async function GET(
-  request: Request,
-  { params }: { params: { project: string } }
-) {
+export async function GET(request: Request, { params }: { params: { project: string } }) {
   const { project } = params;
 
   const { data: projectData, error: projectError } = await supabase
@@ -23,7 +21,7 @@ export async function GET(
   if (metaError) {
     return NextResponse.json({ error: metaError.message }, { status: 500 });
   }
-  
+
   const metadata = metaData.reduce((acc: any, cur: any) => {
     acc[cur.name] = cur.p_value;
     return acc;

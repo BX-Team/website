@@ -1,10 +1,8 @@
 import { NextResponse } from 'next/server';
+
 import { supabase } from '@/lib/supabaseClient';
 
-export async function GET(
-  request: Request,
-  { params }: { params: { project: string; version: string } }
-) {
+export async function GET(request: Request, { params }: { params: { project: string; version: string } }) {
   const { project, version } = params;
   const { searchParams } = new URL(request.url);
   const detailed = searchParams.get('detailed') === 'true';
@@ -28,9 +26,7 @@ export async function GET(
     return NextResponse.json({ error: 'Version not found' }, { status: 404 });
   }
 
-  const buildsSelect = detailed
-    ? '*, commit(*), metadata(*)'
-    : '*';
+  const buildsSelect = detailed ? '*, commit(*), metadata(*)' : '*';
   const { data: buildsData, error: buildsError } = await supabase
     .from('build')
     .select(buildsSelect)
