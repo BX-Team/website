@@ -48,14 +48,15 @@ export async function GET(
     return NextResponse.json({ error: 'File not found' }, { status: 404 });
   }
 
-  const r2Key = `builds/${projectData.name}/${versionData.name}/${buildData.name}.${fileData.file_extension}`;
+  const fileName = `${projectData.name}-${versionData.name}-${buildData.name}.${fileData.file_extension}`;
+
   try {
-    const fileResponse = await getR2FileStream(r2Key);
+    const fileResponse = await getR2FileStream(fileName);
     const readableStream = fileResponse.body as unknown as ReadableStream;
     return new NextResponse(readableStream, {
       headers: {
         'Content-Type': fileResponse.contentType,
-        'Content-Disposition': `attachment; filename="${buildData.name}.${fileData.file_extension}"`,
+        'Content-Disposition': `attachment; filename="${fileName}"`,
       },
     });
   } catch (err: any) {

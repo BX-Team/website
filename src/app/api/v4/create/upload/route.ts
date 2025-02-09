@@ -52,10 +52,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Project not found' }, { status: 404 });
   }
 
-  const r2Key = `builds/${projectData.name}/${versionData.name}/${buildData.name}.${fileExtension}`;
+  const fileName = `${projectData.name}-${versionData.name}-${buildData.name}.${fileExtension}`;
 
   try {
-    await uploadToR2(r2Key, fileBuffer, contentType);
+    await uploadToR2(fileName, fileBuffer, contentType);
   } catch (err: any) {
     console.error(err);
     return NextResponse.json({ error: 'File upload failed' }, { status: 500 });
