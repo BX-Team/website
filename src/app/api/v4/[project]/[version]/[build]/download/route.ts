@@ -1,6 +1,4 @@
 import { NextResponse } from 'next/server';
-
-import { getR2FileStream } from '@/lib/r2Client';
 import { supabase } from '@/lib/supabaseClient';
 
 export async function GET(
@@ -9,6 +7,7 @@ export async function GET(
 ) {
   const params = await props.params;
   const { project, version, build } = params;
+  const bucketLink = process.env.R2_BUCKET_LINK;
 
   const { data: projectData, error: projectError } = await supabase
     .from('project')
@@ -49,17 +48,7 @@ export async function GET(
   }
 
   const fileName = `${projectData.name}-${versionData.name}-${buildData.name}.${fileData.file_extension}`;
+  const fileUrl = `${bucketLink}/${fileName}`;
 
-  try {
-    const fileResponse = await getR2FileStream(fileName);
-    const readableStream = fileResponse.body as unknown as ReadableStream;
-    return new NextResponse(readableStream, {
-      headers: {
-        'Content-Type': fileResponse.contentType,
-        'Content-Disposition': `attachment; filename="${fileName}"`,
-      },
-    });
-  } catch (err: any) {
-    return NextResponse.json({ error: 'File download failed' }, { status: 500 });
-  }
+  return NextResponse.redirect(fileUrl);
 }
