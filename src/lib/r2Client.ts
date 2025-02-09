@@ -1,5 +1,5 @@
+import type { Readable } from 'stream';
 import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import { Readable } from 'stream';
 
 const s3Client = new S3Client({
   region: 'auto',

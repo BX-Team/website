@@ -99,7 +99,7 @@ export function Projects() {
 
         <section className='mt-12'>
           <div className='space-y-8'>
-            {projects.map((project) => (
+            {projects.map(project => (
               <ProjectCard key={project.name} {...project} />
             ))}
           </div>

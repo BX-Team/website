@@ -9,6 +9,6 @@ export async function GET() {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  const projects = data.map((item) => item.name);
+  const projects = data.map(item => item.name);
   return NextResponse.json({ projects });
 }

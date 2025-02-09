@@ -97,7 +97,7 @@ export function VersionBuildsTable({ version, builds }: { version: string; build
             <Button
               variant='ghost'
               size='sm'
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              onClick={() => setPage(p => Math.max(1, p - 1))}
               disabled={page === 1}
               className='h-8 w-8 p-0'
             >
@@ -109,7 +109,7 @@ export function VersionBuildsTable({ version, builds }: { version: string; build
             <Button
               variant='ghost'
               size='sm'
-              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              onClick={() => setPage(p => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
               className='h-8 w-8 p-0'
             >
@@ -139,7 +139,7 @@ export function VersionBuildsTable({ version, builds }: { version: string; build
               </tr>
             </thead>
             <tbody>
-              {currentBuilds.map((build) => (
+              {currentBuilds.map(build => (
                 <TableRow key={build.id} build={build} isLatest={build.name === latestBuild.name} />
               ))}
             </tbody>

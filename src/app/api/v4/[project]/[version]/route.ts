@@ -42,7 +42,16 @@ export async function GET(request: Request, props: { params: Promise<{ project: 
 
   const latestBuild = buildsData[buildsData.length - 1];
 
-  if (!detailed) {
+  if (detailed) {
+    return NextResponse.json({
+      project,
+      version,
+      builds: {
+        latest: latestBuild,
+        all: buildsData,
+      },
+    });
+  } else {
     const buildNames = buildsData.map((b: any) => b.name);
     return NextResponse.json({
       project,
@@ -50,15 +59,6 @@ export async function GET(request: Request, props: { params: Promise<{ project: 
       builds: {
         latest: (latestBuild as any).name,
         all: buildNames,
-      },
-    });
-  } else {
-    return NextResponse.json({
-      project,
-      version,
-      builds: {
-        latest: latestBuild,
-        all: buildsData,
       },
     });
   }

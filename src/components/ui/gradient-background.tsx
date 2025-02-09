@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 
-import { HTMLAttributes } from 'react';
+import type { HTMLAttributes } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -36,7 +36,7 @@ export function GradientBackground({
         transition={{
           duration: 6,
           ease: 'easeInOut',
-          repeat: Infinity,
+          repeat: Number.POSITIVE_INFINITY,
         }}
         className={cn(
           'relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]',

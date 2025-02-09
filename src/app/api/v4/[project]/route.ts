@@ -36,7 +36,7 @@ export async function GET(request: Request, props: { params: Promise<{ project: 
   if (versionsError) {
     return NextResponse.json({ error: versionsError.message }, { status: 500 });
   }
-  const versions = versionsData.map((item) => item.name);
+  const versions = versionsData.map(item => item.name);
 
   return NextResponse.json({
     project: projectData.name,

@@ -79,7 +79,7 @@ export default async function DownloadsPage() {
         </header>
 
         <div className='mt-12 space-y-8 sm:mt-16 sm:space-y-10' role='region' aria-label='Available builds by version'>
-          {sortedVersions.map((version) => (
+          {sortedVersions.map(version => (
             <VersionBuildsTable key={version} version={version} builds={buildsByVersion[version]} />
           ))}
         </div>

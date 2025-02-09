@@ -100,20 +100,20 @@ export function Navbar() {
               <span className='text-sm font-semibold'>BX Team</span>
             </Link>
             <div className='hidden md:flex md:space-x-4' role='menubar'>
-              {LINKS.nav.map((link) => (
+              {LINKS.nav.map(link => (
                 <NavbarLink key={link.href} {...link} />
               ))}
             </div>
           </div>
 
           <div className='hidden md:flex md:items-center md:space-x-5' role='menubar' aria-label='Social links'>
-            {LINKS.social.map((link) => (
+            {LINKS.social.map(link => (
               <NavbarLink key={link.href} {...link} />
             ))}
           </div>
 
           <button
-            onClick={() => setIsOpen((p) => !p)}
+            onClick={() => setIsOpen(p => !p)}
             className='inline-flex items-center justify-center rounded-md p-2.5 text-neutral-300 transition-colors hover:bg-neutral-800 md:hidden'
             aria-expanded={isOpen}
             aria-controls='mobile-menu'
@@ -132,7 +132,7 @@ export function Navbar() {
           aria-label='Mobile navigation'
         >
           <div className='space-y-1 px-2 pb-3'>
-            {LINKS.nav.map((link) => (
+            {LINKS.nav.map(link => (
               <NavbarLink
                 key={link.href}
                 {...link}
@@ -142,7 +142,7 @@ export function Navbar() {
             <div className='-mx-4 pt-3 sm:-mx-6 lg:-mx-8'>
               <div className='border-t border-neutral-800'>
                 <div className='flex gap-2 px-6 pt-3' role='menu' aria-label='Mobile social links'>
-                  {LINKS.social.map((link) => (
+                  {LINKS.social.map(link => (
                     <NavbarLink
                       key={link.href}
                       {...link}
