@@ -7,6 +7,7 @@ import { Navbar } from '@/components/navbar';
 import { cn } from '@/lib/utils';
 
 import './globals.css';
+import { siteConfig } from '@/config/site';
 
 const geist = Geist({
   variable: '--font-sans',
@@ -20,13 +21,13 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://bx-team.space'),
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: 'BX Team',
-    template: '%s | BX Team',
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
   },
-  description:
-    'Powerful fork of PurpurMC that introduces experimental yet effective performance optimizations, featuring multithreaded dimension ticking, optimized chunk generation and many more! Built to soar.',
+  description: siteConfig.description,
+  keywords: ['BX Team', 'Minecraft', 'DivineMC', 'NDailyRewards', 'Nexus'],
 };
 
 export default function RootLayout({
