@@ -2,10 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { supabase } from '@/lib/supabaseClient';
 
-export async function GET(
-  request: Request,
-  props: { params: Promise<{ project: string; version: string }> }
-) {
+export async function GET(request: Request, props: { params: Promise<{ project: string; version: string }> }) {
   const params = await props.params;
   const { project, version } = params;
   const { searchParams } = new URL(request.url);
