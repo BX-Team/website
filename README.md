@@ -1,4 +1,4 @@
-# BX Team Website [![Discord](https://img.shields.io/discord/931595732752953375.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/p7cxhw7E2M)
+# BX Team Website [![Discord](https://img.shields.io/discord/931595732752953375.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/p7cxhw7E2M) [![Netlify Status](https://api.netlify.com/api/v1/badges/b70ca151-d5a5-4c8f-b1c8-1d63c4930aa9/deploy-status)](https://app.netlify.com/sites/bx-team-website/deploys)
 
 This repository contains the source code for the main BX Team website. The website is built using this techo stack:
 
@@ -15,7 +15,7 @@ How to get docs running on your local machine for development.
 ### Prerequisites
 
 - [node](https://nodejs.org)
-- [npm](https://www.npmjs.com/)
+- [bun](https://bun.sh/)
 
 ### Local Development
 
@@ -28,13 +28,13 @@ $ git clone https://github.com/BX-Team/website
 2. Install all required dependencies.
 
 ```bash
-$ npm install
+$ bun install
 ```
 
 3. Start the development server.
 
 ```bash
-$ npm run dev
+$ bun dev
 ```
 
 This will start a local development server and show you a link to local website. The majority of changes will
@@ -44,5 +44,5 @@ your browser. Edit away!
 ### Building
 
 ```bash
-$ npm run build
+$ bun build
 ```
