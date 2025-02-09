@@ -1,4 +1,5 @@
 import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { Readable } from 'stream';
 
 const s3Client = new S3Client({
   region: 'auto',
@@ -28,8 +29,10 @@ export async function getR2FileStream(key: string) {
   });
   const response = await s3Client.send(command);
   if (!response.Body) throw new Error('No file body returned');
+
+  const stream = response.Body as Readable;
   return {
-    body: response.Body,
+    body: stream,
     contentType: response.ContentType || 'application/octet-stream',
   };
 }
