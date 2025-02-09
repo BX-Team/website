@@ -30,7 +30,7 @@ const projects: Project[] = [
   {
     name: 'DivineMC',
     description: 'Fork of Purpur compatible with Spigot plugins, offering the best performance for your server.',
-    downloadUrl: 'https://example.com/divinemc/download',
+    downloadUrl: '/downloads/divinemc',
     docUrl: 'https://docs.bx-team.space/documentation/divinemc/about',
     sourceUrl: 'https://github.com/DivineMC/DivineMC',
   },
@@ -50,7 +50,7 @@ function ProjectCard({ name, description, downloadUrl, docUrl, sourceUrl }: Proj
         <Button asChild variant='default' size='sm'>
           <a
             href={downloadUrl}
-            target='_blank'
+            target='_self'
             rel='noopener noreferrer'
             aria-label={`Download ${name}`}
             className='flex items-center'
@@ -62,7 +62,7 @@ function ProjectCard({ name, description, downloadUrl, docUrl, sourceUrl }: Proj
         <Button asChild variant='secondary' size='sm'>
           <a
             href={docUrl}
-            target='_blank'
+            target='_self'
             rel='noopener noreferrer'
             aria-label={`Read Documentation for ${name}`}
             className='flex items-center'
