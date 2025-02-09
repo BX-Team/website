@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server';
 
 import { supabase } from '@/lib/supabaseClient';
 
-export async function GET(request: Request, { params }: { params: { project: string } }) {
+export async function GET(request: Request, props: { params: Promise<{ project: string }> }) {
+  const params = await props.params;
   const { project } = params;
 
   const { data: projectData, error: projectError } = await supabase

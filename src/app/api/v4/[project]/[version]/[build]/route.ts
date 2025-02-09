@@ -4,8 +4,9 @@ import { supabase } from '@/lib/supabaseClient';
 
 export async function GET(
   request: Request,
-  { params }: { params: { project: string; version: string; build: string } },
+  props: { params: Promise<{ project: string; version: string; build: string }> }
 ) {
+  const params = await props.params;
   const { project, version, build } = params;
 
   const { data: projectData, error: projectError } = await supabase
