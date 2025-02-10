@@ -44,5 +44,5 @@ your browser. Edit away!
 ### Building
 
 ```bash
-$ bun build
+$ bun run build
 ```
