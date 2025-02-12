@@ -1,47 +1,40 @@
 {
-  "name": "bx-team-website",
+  "name": "bx-team-websites",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "biome lint .",
-    "lint:fix": "biome lint --write .",
-    "format": "biome format .",
-    "format:fix": "biome format --write .",
-    "check": "biome check .",
-    "check:fix": "biome check --write .",
-    "preinstall": "npx only-allow bun"
-  },
-  "dependencies": {
-    "@aws-sdk/client-s3": "^3.744.0",
-    "@radix-ui/react-avatar": "^1.1.2",
-    "@radix-ui/react-slot": "^1.1.1",
-    "@supabase/supabase-js": "^2.48.1",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "framer-motion": "^12.3.1",
-    "lru-cache": "^11.0.2",
-    "lucide-react": "^0.475.0",
-    "next": "15.1.7",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "tailwind-merge": "^3.0.0",
-    "uuid": "^11.0.5"
+    "docs:dev": "pnpm --filter=docs run dev",
+    "docs:build": "pnpm --filter=docs run build",
+    "docs:lint": "pnpm --filter=docs run lint",
+    "docs:typecheck": "pnpm --filter=docs run typecheck",
+    "website:dev": "pnpm --filter=website run dev",
+    "website:build": "pnpm --filter=website run build",
+    "website:lint": "pnpm --filter=website run lint",
+    "website:typecheck": "pnpm --filter=website run typecheck",
+    "build": "pnpm -r run build",
+    "typecheck": "pnpm -r run typecheck",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "node .husky/install.mjs",
+    "preinstall": "npx only-allow pnpm"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "@eslint/eslintrc": "^3.2.0",
-    "@tailwindcss/postcss": "^4.0.0",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
-    "@types/node": "^22.12.0",
-    "@types/react": "^19.0.8",
-    "@types/react-dom": "^19.0.3",
-    "eslint": "^9.19.0",
-    "eslint-config-next": "15.1.7",
-    "prettier-plugin-organize-attributes": "^1.0.0",
-    "prettier-plugin-style-order": "^0.2.2",
-    "prettier-plugin-tailwindcss": "^0.6.11",
-    "tailwindcss": "^4.0.0",
-    "typescript": "^5.7.3"
+    "lint-staged": "^15.2.7",
+    "husky": "^9.1.6",
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@types/node": "^20.9.0"
+  },
+  "packageManager": "pnpm@9.5.0",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "resolutions": {
+    "@types/react": "18.3.5",
+    "@types/react-dom": "18.3.0"
   }
 }
