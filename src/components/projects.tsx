@@ -30,7 +30,7 @@ const projects: Project[] = [
   {
     name: 'DivineMC',
     description: 'Fork of Purpur compatible with Spigot plugins, offering the best performance for your server.',
-    downloadUrl: '/downloads/divinemc',
+    downloadUrl: 'https://github.com/DivineMC/DivineMC/releases/latest',
     docUrl: 'https://docs.bx-team.space/documentation/divinemc/about',
     sourceUrl: 'https://github.com/DivineMC/DivineMC',
   },
@@ -99,7 +99,7 @@ export function Projects() {
 
         <section className='mt-12'>
           <div className='space-y-8'>
-            {projects.map(project => (
+            {projects.map((project) => (
               <ProjectCard key={project.name} {...project} />
             ))}
           </div>

@@ -91,7 +91,7 @@ function Contributor({ url, avatar, username }: { url: string; avatar: string; u
 export default async function TeamPage() {
   const repos = ['NDailyRewards', 'Nexus', 'commons', 'docs', 'DivineMC'];
   const responses = await Promise.all(
-    repos.map(repo =>
+    repos.map((repo) =>
       fetch(
         `https://api.github.com/repos/${repo === 'DivineMC' ? 'DivineMC/DivineMC' : 'BX-Team/' + repo}/contributors`,
         {
@@ -102,14 +102,14 @@ export default async function TeamPage() {
     ),
   );
 
-  if (responses.some(res => !res.ok)) {
+  if (responses.some((res) => !res.ok)) {
     throw new Error('Failed to fetch contributors', { cause: responses });
   }
 
   const contributorMap = new Map();
 
   // process all responses and aggregate contributions
-  const contributorsData = await Promise.all(responses.map(res => res.json()));
+  const contributorsData = await Promise.all(responses.map((res) => res.json()));
   for (const contributors of contributorsData) {
     for (const contributor of contributors) {
       // skip bots and actions users
@@ -170,7 +170,7 @@ export default async function TeamPage() {
                 </h2>
                 <p className='mt-2 mb-6 text-neutral-300'>{description}</p>
                 <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
-                  {members.map(member => (
+                  {members.map((member) => (
                     <TeamMember key={member.name} {...member} />
                   ))}
                 </div>
