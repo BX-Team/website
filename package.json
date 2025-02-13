@@ -1,47 +1,52 @@
 {
-  "name": "bx-team-website",
+  "name": "website",
+  "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
     "build": "next build",
+    "dev": "next dev",
     "start": "next start",
-    "lint": "biome lint .",
-    "lint:fix": "biome lint --write .",
-    "format": "biome format .",
-    "format:fix": "biome format --write .",
-    "check": "biome check .",
-    "check:fix": "biome check --write .",
-    "preinstall": "npx only-allow bun"
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "postinstall": "fumadocs-mdx",
+    "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.744.0",
     "@radix-ui/react-avatar": "^1.1.2",
     "@radix-ui/react-slot": "^1.1.1",
-    "@supabase/supabase-js": "^2.48.1",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "framer-motion": "^12.3.1",
-    "lru-cache": "^11.0.2",
-    "lucide-react": "^0.475.0",
-    "next": "15.1.7",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "tailwind-merge": "^3.0.0",
-    "uuid": "^11.0.5"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "@eslint/eslintrc": "^3.2.0",
-    "@tailwindcss/postcss": "^4.0.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
-    "@types/node": "^22.12.0",
-    "@types/react": "^19.0.8",
-    "@types/react-dom": "^19.0.3",
-    "eslint": "^9.19.0",
-    "eslint-config-next": "15.1.7",
+    "class-variance-authority": "^0.7.1",
+    "framer-motion": "^12.4.2",
+    "fumadocs-core": "15.0.6",
+    "fumadocs-mdx": "11.5.3",
+    "fumadocs-ui": "15.0.6",
+    "lucide-react": "^0.475.0",
+    "next": "15.1.6",
+    "prettier": "^3.5.1",
     "prettier-plugin-organize-attributes": "^1.0.0",
     "prettier-plugin-style-order": "^0.2.2",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "tailwindcss": "^4.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.0.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@tailwindcss/postcss": "^4.0.5",
+    "@types/mdx": "^2.0.13",
+    "@types/node": "22.13.1",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^4.0.5",
     "typescript": "^5.7.3"
+  },
+  "packageManager": "pnpm@9.5.0",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   }
 }

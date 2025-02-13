@@ -1,56 +1,20 @@
-import type { Metadata, Viewport } from 'next';
+import { RootProvider } from 'fumadocs-ui/provider';
 
-import { Geist } from 'next/font/google';
+import type { ReactNode } from 'react';
 
-import { Footer } from '@/components/footer';
-import { Navbar } from '@/components/navbar';
-import { cn } from '@/lib/utils';
+import { Inter } from 'next/font/google';
 
-import './globals.css';
-import { siteConfig } from '@/config/site';
+import './global.css';
 
-const geist = Geist({
-  variable: '--font-sans',
+const inter = Inter({
   subsets: ['latin'],
-  display: 'swap',
-  preload: true,
 });
 
-export const viewport: Viewport = {
-  themeColor: '#556ABE',
-};
-
-export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
-  title: {
-    default: siteConfig.name,
-    template: `%s | ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
-  keywords: ['BX Team', 'Minecraft', 'DivineMC', 'NDailyRewards', 'Nexus'],
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <html lang='en' style={{ colorScheme: 'dark' }} suppressHydrationWarning>
-      <body
-        className={cn(
-          geist.variable,
-          'antialiased',
-          'bg-background text-foreground font-sans',
-          'min-h-screen supports-[height:100dvh]:min-h-dvh',
-          'selection:bg-neutral-700/50 selection:text-neutral-100',
-        )}
-      >
-        <Navbar />
-        <main role='main' className='mt-15'>
-          {children}
-        </main>
-        <Footer />
+    <html lang='en' className={inter.className} suppressHydrationWarning>
+      <body className='flex min-h-screen flex-col'>
+        <RootProvider>{children}</RootProvider>
       </body>
     </html>
   );
