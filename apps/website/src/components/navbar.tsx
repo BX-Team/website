@@ -89,11 +89,11 @@ export function Navbar() {
 
   return (
     <nav
-      className='supports-[backdrop-filter]:bg-background/90 fixed top-0 right-0 left-0 z-50 border-b border-neutral-800 text-white backdrop-blur-sm'
+      className='supports-[backdrop-filter]:bg-background/90 fixed left-0 right-0 top-0 z-50 border-b border-neutral-800 text-white backdrop-blur-sm'
       role='navigation'
     >
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-        <div className='flex h-15 items-center justify-between'>
+        <div className='h-15 flex items-center justify-between'>
           <div className='flex items-center space-x-6'>
             <Link href='/' className='flex items-center space-x-2 hover:opacity-90' aria-label='BX Team'>
               <Image src='/logo.png' alt='' width={28} height={28} className='rounded-md' priority />
@@ -127,7 +127,7 @@ export function Navbar() {
       {isOpen && (
         <div
           id='mobile-menu'
-          className='bg-background absolute top-15 right-0 left-0 border-t border-b border-neutral-800 pt-5 md:hidden'
+          className='bg-background top-15 absolute left-0 right-0 border-b border-t border-neutral-800 pt-5 md:hidden'
           role='menu'
           aria-label='Mobile navigation'
         >

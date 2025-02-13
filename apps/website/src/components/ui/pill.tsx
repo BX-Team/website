@@ -5,7 +5,7 @@ import type * as React from 'react';
 import { cn } from '@/lib/utils';
 
 const pillVariants = cva(
-  'inline-flex items-center justify-center rounded-full text-sm font-medium ring-1 transition-colors ring-inset',
+  'inline-flex items-center justify-center rounded-full text-sm font-medium ring-1 ring-inset transition-colors',
   {
     variants: {
       variant: {

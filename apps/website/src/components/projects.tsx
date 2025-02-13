@@ -46,7 +46,7 @@ function ProjectCard({ name, description, downloadUrl, docUrl, sourceUrl }: Proj
         <h3 className='text-3xl font-bold sm:text-2xl lg:text-3xl'>{name}</h3>
         <p className='mt-4 text-base text-neutral-300'>{description}</p>
       </div>
-      <div className='mt-6 flex flex-wrap gap-3 md:mt-0 md:ml-6'>
+      <div className='mt-6 flex flex-wrap gap-3 md:ml-6 md:mt-0'>
         <Button asChild variant='default' size='sm'>
           <a
             href={downloadUrl}

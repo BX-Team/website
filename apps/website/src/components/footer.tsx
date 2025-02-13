@@ -101,7 +101,7 @@ export function Footer() {
           <section className='text-left lg:col-span-2'>
             <Link
               href='/'
-              className='inline-flex items-center gap-2 rounded-xl transition-opacity duration-200 hover:opacity-90 focus-visible:ring-2 focus-visible:ring-white/20 focus-visible:outline-none'
+              className='inline-flex items-center gap-2 rounded-xl transition-opacity duration-200 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20'
             >
               <Image src='/logo.png' alt='' width={28} height={28} className='rounded-xl' />
               <div>

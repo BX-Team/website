@@ -51,7 +51,7 @@ export function Hero() {
         </div>
 
         <div className='mt-16 sm:mt-20'>
-          <div className='relative overflow-hidden rounded-xl bg-neutral-800/50 p-2 ring-1 shadow-2xl shadow-neutral-900/50 ring-neutral-700/50 backdrop-blur-sm'>
+          <div className='relative overflow-hidden rounded-xl bg-neutral-800/50 p-2 shadow-2xl shadow-neutral-900/50 ring-1 ring-neutral-700/50 backdrop-blur-sm'>
             <figure className='relative aspect-video'>
               <Image
                 src='/banner.png'

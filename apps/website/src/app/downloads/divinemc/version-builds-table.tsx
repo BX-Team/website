@@ -38,8 +38,8 @@ function TableRow({ build, isLatest }: TableRowProps) {
   const commit = build.commit?.[0];
   return (
     <tr className={cn('border-t border-neutral-700/50', isLatest && 'bg-neutral-800/50')}>
-      <td className='px-4 py-3 text-sm whitespace-nowrap'>#{build.name}</td>
-      <td className='px-4 py-3 whitespace-nowrap'>
+      <td className='whitespace-nowrap px-4 py-3 text-sm'>#{build.name}</td>
+      <td className='whitespace-nowrap px-4 py-3'>
         {commit?.hash && (
           <a
             href={`https://github.com/DivineMC/DivineMC/commit/${commit.hash}`}
@@ -122,7 +122,7 @@ export function VersionBuildsTable({ version, builds }: { version: string; build
       <CardContent>
         <div className='relative overflow-x-auto'>
           <table className='w-full text-left text-sm text-neutral-300'>
-            <thead className='text-xs tracking-wider text-neutral-400 uppercase'>
+            <thead className='text-xs uppercase tracking-wider text-neutral-400'>
               <tr>
                 <th scope='col' className='px-4 py-3'>
                   Build

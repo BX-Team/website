@@ -168,7 +168,7 @@ export default async function TeamPage() {
                 <h2 id={`${teamName.toLowerCase()}-heading`} className='text-2xl font-semibold text-white'>
                   {teamName}
                 </h2>
-                <p className='mt-2 mb-6 text-neutral-300'>{description}</p>
+                <p className='mb-6 mt-2 text-neutral-300'>{description}</p>
                 <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
                   {members.map((member) => (
                     <TeamMember key={member.name} {...member} />
@@ -182,7 +182,7 @@ export default async function TeamPage() {
           <h2 id='contributors-heading' className='text-2xl font-semibold text-white'>
             Contributors
           </h2>
-          <p className='mt-2 mb-6 text-neutral-300'>
+          <p className='mb-6 mt-2 text-neutral-300'>
             Our amazing contributors who help make BX Team projects better and better.
           </p>
           <div className='flex flex-wrap gap-4'>
