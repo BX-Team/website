@@ -35,7 +35,13 @@ export function Hero() {
               <Link href='/docs'>Documentation</Link>
             </Button>
             <Button asChild color='ghost' className='w-full sm:w-auto'>
-              <a href='/team' onClick={scrollToProjects} target='_self' rel='noopener noreferrer' className='inline-flex items-center gap-2'>
+              <a
+                href='/team'
+                onClick={scrollToProjects}
+                target='_self'
+                rel='noopener noreferrer'
+                className='inline-flex items-center gap-2'
+              >
                 Our projects
                 <ArrowRight className='ml-2 h-4 w-4' aria-hidden='true' />
               </a>

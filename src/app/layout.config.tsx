@@ -1,8 +1,8 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { DiscordIcon } from '@/components/icon/discord';
 
 import Image from 'next/image';
 
+import { DiscordIcon } from '@/components/icon/discord';
 import { siteConfig } from '@/config/site';
 
 export const baseOptions: BaseLayoutProps = {

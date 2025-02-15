@@ -11,13 +11,14 @@ export const buttonVariants = cva(
     variants: {
       color: {
         default: 'bg-fd-primary text-fd-primary-foreground hover:bg-fd-primary/80',
-        outline: 'border hover:bg-fd-accent hover:text-fd-accent-foreground',
+        outline: 'hover:bg-fd-accent hover:text-fd-accent-foreground border',
         ghost: 'hover:bg-fd-accent hover:text-fd-accent-foreground',
-        secondary:'border bg-fd-secondary text-fd-secondary-foreground hover:bg-fd-accent hover:text-fd-accent-foreground',
+        secondary:
+          'bg-fd-secondary text-fd-secondary-foreground hover:bg-fd-accent hover:text-fd-accent-foreground border',
       },
       size: {
         default: 'h-10 px-5 py-2',
-        sm: 'gap-1 p-0.5 text-xs',
+        sm: 'h-8 rounded-md px-3 text-xs',
         lg: 'h-11 rounded-md px-7',
         icon: 'p-1.5 [&_svg]:size-5',
       },
