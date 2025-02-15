@@ -25,7 +25,7 @@ export default function NotFound() {
             </Link>
           </Button>
 
-          <Button asChild variant='secondary' size='lg'>
+          <Button asChild color='secondary' size='lg'>
             <Link href='https://discord.gg/p7cxhw7E2M'>Report this on our Discord</Link>
           </Button>
         </nav>

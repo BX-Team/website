@@ -1,5 +1,7 @@
 import defaultMdxComponents from 'fumadocs-ui/mdx';
+import { getGithubLastEdit } from 'fumadocs-core/server';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/page';
+import WorkInProgress from '@/components/wip';
 
 import { notFound } from 'next/navigation';
 
@@ -12,14 +14,30 @@ export default async function Page(props: { params: Promise<{ slug?: string[] }>
 
   const MDX = page.data.body;
 
+  const lastUpdated = await getGithubLastEdit({
+    owner: 'BX-Team',
+    repo: 'website',
+    path: `public/content/${page.data._file.path}`,
+  });
+
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full}>
-      <DocsTitle>{page.data.title}</DocsTitle>
-      <DocsDescription>{page.data.description}</DocsDescription>
-      <DocsBody>
-        <MDX components={{ ...defaultMdxComponents }} />
-      </DocsBody>
-    </DocsPage>
+    <DocsPage
+        toc={page.data.toc}
+        full={page.data.full}
+        editOnGithub={{ owner: 'BX-Team', repo: 'website', sha: 'master', path: `public/content/${page.data._file.path}` }}
+        lastUpdate={lastUpdated ? new Date(lastUpdated) : undefined}
+        tableOfContent={{
+          single: false,
+          style: 'clerk',
+        }}
+      >
+        <DocsTitle>{page.data.title}</DocsTitle>
+        <DocsDescription className='mb-0'>{page.data.description}</DocsDescription>
+        <DocsBody>
+          <hr />
+          <MDX components={{ ...defaultMdxComponents, WorkInProgress }} />
+        </DocsBody>
+      </DocsPage>
   );
 }
 
