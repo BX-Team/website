@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 import type { HTMLAttributes } from 'react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/cn';
 
 interface GradientBackgroundProps extends HTMLAttributes<HTMLDivElement> {
   colors?: {
