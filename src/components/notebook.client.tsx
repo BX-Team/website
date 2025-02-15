@@ -1,15 +1,19 @@
 'use client';
-import { cn } from '../lib/cn';
-import { type ButtonHTMLAttributes, type HTMLAttributes } from 'react';
-import { useSidebar } from 'fumadocs-ui/provider';
-import { useNav } from './layout/nav';
-import { SidebarTrigger } from 'fumadocs-core/sidebar';
-import { buttonVariants } from './ui/button';
-import { Menu, X } from 'lucide-react';
+
 import Link from 'fumadocs-core/link';
+import { SidebarTrigger } from 'fumadocs-core/sidebar';
+import { useSidebar } from 'fumadocs-ui/provider';
+import { Menu, X } from 'lucide-react';
+
+import { type ButtonHTMLAttributes, type HTMLAttributes } from 'react';
+
 import { usePathname } from 'next/navigation';
+
+import { cn } from '../lib/cn';
 import { isActive } from '../lib/is-active';
+import { useNav } from './layout/nav';
 import type { Option } from './layout/root-toggle';
+import { buttonVariants } from './ui/button';
 
 export function Navbar(props: HTMLAttributes<HTMLElement>) {
   const { open, collapsed } = useSidebar();
@@ -17,7 +21,7 @@ export function Navbar(props: HTMLAttributes<HTMLElement>) {
 
   return (
     <header
-      id="nd-subnav"
+      id='nd-subnav'
       {...props}
       className={cn(
         'fixed inset-x-0 top-(--fd-banner-height) z-10 h-14 pe-(--fd-layout-offset) backdrop-blur-lg transition-colors',
@@ -38,9 +42,7 @@ export function Navbar(props: HTMLAttributes<HTMLElement>) {
   );
 }
 
-export function NavbarSidebarTrigger(
-  props: ButtonHTMLAttributes<HTMLButtonElement>,
-) {
+export function NavbarSidebarTrigger(props: ButtonHTMLAttributes<HTMLButtonElement>) {
   const { open } = useSidebar();
 
   return (
@@ -61,13 +63,7 @@ export function NavbarSidebarTrigger(
 
 export function LayoutTabs(props: HTMLAttributes<HTMLElement>) {
   return (
-    <div
-      {...props}
-      className={cn(
-        'flex flex-row items-end gap-6 overflow-auto',
-        props.className,
-      )}
-    >
+    <div {...props} className={cn('flex flex-row items-end gap-6 overflow-auto', props.className)}>
       {props.children}
     </div>
   );
@@ -88,8 +84,8 @@ export function LayoutTab(item: Option) {
   return (
     <Link
       className={cn(
-        'inline-flex items-center py-2.5 border-b-2 border-transparent gap-2 text-fd-muted-foreground text-sm text-nowrap',
-        selected && 'text-fd-foreground font-medium border-fd-primary',
+        'text-fd-muted-foreground inline-flex items-center gap-2 border-b-2 border-transparent py-2.5 text-sm text-nowrap',
+        selected && 'text-fd-foreground border-fd-primary font-medium',
       )}
       href={item.url}
       onClick={() => {
@@ -101,20 +97,15 @@ export function LayoutTab(item: Option) {
   );
 }
 
-export function SidebarLayoutTab({
-  item,
-  ...props
-}: { item: Option } & HTMLAttributes<HTMLElement>) {
+export function SidebarLayoutTab({ item, ...props }: { item: Option } & HTMLAttributes<HTMLElement>) {
   const selected = useIsSelected(item);
 
   return (
     <Link
       {...props}
       className={cn(
-        'flex flex-row items-center px-2 py-1.5 gap-2.5 text-fd-muted-foreground [&_svg]:!size-4.5',
-        selected
-          ? 'text-fd-primary font-medium'
-          : 'hover:text-fd-accent-foreground',
+        'text-fd-muted-foreground flex flex-row items-center gap-2.5 px-2 py-1.5 [&_svg]:!size-4.5',
+        selected ? 'text-fd-primary font-medium' : 'hover:text-fd-accent-foreground',
         props.className,
       )}
       data-active={selected}

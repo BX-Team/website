@@ -47,7 +47,7 @@ function ProjectCard({ name, description, downloadUrl, docUrl, sourceUrl }: Proj
         <p className='mt-4 text-base text-neutral-300'>{description}</p>
       </div>
       <div className='mt-6 flex flex-wrap gap-3 md:mt-0 md:ml-6'>
-        <Button asChild variant='default' size='sm'>
+        <Button asChild color='default' size='sm'>
           <a
             href={downloadUrl}
             target='_self'
@@ -59,7 +59,7 @@ function ProjectCard({ name, description, downloadUrl, docUrl, sourceUrl }: Proj
             <span>Download</span>
           </a>
         </Button>
-        <Button asChild variant='secondary' size='sm'>
+        <Button asChild color='secondary' size='sm'>
           <a
             href={docUrl}
             target='_self'
@@ -71,7 +71,7 @@ function ProjectCard({ name, description, downloadUrl, docUrl, sourceUrl }: Proj
             <span>Read Documentation</span>
           </a>
         </Button>
-        <Button asChild variant='secondary' size='sm'>
+        <Button asChild color='secondary' size='sm'>
           <a
             href={sourceUrl}
             target='_blank'

@@ -1,49 +1,39 @@
-import { Fragment, ReactNode, type HTMLAttributes } from 'react';
-import { type BaseLayoutProps, getLinks, type SharedNavProps } from './shared';
+import type { PageTree } from 'fumadocs-core/server';
+import { TreeContextProvider } from 'fumadocs-ui/provider';
+import { type PageStyles, StylesProvider } from 'fumadocs-ui/provider';
+import { ChevronDown, Languages } from 'lucide-react';
+
+import { Fragment, type HTMLAttributes, ReactNode } from 'react';
+
+import Link from 'next/link';
+
+import { cn } from '../lib/cn';
+import {
+  SidebarLinkItem,
+  type SidebarOptions,
+  checkPageTree,
+  getSidebarTabsFromOptions,
+  layoutVariables,
+} from './docs/shared';
 import {
   CollapsibleSidebar,
   Sidebar,
   SidebarCollapseTrigger,
   SidebarFooter,
   SidebarHeader,
-  SidebarViewport,
   SidebarPageTree,
+  SidebarViewport,
 } from './docs/sidebar';
-import { TreeContextProvider } from 'fumadocs-ui/provider';
-import { NavProvider, Title } from './layout/nav';
-import {
-  LargeSearchToggle,
-  SearchToggle,
-} from './layout/search-toggle';
-import { cn } from '../lib/cn';
-import Link from 'next/link';
-import { buttonVariants } from './ui/button';
-import { ChevronDown, Languages } from 'lucide-react';
-import { BaseLinkItem, type LinkItemType } from './links';
 import { LanguageToggle } from './layout/language-toggle';
-import { ThemeToggle } from './layout/theme-toggle';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from './ui/popover';
-import {
-  checkPageTree,
-  getSidebarTabsFromOptions,
-  layoutVariables,
-  SidebarLinkItem,
-  type SidebarOptions,
-} from './docs/shared';
-import type { PageTree } from 'fumadocs-core/server';
-import {
-  LayoutTab,
-  LayoutTabs,
-  Navbar,
-  NavbarSidebarTrigger,
-  SidebarLayoutTab,
-} from './notebook.client';
-import { type PageStyles, StylesProvider } from 'fumadocs-ui/provider';
+import { NavProvider, Title } from './layout/nav';
 import { type Option, RootToggle } from './layout/root-toggle';
+import { LargeSearchToggle, SearchToggle } from './layout/search-toggle';
+import { ThemeToggle } from './layout/theme-toggle';
+import { BaseLinkItem, type LinkItemType } from './links';
+import { LayoutTab, LayoutTabs, Navbar, NavbarSidebarTrigger, SidebarLayoutTab } from './notebook.client';
+import { type BaseLayoutProps, type SharedNavProps, getLinks } from './shared';
+import { buttonVariants } from './ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 
 export interface DocsLayoutProps extends BaseLayoutProps {
   tree: PageTree.Root;
@@ -82,9 +72,7 @@ export function DocsLayout({
   const tabs = getSidebarTabsFromOptions(tabOptions, props.tree) ?? [];
   const variables = cn(
     '[--fd-nav-height:calc(var(--spacing)*14)] [--fd-tocnav-height:36px] md:[--fd-sidebar-width:286px] xl:[--fd-toc-width:286px] xl:[--fd-tocnav-height:0px]',
-    tabs.length > 0 &&
-      tabMode === 'navbar' &&
-      'lg:[--fd-nav-height:calc(var(--spacing)*26)]',
+    tabs.length > 0 && tabMode === 'navbar' && 'lg:[--fd-nav-height:calc(var(--spacing)*26)]',
   );
 
   const pageStyles: PageStyles = {
@@ -97,7 +85,7 @@ export function DocsLayout({
     <TreeContextProvider tree={props.tree}>
       <NavProvider transparentMode={transparentMode}>
         <main
-          id="nd-docs-layout"
+          id='nd-docs-layout'
           {...props.containerProps}
           className={cn(
             'flex w-full flex-1 flex-row pe-(--fd-layout-offset)',
@@ -113,42 +101,38 @@ export function DocsLayout({
             {...sidebar}
             className={cn(
               'md:ps-(--fd-layout-offset)',
-              navMode === 'top'
-                ? 'bg-transparent *:!pt-0'
-                : 'md:[--fd-nav-height:0px]',
+              navMode === 'top' ? 'bg-transparent *:!pt-0' : 'md:[--fd-nav-height:0px]',
               sidebar.className,
             )}
           >
-<SidebarHeader>
-  <div className="flex items-center justify-between w-full">
-    <div className="flex items-center gap-2">
-      {nav.title && navMode === 'auto' ? (
-        <Link
-          href={nav.url ?? '/'}
-          className="inline-flex items-center gap-2.5 py-1 font-medium max-md:hidden"
-        >
-          {nav.title}
-        </Link>
-      ) : null}
-      {nav.children}
-    </div>
-    {sidebarCollapsible ? (
-      <SidebarCollapseTrigger
-        className={cn(
-          buttonVariants({
-            color: 'ghost',
-            size: 'icon',
-          }),
-          'text-fd-muted-foreground'
-        )}
-      />
-    ) : null}
-  </div>
-  {sidebarBanner}
-  {tabMode === 'sidebar' && tabs.length > 0 ? (
-    <RootToggle options={tabs} className="-mx-2" />
-  ) : null}
-</SidebarHeader>
+            <SidebarHeader>
+              <div className='flex w-full items-center justify-between'>
+                <div className='flex items-center gap-2'>
+                  {nav.title && navMode === 'auto' ? (
+                    <Link
+                      href={nav.url ?? '/'}
+                      className='inline-flex items-center gap-2.5 py-1 font-medium max-md:hidden'
+                    >
+                      {nav.title}
+                    </Link>
+                  ) : null}
+                  {nav.children}
+                </div>
+                {sidebarCollapsible ? (
+                  <SidebarCollapseTrigger
+                    className={cn(
+                      buttonVariants({
+                        color: 'ghost',
+                        size: 'icon',
+                      }),
+                      'text-fd-muted-foreground max-md:hidden', // Hide on mobile devices
+                    )}
+                  />
+                ) : null}
+              </div>
+              {sidebarBanner}
+              {tabMode === 'sidebar' && tabs.length > 0 ? <RootToggle options={tabs} className='-mx-2' /> : null}
+            </SidebarHeader>
             <SidebarViewport>
               {tabMode === 'navbar' &&
                 tabs.map((tab, i) => (
@@ -159,22 +143,13 @@ export function DocsLayout({
                   />
                 ))}
               {links.map((item, i) => (
-                <SidebarLinkItem
-                  key={i}
-                  item={item}
-                  className={cn('lg:hidden', i === links.length - 1 && 'mb-4')}
-                />
+                <SidebarLinkItem key={i} item={item} className={cn('lg:hidden', i === links.length - 1 && 'mb-4')} />
               ))}
 
               <SidebarPageTree components={sidebarComponents} />
             </SidebarViewport>
             <SidebarFooter className={cn(!sidebarFooter && 'md:hidden')}>
-              {!disableThemeSwitch ? (
-                <ThemeToggle
-                  className="w-fit md:hidden"
-                  mode="light-dark-system"
-                />
-              ) : null}
+              {!disableThemeSwitch ? <ThemeToggle className='w-fit md:hidden' mode='light-dark-system' /> : null}
               {sidebarFooter}
             </SidebarFooter>
           </Aside>
@@ -212,7 +187,7 @@ function DocsNavbar({
 
   return (
     <Navbar
-      className={cn('flex flex-col h-14', tabs.length > 0 && 'lg:h-26')}
+      className={cn('flex h-14 flex-col', tabs.length > 0 && 'lg:h-26')}
       style={
         navMode === 'top'
           ? {
@@ -221,43 +196,34 @@ function DocsNavbar({
           : undefined
       }
     >
-      <div className="flex flex-row border-b border-fd-foreground/10 px-4 flex-1 md:px-6">
-        <div
-          className={cn(
-            'flex flex-row items-center',
-            navMode === 'top' && 'flex-1',
-          )}
-        >
-          <Title
-            url={nav.url}
-            title={nav.title}
-            className={cn(navMode === 'auto' ? 'md:hidden' : 'pe-6')}
-          />
+      <div className='border-fd-foreground/10 flex flex-1 flex-row border-b px-4 md:px-6'>
+        <div className={cn('flex flex-row items-center', navMode === 'top' && 'flex-1')}>
+          <Title url={nav.url} title={nav.title} className={cn(navMode === 'auto' ? 'md:hidden' : 'pe-6')} />
         </div>
 
         <LargeSearchToggle
           hideIfDisabled
           className={cn(
-            'w-full my-auto rounded-xl max-md:hidden',
+            'my-auto w-full rounded-xl max-md:hidden',
             navMode === 'top' ? 'max-w-sm px-2' : 'max-w-[240px]',
           )}
         />
 
-        <div className="flex flex-1 flex-row items-center justify-end md:gap-2">
-          <div className="flex flex-row items-center gap-6 px-4 empty:hidden max-lg:hidden">
+        <div className='flex flex-1 flex-row items-center justify-end md:gap-2'>
+          <div className='flex flex-row items-center gap-6 px-4 empty:hidden max-lg:hidden'>
             {links
               .filter((item) => item.type !== 'icon')
               .map((item, i) => (
                 <NavbarLinkItem
                   key={i}
                   item={item}
-                  className="text-sm text-fd-muted-foreground transition-colors hover:text-fd-accent-foreground"
+                  className='text-fd-muted-foreground hover:text-fd-accent-foreground text-sm transition-colors'
                 />
               ))}
           </div>
           {nav.children}
-          <SearchToggle hideIfDisabled className="md:hidden" />
-          <NavbarSidebarTrigger className="md:hidden" />
+          <SearchToggle hideIfDisabled className='md:hidden' />
+          <NavbarSidebarTrigger className='md:hidden' />
           {links
             .filter((item) => item.type === 'icon')
             .map((item, i) => (
@@ -266,7 +232,7 @@ function DocsNavbar({
                 item={item}
                 className={cn(
                   buttonVariants({ size: 'icon', color: 'ghost' }),
-                  'text-fd-muted-foreground [&_svg]:size-4.5 max-lg:hidden',
+                  'text-fd-muted-foreground max-lg:hidden [&_svg]:size-4.5',
                 )}
                 aria-label={item.label}
               >
@@ -275,16 +241,14 @@ function DocsNavbar({
             ))}
           {i18n ? (
             <LanguageToggle>
-              <Languages className="size-5" />
+              <Languages className='size-5' />
             </LanguageToggle>
           ) : null}
-          {!disableThemeSwitch && (
-            <ThemeToggle className="max-md:hidden" mode="light-dark-system" />
-          )}
+          {!disableThemeSwitch && <ThemeToggle className='max-md:hidden' mode='light-dark-system' />}
         </div>
       </div>
       {tabs.length > 0 ? (
-        <LayoutTabs className="px-6 border-b border-fd-foreground/10 max-lg:hidden">
+        <LayoutTabs className='border-fd-foreground/10 border-b px-6 max-lg:hidden'>
           {tabs.map((tab) => (
             <LayoutTab key={tab.url} {...tab} />
           ))}
@@ -294,30 +258,23 @@ function DocsNavbar({
   );
 }
 
-function NavbarLinkItem({
-  item,
-  ...props
-}: { item: LinkItemType } & HTMLAttributes<HTMLElement>) {
+function NavbarLinkItem({ item, ...props }: { item: LinkItemType } & HTMLAttributes<HTMLElement>) {
   if (item.type === 'menu') {
     return (
       <Popover>
-        <PopoverTrigger
-          {...props}
-          className={cn('inline-flex items-center gap-1.5', props.className)}
-        >
+        <PopoverTrigger {...props} className={cn('inline-flex items-center gap-1.5', props.className)}>
           {item.text}
-          <ChevronDown className="size-3" />
+          <ChevronDown className='size-3' />
         </PopoverTrigger>
-        <PopoverContent className="flex flex-col">
+        <PopoverContent className='flex flex-col'>
           {item.items.map((child, i) => {
-            if (child.type === 'custom')
-              return <Fragment key={i}>{child.children}</Fragment>;
+            if (child.type === 'custom') return <Fragment key={i}>{child.children}</Fragment>;
 
             return (
               <BaseLinkItem
                 key={i}
                 item={child}
-                className="inline-flex items-center gap-2 rounded-md p-2 text-start hover:bg-fd-accent hover:text-fd-accent-foreground data-[active=true]:text-fd-primary [&_svg]:size-4"
+                className='hover:bg-fd-accent hover:text-fd-accent-foreground data-[active=true]:text-fd-primary inline-flex items-center gap-2 rounded-md p-2 text-start [&_svg]:size-4'
               >
                 {child.icon}
                 {child.text}
