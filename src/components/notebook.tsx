@@ -3,7 +3,7 @@ import { TreeContextProvider } from 'fumadocs-ui/provider';
 import { type PageStyles, StylesProvider } from 'fumadocs-ui/provider';
 import { ChevronDown, Languages } from 'lucide-react';
 
-import { Fragment, type HTMLAttributes, ReactNode } from 'react';
+import { Fragment, type HTMLAttributes } from 'react';
 
 import Link from 'next/link';
 
@@ -31,14 +31,13 @@ import { LargeSearchToggle, SearchToggle } from './layout/search-toggle';
 import { ThemeToggle } from './layout/theme-toggle';
 import { BaseLinkItem, type LinkItemType } from './links';
 import { LayoutTab, LayoutTabs, Navbar, NavbarSidebarTrigger, SidebarLayoutTab } from './notebook.client';
-import { type BaseLayoutProps, type SharedNavProps, getLinks } from './shared';
+import { type BaseLayoutProps, getLinks } from './shared';
 import { buttonVariants } from './ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 
 export interface DocsLayoutProps extends BaseLayoutProps {
   tree: PageTree.Root;
   tabMode?: 'sidebar' | 'navbar';
-  disableThemeSwitch?: boolean;
 
   nav?: BaseLayoutProps['nav'] & {
     mode?: 'top' | 'auto';
@@ -61,7 +60,6 @@ export function DocsLayout({
     ...sidebar
   } = {},
   i18n = false,
-  disableThemeSwitch = false,
   ...props
 }: DocsLayoutProps) {
   checkPageTree(props.tree);
@@ -101,35 +99,17 @@ export function DocsLayout({
             {...sidebar}
             className={cn(
               'md:ps-(--fd-layout-offset)',
-              navMode === 'top' ? 'bg-transparent *:!pt-0' : 'md:[--fd-nav-height:0px]',
+              navMode === 'top' ? 'bg-transparent' : 'md:[--fd-nav-height:0px]',
               sidebar.className,
             )}
           >
             <SidebarHeader>
-              <div className='flex w-full items-center justify-between'>
-                <div className='flex items-center gap-2'>
-                  {nav.title && navMode === 'auto' ? (
-                    <Link
-                      href={nav.url ?? '/'}
-                      className='inline-flex items-center gap-2.5 py-1 font-medium max-md:hidden'
-                    >
-                      {nav.title}
-                    </Link>
-                  ) : null}
-                  {nav.children}
-                </div>
-                {sidebarCollapsible ? (
-                  <SidebarCollapseTrigger
-                    className={cn(
-                      buttonVariants({
-                        color: 'ghost',
-                        size: 'icon',
-                      }),
-                      'text-fd-muted-foreground max-md:hidden', // Hide on mobile devices
-                    )}
-                  />
-                ) : null}
-              </div>
+              {nav.title && navMode === 'auto' ? (
+                <Link href={nav.url ?? '/'} className='inline-flex items-center gap-2.5 py-1 font-medium max-md:hidden'>
+                  {nav.title}
+                </Link>
+              ) : null}
+              {nav.children}
               {sidebarBanner}
               {tabMode === 'sidebar' && tabs.length > 0 ? <RootToggle options={tabs} className='-mx-2' /> : null}
             </SidebarHeader>
@@ -148,8 +128,13 @@ export function DocsLayout({
 
               <SidebarPageTree components={sidebarComponents} />
             </SidebarViewport>
-            <SidebarFooter className={cn(!sidebarFooter && 'md:hidden')}>
-              {!disableThemeSwitch ? <ThemeToggle className='w-fit md:hidden' mode='light-dark-system' /> : null}
+            <SidebarFooter className={cn('flex flex-row items-center', !sidebarFooter && 'md:hidden')}>
+              {i18n ? (
+                <LanguageToggle className='me-auto md:hidden'>
+                  <Languages className='text-fd-muted-foreground size-5' />
+                </LanguageToggle>
+              ) : null}
+              {!props.disableThemeSwitch ? <ThemeToggle className='md:hidden' mode='light-dark-system' /> : null}
               {sidebarFooter}
             </SidebarFooter>
           </Aside>
@@ -159,7 +144,6 @@ export function DocsLayout({
             i18n={i18n}
             sidebarCollapsible={sidebarCollapsible}
             tabs={tabMode == 'navbar' ? tabs : []}
-            disableThemeSwitch={disableThemeSwitch}
           />
           <StylesProvider {...pageStyles}>{props.children}</StylesProvider>
         </main>
@@ -174,14 +158,12 @@ function DocsNavbar({
   nav = {},
   i18n,
   tabs,
-  disableThemeSwitch,
 }: {
   nav: DocsLayoutProps['nav'];
   sidebarCollapsible: boolean;
   i18n: boolean;
   links: LinkItemType[];
   tabs: Option[];
-  disableThemeSwitch: boolean;
 }) {
   const navMode = nav.mode ?? 'auto';
 
@@ -199,6 +181,17 @@ function DocsNavbar({
       <div className='border-fd-foreground/10 flex flex-1 flex-row border-b px-4 md:px-6'>
         <div className={cn('flex flex-row items-center', navMode === 'top' && 'flex-1')}>
           <Title url={nav.url} title={nav.title} className={cn(navMode === 'auto' ? 'md:hidden' : 'pe-6')} />
+          {sidebarCollapsible ? (
+            <SidebarCollapseTrigger
+              className={cn(
+                buttonVariants({
+                  color: 'ghost',
+                  size: 'icon',
+                }),
+                'text-fd-muted-foreground data-[collapsed=false]:hidden max-md:hidden',
+              )}
+            />
+          ) : null}
         </div>
 
         <LargeSearchToggle
@@ -209,7 +202,7 @@ function DocsNavbar({
           )}
         />
 
-        <div className='flex flex-1 flex-row items-center justify-end md:gap-2'>
+        <div className='flex flex-1 flex-row items-center justify-end'>
           <div className='flex flex-row items-center gap-6 px-4 empty:hidden max-lg:hidden'>
             {links
               .filter((item) => item.type !== 'icon')
@@ -231,8 +224,8 @@ function DocsNavbar({
                 key={i}
                 item={item}
                 className={cn(
-                  buttonVariants({ size: 'icon', color: 'ghost' }),
-                  'text-fd-muted-foreground max-lg:hidden [&_svg]:size-4.5',
+                  buttonVariants({ size: 'icon-sm', color: 'ghost' }),
+                  'text-fd-muted-foreground max-lg:hidden',
                 )}
                 aria-label={item.label}
               >
@@ -240,11 +233,10 @@ function DocsNavbar({
               </BaseLinkItem>
             ))}
           {i18n ? (
-            <LanguageToggle>
-              <Languages className='size-5' />
+            <LanguageToggle className='max-md:hidden'>
+              <Languages className='text-fd-muted-foreground size-4.5' />
             </LanguageToggle>
           ) : null}
-          {!disableThemeSwitch && <ThemeToggle className='max-md:hidden' mode='light-dark-system' />}
         </div>
       </div>
       {tabs.length > 0 ? (
