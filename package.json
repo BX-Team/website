@@ -19,6 +19,7 @@
     "@radix-ui/react-popover": "^1.1.6",
     "@radix-ui/react-scroll-area": "^1.2.3",
     "@radix-ui/react-slot": "^1.1.1",
+    "@theguild/remark-mermaid": "^0.2.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "class-variance-authority": "^0.7.1",
     "framer-motion": "^12.4.2",
@@ -34,7 +35,8 @@
     "prettier-plugin-tailwindcss": "^0.6.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "tailwind-merge": "^3.0.1"
+    "tailwind-merge": "^3.0.1",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
