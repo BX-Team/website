@@ -1,8 +1,7 @@
-import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-
 import Image from 'next/image';
 
 import { DiscordIcon } from '@/components/icon/discord';
+import type { BaseLayoutProps } from '@/components/shared';
 import { siteConfig } from '@/config/site';
 
 export const baseOptions: BaseLayoutProps = {
@@ -40,7 +39,7 @@ export const baseOptions: BaseLayoutProps = {
     },
     {
       type: 'icon',
-      label: 'Discord Server',
+      label: 'aria-label',
       icon: <DiscordIcon />,
       text: 'Discord',
       url: siteConfig.links.discord,
