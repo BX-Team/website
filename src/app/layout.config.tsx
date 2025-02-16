@@ -7,7 +7,7 @@ import { siteConfig } from '@/config/site';
 export const baseOptions: BaseLayoutProps = {
   nav: {
     title: (
-      <div className='flex items-center gap-x-2 text-stone-800 dark:text-stone-100'>
+      <div className='flex items-center gap-2'>
         <Image src='/logo.png' alt='BX Team Logo' width={22} height={22} />
         <span>BX Team</span>
       </div>
