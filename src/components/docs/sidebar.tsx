@@ -28,7 +28,6 @@ import { usePathname } from 'next/navigation';
 
 import { cn } from '../../lib/cn';
 import { isActive } from '../../lib/is-active';
-import { buttonVariants } from '../ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible';
 import { ScrollArea, ScrollViewport } from '../ui/scroll-area';
 import type { SidebarComponents } from './shared';
@@ -331,7 +330,7 @@ export function SidebarFolderContent(props: CollapsibleContentProps) {
 
   return (
     <CollapsibleContent {...props} className={cn('relative', props.className)}>
-      <Context
+      <Context.Provider
         value={useMemo(
           () => ({
             ...ctx,
@@ -342,7 +341,7 @@ export function SidebarFolderContent(props: CollapsibleContentProps) {
       >
         <div className='bg-fd-border absolute inset-y-0 start-3 w-px' />
         {props.children}
-      </Context>
+      </Context.Provider>
     </CollapsibleContent>
   );
 }
@@ -356,13 +355,6 @@ export function SidebarCollapseTrigger(props: ButtonHTMLAttributes<HTMLButtonEle
       aria-label='Collapse Sidebar'
       data-collapsed={collapsed}
       {...props}
-      className={cn(
-        buttonVariants({
-          color: 'ghost',
-          size: 'icon',
-        }),
-        props.className,
-      )}
       onClick={() => {
         setCollapsed((prev) => !prev);
       }}
@@ -403,7 +395,7 @@ export function SidebarPageTree(props: { components?: Partial<SidebarComponents>
           if (Separator) return <Separator key={id} item={item} />;
           return (
             <SidebarSeparator key={id} className={cn(i !== 0 && 'mt-8')}>
-              {/*{item.icon} // Fix this soon */}
+              {item.icon}
               {item.name}
             </SidebarSeparator>
           );
