@@ -4,6 +4,17 @@
   "icon": "DollarSign",
   "root": true,
   "pages": [
-    "index"
+    "index",
+
+    "---Configuration---",
+    "configuration/files",
+    "configuration/placeholders",
+
+    "---Usage---",
+    "usage/commands",
+
+    "---Development---",
+    "development/dependencies",
+    "development/events"
   ]
 }
