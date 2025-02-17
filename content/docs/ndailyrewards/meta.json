@@ -1,3 +1,9 @@
 {
-  "pages": ["index"]
+  "title": "NDailyRewards",
+  "description": "Simple and lightweight plugin that allows you to reward your players for playing on your server every day.",
+  "icon": "DollarSign",
+  "root": true,
+  "pages": [
+    "index"
+  ]
 }

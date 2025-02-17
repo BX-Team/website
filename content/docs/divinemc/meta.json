@@ -1,3 +1,19 @@
 {
-  "pages": ["index", "getting-started/installation", "getting-started/plugins", "reference/configuration"]
+  "title": "DivineMC",
+  "description": "Fork of Purpur compatible with Spigot plugins, offering the best performance for your server.",
+  "icon": "Cuboid",
+  "root": true,
+  "pages": [
+    "index",
+
+    "---Getting Started---",
+    "getting-started/installation",
+    "getting-started/plugins",
+
+    "---Reference---",
+    "reference/configuration",
+
+    "---For Developers---",
+    "development/contributing"
+  ]
 }

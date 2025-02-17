@@ -1,3 +1,5 @@
+import { Cuboid, DollarSign, Drill } from 'lucide-react';
+
 import Image from 'next/image';
 
 import { DiscordIcon } from '@/components/icon/discord';
@@ -18,9 +20,34 @@ export const baseOptions: BaseLayoutProps = {
   githubUrl: siteConfig.links.github,
   links: [
     {
+      type: 'menu',
       text: 'Documentation',
       url: '/docs',
-      active: 'nested-url',
+      items: [
+        {
+          icon: <Drill />,
+          text: 'Nexus',
+          description:
+            'Powerful plugin that gives you ability to personalize your Minecraft server with useful features.',
+          url: '/docs/nexus',
+        },
+        {
+          icon: <DollarSign />,
+          text: 'NDailyRewards',
+          description:
+            'Simple and lightweight plugin that allows you to reward your players for playing on your server every day.',
+          url: '/docs/ndailyrewards',
+          menu: {
+            className: 'lg:col-start-2',
+          },
+        },
+        {
+          icon: <Cuboid />,
+          text: 'DivineMC',
+          description: 'Fork of Purpur compatible with Spigot plugins, offering the best performance for your server.',
+          url: '/docs/divinemc',
+        },
+      ],
     },
     {
       text: 'Team',

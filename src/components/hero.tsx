@@ -32,7 +32,7 @@ export function Hero() {
 
           <div className='mt-8 flex flex-col items-center justify-center gap-4 sm:mt-10 sm:flex-row'>
             <Button asChild className='w-full sm:w-auto'>
-              <Link href='/docs'>Documentation</Link>
+              <Link href='/docs/introduction'>Documentation</Link>
             </Button>
             <Button asChild color='ghost' className='w-full sm:w-auto'>
               <a
