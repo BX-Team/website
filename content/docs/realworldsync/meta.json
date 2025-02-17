@@ -1,0 +1,18 @@
+{
+  "title": "RealWorldSync",
+  "description": "Synchronize time and weather from the real world to the game.",
+  "icon": "Cloudy",
+  "root": true,
+  "pages": [
+    "index",
+
+    "---Documentation---",
+    "docs/commands",
+    "docs/config-files",
+    "docs/placeholders",
+
+    "---Guides---",
+    "guides/setting-up-plugin",
+    "guides/setting-up-weather-sync"
+  ]
+}
