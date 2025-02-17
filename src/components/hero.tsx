@@ -36,7 +36,7 @@ export function Hero() {
             </Button>
             <Button asChild color='ghost' className='w-full sm:w-auto'>
               <a
-                href='/team'
+                href='#projects'
                 onClick={scrollToProjects}
                 target='_self'
                 rel='noopener noreferrer'

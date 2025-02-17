@@ -1,4 +1,4 @@
-import { HomeLayout } from 'fumadocs-ui/layouts/home';
+import { HomeLayout } from '@/components/home';
 
 import type { ReactNode } from 'react';
 
