@@ -1,4 +1,6 @@
 {
-  "root": true,
-  "pages": ["index", "---DivineMC---", "...divinemc", "---NDailyRewards---", "...ndailyrewards"]
+  "pages": [
+    "ndailyrewards",
+    "divinemc"
+  ]
 }
