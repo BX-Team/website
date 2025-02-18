@@ -13,25 +13,25 @@ type Project = {
 
 const projects: Project[] = [
   {
+    name: 'Nexus',
+    description: 'Powerful plugin that gives you ability to personalize your Minecraft server with useful features.',
+    downloadUrl: 'https://modrinth.com/plugin/nexuss',
+    docUrl: '/docs/nexus',
+    sourceUrl: 'https://github.com/BX-Team/Nexus',
+  },
+  {
     name: 'NDailyRewards',
     description:
       'Simple and lightweight plugin that allows you to reward your players for playing on your server every day.',
     downloadUrl: 'https://modrinth.com/plugin/ndailyrewards',
-    docUrl: 'https://docs.bx-team.space/documentation/ndailyrewards/about',
+    docUrl: '/docs/ndailyrewards',
     sourceUrl: 'https://github.com/BX-Team/NDailyRewards',
-  },
-  {
-    name: 'Nexus',
-    description: 'Powerful plugin that gives you ability to personalize your Minecraft server with useful features.',
-    downloadUrl: 'https://modrinth.com/plugin/nexuss',
-    docUrl: 'https://docs.bx-team.space/documentation/nexus/about',
-    sourceUrl: 'https://github.com/BX-Team/Nexus',
   },
   {
     name: 'DivineMC',
     description: 'Fork of Purpur compatible with Spigot plugins, offering the best performance for your server.',
     downloadUrl: 'https://github.com/DivineMC/DivineMC/releases/latest',
-    docUrl: 'https://docs.bx-team.space/documentation/divinemc/about',
+    docUrl: '/docs/divinemc',
     sourceUrl: 'https://github.com/DivineMC/DivineMC',
   },
 ];
