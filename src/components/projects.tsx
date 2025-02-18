@@ -94,7 +94,7 @@ export function Projects() {
       <div className='mx-auto max-w-7xl px-6 py-16 pb-32 sm:px-8 sm:py-20 sm:pb-40 lg:px-12'>
         <header className='mx-auto max-w-3xl text-center'>
           <h1 className='text-3xl font-bold sm:text-4xl lg:text-5xl'>Our Projects</h1>
-          <p className='mt-4 text-neutral-300 sm:text-lg'>Here are some of the projects we're working on.</p>
+          <p className='mt-4 text-neutral-300 sm:text-lg'>Explore our projects that are currently in development.</p>
         </header>
 
         <section className='mt-12'>
