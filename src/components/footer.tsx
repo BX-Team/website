@@ -27,8 +27,8 @@ const LINK_SECTIONS: { title: string; links: LinkItem[] }[] = [
     links: [
       { href: '/docs', label: 'Documentation' },
       { href: '/team', label: 'Our team' },
-      { href: 'https://status.bx-team.space', label: 'Status' },
-      { href: 'https://repo.bx-team.space', label: 'Maven Repo' },
+      { href: 'https://status.bxteam.org', label: 'Status' },
+      { href: 'https://repo.bxteam.org', label: 'Maven Repo' },
     ],
   },
   {
