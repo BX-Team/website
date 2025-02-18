@@ -1,4 +1,4 @@
-import { Cuboid, DollarSign, Drill } from 'lucide-react';
+import { Cloudy, Cuboid, DollarSign, Drill } from 'lucide-react';
 
 import Image from 'next/image';
 
@@ -30,6 +30,9 @@ export const baseOptions: BaseLayoutProps = {
           description:
             'Powerful plugin that gives you ability to personalize your Minecraft server with useful features.',
           url: '/docs/nexus',
+          menu: {
+            className: 'lg:col-start-1 lg:row-start-1 lg:col-span-1',
+          },
         },
         {
           icon: <DollarSign />,
@@ -38,7 +41,7 @@ export const baseOptions: BaseLayoutProps = {
             'Simple and lightweight plugin that allows you to reward your players for playing on your server every day.',
           url: '/docs/ndailyrewards',
           menu: {
-            className: 'lg:col-start-2',
+            className: 'lg:col-start-2 lg:row-start-1 lg:col-span-1 text-sm',
           },
         },
         {
@@ -46,6 +49,18 @@ export const baseOptions: BaseLayoutProps = {
           text: 'DivineMC',
           description: 'Fork of Purpur compatible with Spigot plugins, offering the best performance for your server.',
           url: '/docs/divinemc',
+          menu: {
+            className: 'lg:col-start-1 lg:row-start-2 lg:col-span-1 text-sm',
+          },
+        },
+        {
+          icon: <Cloudy />,
+          text: 'RealWorldSync',
+          description: 'Synchronize time and weather from the real world to the game.',
+          url: '/docs/realworldsync',
+          menu: {
+            className: 'lg:col-start-2 lg:row-start-2 lg:col-span-1 text-lg',
+          },
         },
       ],
     },
