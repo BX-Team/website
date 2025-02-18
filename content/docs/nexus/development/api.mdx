@@ -1,0 +1,119 @@
+---
+icon: SquareTerminal
+title: Nexus API
+description: Learn how to use the Nexus API in your plugins.
+---
+
+We provide a simple and easy to use API that allows you to create your own plugins using Nexus API. This page will show you how to use Nexus API in your project.
+
+## Dependency installation
+
+To use Nexus API you need to add our repository and Nexus to your repositories and dependencies in your project.
+
+Depending on the build system you are using, add the following code to your project:
+
+<Tabs items={['Gradle Kotlin', 'Gradle Groovy', 'Maven']}>
+  <Tab value='Gradle Kotlin'>
+    ```kotlin
+    maven { url = uri("https://repo.bxteam.org/releases") }
+    ```
+  </Tab>
+  <Tab value='Gradle Groovy'>
+    ```groovy
+    maven { url "https://repo.bxteam.org/releases" }
+    ```
+  </Tab>
+  <Tab value='Maven'>
+    ```xml
+    <repository>
+      <id>bx-team-releases</id>
+      <name>BX Team Maven repository</name>
+      <url>https://repo.bxteam.org/releases</url>
+    </repository>
+    ```
+  </Tab>
+</Tabs>
+
+<Tabs items={['Gradle Kotlin', 'Gradle Groovy', 'Maven']}>
+  <Tab value='Gradle Kotlin'>
+    ```kotlin
+    implementation("space.bxteam:nexus:0.4.0")
+    ```
+  </Tab>
+  <Tab value='Gradle Groovy'>
+    ```groovy
+    implementation "space.bxteam:nexus:0.4.0"
+    ```
+  </Tab>
+  <Tab value='Maven'>
+    ```xml
+    <dependency>
+      <groupId>space.bxteam</groupId>
+      <artifactId>nexus</artifactId>
+      <version>0.4.0</version>
+    </dependency>
+    ```
+  </Tab>
+</Tabs>
+
+You must also add dependency inside `plugin.yml` or `paper-plugin.yml` file, this is required to load our plugin before your plugin, so they can access our API.
+
+<Tabs items={['plugin.yml', 'paper-plugin.yml']}>
+  <Tab value='plugin.yml'>
+    ```yaml
+    depend: [Nexus]
+    ```
+  </Tab>
+  <Tab value='paper-plugin.yml'>
+    ```yaml
+    dependencies:
+      server:
+        Nexus:
+          load: BEFORE
+          required: true
+          join-classpath: true
+    ```
+  </Tab>
+</Tabs>
+
+## Using Nexus API
+
+To use Nexus API in your project, you need to create an instance of `NexusAPI` class. This class provides all the methods you need to interact with Nexus.
+You can do this by using `NexusAPIProvider.get()` method.
+
+```java
+NexusAPI nexusApi = NexusAPIProvider.get();
+```
+
+After creating instance of API, you can use all the methods that are available in Nexus API. This includes:
+
+| Class                  | Provide method              |
+| ---------------------- | --------------------------- |
+| ChatService            | getChatService()            |
+| HomeService            | getHomeService()            |
+| JailService            | getJailService()            |
+| RandomTeleportService  | getRandomTeleportService()  |
+| SpawnService           | getSpawnService()           |
+| TeleportService        | getTeleportService()        |
+| TeleportRequestService | getTeleportRequestService() |
+| WarpService            | getWarpService()            |
+
+### Example usage of JailService
+
+```java
+public class YourPlugin extends JavaPlugin {
+
+    private NexusAPI nexusApi; // [!code highlight]
+    private JailService jailService; // [!code highlight]
+
+    @Override
+    public onEnable() {
+        this.nexusApi = NexusAPIProvider.get(); // [!code highlight]
+        this.jailService = nexusApi.getJailService(); // [!code highlight]
+    }
+}
+```
+
+## JavaDocs
+
+Nexus API provides JavaDocs for all the classes and methods. You can find the JavaDocs for Nexus API [here](https://repo.bxteam.org/javadoc/releases/space/bxteam/nexus/0.4.0).

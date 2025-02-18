@@ -53,10 +53,7 @@ export const NavbarMenu = NavigationMenuItem;
 
 export function NavbarMenuContent(props: NavigationMenuContentProps) {
   return (
-    <NavigationMenuContent
-      {...props}
-      className={cn('grid grid-cols-2 gap-3 px-4 pb-4', props.className)}
-    >
+    <NavigationMenuContent {...props} className={cn('grid grid-cols-2 gap-3 px-4 pb-4', props.className)}>
       {props.children}
     </NavigationMenuContent>
   );
