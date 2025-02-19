@@ -161,7 +161,7 @@ export function Sidebar({
         <div
           {...inner}
           className={cn(
-            'flex size-full max-w-full flex-col pt-2 md:ms-auto md:w-(--fd-sidebar-width) md:border-e md:pt-4',
+            'flex size-full max-w-full flex-col pt-2 md:ms-auto md:w-(--fd-sidebar-width) md:border-e',
             inner?.className,
           )}
         >
@@ -174,7 +174,7 @@ export function Sidebar({
 
 export function SidebarHeader(props: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div {...props} className={cn('flex flex-col gap-2 px-4 empty:hidden md:ps-5', props.className)}>
+    <div {...props} className={cn('flex flex-col gap-2 px-4 empty:hidden', props.className)}>
       {props.children}
     </div>
   );
@@ -182,7 +182,7 @@ export function SidebarHeader(props: HTMLAttributes<HTMLDivElement>) {
 
 export function SidebarFooter(props: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div {...props} className={cn('flex flex-col border-t px-4 py-3 empty:hidden md:ps-5', props.className)}>
+    <div {...props} className={cn('flex flex-col border-t px-4 py-3 empty:hidden', props.className)}>
       {props.children}
     </div>
   );
@@ -192,7 +192,7 @@ export function SidebarViewport(props: ScrollAreaProps) {
   return (
     <ScrollArea {...props} className={cn('h-full', props.className)}>
       <ScrollViewport
-        className='p-4 md:ps-5'
+        className='p-4'
         style={{
           maskImage: 'linear-gradient(to bottom, transparent, white 12px)',
         }}

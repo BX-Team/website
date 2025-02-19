@@ -67,34 +67,34 @@ function Header({
       <div className='flex flex-1 flex-row items-center justify-end gap-1.5'>
         {enableSearch ? (
           <>
-            <SearchToggle className='me-2 lg:hidden' hideIfDisabled />
-            <LargeSearchToggle className='me-2 w-full max-w-[240px] max-lg:hidden' hideIfDisabled />
+            <SearchToggle className='lg:hidden' hideIfDisabled />
+            <LargeSearchToggle className='w-full max-w-[240px] max-lg:hidden' hideIfDisabled />
           </>
         ) : null}
-        {!disableThemeSwitch ? <ThemeToggle className='me-2 max-lg:hidden' /> : null}
+        {!disableThemeSwitch ? <ThemeToggle className='max-lg:hidden' /> : null}
         {i18n ? (
-          <LanguageToggle className='me-2 max-lg:hidden'>
+          <LanguageToggle className='max-lg:hidden'>
             <Languages className='size-5' />
           </LanguageToggle>
         ) : null}
       </div>
       <ul className='flex flex-row items-center'>
         {navItems.filter(isSecondary).map((item, i) => (
-          <NavbarLinkItem key={i} item={item} className='-me-1.5 me-2 max-lg:hidden' />
+          <NavbarLinkItem key={i} item={item} className='-me-1.5 max-lg:hidden' />
         ))}
         <Menu className='lg:hidden'>
-          <MenuTrigger aria-label='Toggle Menu' className='group -me-2 me-2' enableHover={nav.enableHoverToOpen}>
+          <MenuTrigger aria-label='Toggle Menu' className='group -me-2' enableHover={nav.enableHoverToOpen}>
             <ChevronDown className='size-3 transition-transform duration-300 group-data-[state=open]:rotate-180' />
           </MenuTrigger>
           <MenuContent className='sm:flex-row sm:items-center sm:justify-end'>
             {menuItems
               .filter((item) => !isSecondary(item))
               .map((item, i) => (
-                <MenuLinkItem key={i} item={item} className='me-2 sm:hidden' />
+                <MenuLinkItem key={i} item={item} className='sm:hidden' />
               ))}
             <div className='-ms-1.5 flex flex-row items-center gap-1.5 max-sm:mt-2'>
               {menuItems.filter(isSecondary).map((item, i) => (
-                <MenuLinkItem key={i} item={item} className='-me-1.5 me-2' />
+                <MenuLinkItem key={i} item={item} className='-me-1.5' />
               ))}
               <div role='separator' className='flex-1' />
               {i18n ? (

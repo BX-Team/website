@@ -104,11 +104,22 @@ export function DocsLayout({
             )}
           >
             <SidebarHeader>
-              {nav.title && navMode === 'auto' ? (
-                <Link href={nav.url ?? '/'} className='inline-flex items-center gap-2.5 py-1 font-medium max-md:hidden'>
-                  {nav.title}
-                </Link>
-              ) : null}
+              {navMode === 'auto' && (
+                <div className='-my-2 flex min-h-14 flex-row items-center justify-between max-md:hidden'>
+                  <Link href={nav.url ?? '/'} className='inline-flex items-center gap-2.5 py-1 font-medium'>
+                    {nav.title}
+                  </Link>
+                  <SidebarCollapseTrigger
+                    className={cn(
+                      buttonVariants({
+                        color: 'ghost',
+                        size: 'icon-sm',
+                      }),
+                      'text-fd-muted-foreground',
+                    )}
+                  />
+                </div>
+              )}
               {nav.children}
               {sidebarBanner}
               {tabMode === 'sidebar' && tabs.length > 0 ? <RootToggle options={tabs} className='-mx-2' /> : null}
@@ -178,20 +189,29 @@ function DocsNavbar({
           : undefined
       }
     >
-      <div className='border-fd-foreground/10 flex flex-1 flex-row border-b px-4 md:px-6'>
-        <div className={cn('flex flex-row items-center', navMode === 'top' && 'flex-1')}>
-          <Title url={nav.url} title={nav.title} className={cn(navMode === 'auto' ? 'md:hidden' : 'pe-6')} />
-          {sidebarCollapsible ? (
+      <div
+        className={cn('border-fd-foreground/10 flex flex-1 flex-row border-b px-4', navMode === 'auto' && 'md:px-6')}
+      >
+        <div className={cn('flex flex-row items-center', navMode === 'top' && 'flex-1 pe-4')}>
+          {sidebarCollapsible && navMode === 'auto' ? (
             <SidebarCollapseTrigger
               className={cn(
                 buttonVariants({
                   color: 'ghost',
-                  size: 'icon',
+                  size: 'icon-sm',
                 }),
-                'text-fd-muted-foreground data-[collapsed=false]:hidden max-md:hidden',
+                'text-fd-muted-foreground -ms-1.5 me-2 data-[collapsed=false]:hidden max-md:hidden',
               )}
             />
           ) : null}
+          <Title
+            url={nav.url}
+            title={nav.title}
+            className={cn(
+              // show on sidebar on above md
+              navMode === 'auto' && 'md:hidden',
+            )}
+          />
         </div>
 
         <LargeSearchToggle
@@ -236,6 +256,17 @@ function DocsNavbar({
             <LanguageToggle className='max-md:hidden'>
               <Languages className='text-fd-muted-foreground size-4.5' />
             </LanguageToggle>
+          ) : null}
+          {sidebarCollapsible && navMode === 'top' ? (
+            <SidebarCollapseTrigger
+              className={cn(
+                buttonVariants({
+                  color: 'secondary',
+                  size: 'icon-sm',
+                }),
+                'text-fd-muted-foreground ms-2 rounded-full max-md:hidden',
+              )}
+            />
           ) : null}
         </div>
       </div>
