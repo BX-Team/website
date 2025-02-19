@@ -93,7 +93,7 @@ function ContributorAvatar({ url, avatar, username }: { url: string; avatar: str
 }
 
 export default async function TeamPage() {
-  const repos = ['NDailyRewards', 'Nexus', 'commons', 'website'];
+  const repos = ['DivineMC', 'NDailyRewards', 'Nexus', 'commons', 'website'];
   const responses = await Promise.all(
     repos.map((repo) =>
       fetch(`https://api.github.com/repos/BX-Team/${repo}/contributors`, {
