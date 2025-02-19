@@ -47,9 +47,9 @@ const TEAM_MEMBERS: Record<string, TeamSection> = {
 };
 
 function TeamMember({ name, role, github }: TeamMember) {
-  const CardContent = () => (
+  const content = (
     <div className='flex items-center gap-4'>
-      <Avatar className='h-12 w-12'>
+      <Avatar className='size-12'>
         <AvatarImage src={`https://github.com/${github}.png`} alt={`${name}'s avatar`} />
         <AvatarFallback>{name[0]}</AvatarFallback>
       </Avatar>
@@ -60,27 +60,31 @@ function TeamMember({ name, role, github }: TeamMember) {
     </div>
   );
 
-  if (!github) {
+  if (github) {
     return (
-      <Card className='p-5'>
-        <CardContent />
-      </Card>
+      <a href={`https://github.com/${github}`} target='_blank' rel='noopener noreferrer'>
+        <Card className='p-5 transition-all hover:bg-neutral-800/50 hover:ring-1 hover:ring-neutral-700'>
+          {content}
+        </Card>
+      </a>
     );
   }
 
-  return (
-    <a href={`https://github.com/${github}`} target='_blank' rel='noopener noreferrer'>
-      <Card className='p-5 transition-all hover:bg-neutral-800/50 hover:ring-1 hover:ring-neutral-700'>
-        <CardContent />
-      </Card>
-    </a>
-  );
+  return <Card className='p-5'>{content}</Card>;
 }
 
-function Contributor({ url, avatar, username }: { url: string; avatar: string; username: string }) {
+interface Contributor {
+  login: string;
+  avatar_url: string;
+  html_url: string;
+  type: string;
+  contributions: number;
+}
+
+function ContributorAvatar({ url, avatar, username }: { url: string; avatar: string; username: string }) {
   return (
     <a href={url} target='_blank' rel='noopener noreferrer' className='group'>
-      <Avatar className='h-16 w-16 ring-1 ring-neutral-600 transition group-hover:ring-neutral-400'>
+      <Avatar className='size-16 ring-1 ring-neutral-600 transition group-hover:ring-neutral-400'>
         <AvatarImage src={avatar} alt={`${username}'s GitHub profile`} />
         <AvatarFallback>{username[0]}</AvatarFallback>
       </Avatar>
@@ -89,47 +93,39 @@ function Contributor({ url, avatar, username }: { url: string; avatar: string; u
 }
 
 export default async function TeamPage() {
-  const repos = ['NDailyRewards', 'Nexus', 'commons', 'docs', 'DivineMC'];
+  const repos = ['NDailyRewards', 'Nexus', 'commons', 'website'];
   const responses = await Promise.all(
     repos.map((repo) =>
-      fetch(
-        `https://api.github.com/repos/${repo === 'DivineMC' ? 'DivineMC/DivineMC' : 'BX-Team/' + repo}/contributors`,
-        {
-          headers: { Accept: 'application/vnd.github.v3+json' },
-          next: { revalidate: 3600 },
-        },
-      ),
+      fetch(`https://api.github.com/repos/BX-Team/${repo}/contributors`, {
+        headers: { Accept: 'application/vnd.github.v3+json' },
+        next: { revalidate: 3600 },
+      }),
     ),
   );
 
   if (responses.some((res) => !res.ok)) {
-    throw new Error('Failed to fetch contributors', { cause: responses });
+    throw new Error('Failed to fetch contributors');
   }
 
-  const contributorMap = new Map();
-
-  // process all responses and aggregate contributions
   const contributorsData = await Promise.all(responses.map((res) => res.json()));
-  for (const contributors of contributorsData) {
-    for (const contributor of contributors) {
-      // skip bots and actions users
-      const skipList = ['renovate[bot]', 'renovate-bot', 'actions-user'];
-      if (skipList.includes(contributor.login)) continue;
 
-      const currentContributions = contributorMap.get(contributor.login)?.contributions || 0;
-      contributorMap.set(contributor.login, {
-        ...contributor,
-        contributions: currentContributions + (contributor.contributions || 0),
-      });
-    }
-  }
+  const contributors = (
+    Object.values(
+      contributorsData.flat().reduce(
+        (acc, contributor: Contributor) => {
+          if (contributor.type !== 'User') return acc;
 
-  // convert map to array and sort by contributions
-  const contributors = Array.from(contributorMap.values()).sort((a, b) => {
-    const diff = b.contributions - a.contributions;
-    // if contributions are equal, sort alphabetically by login as secondary criteria
-    return diff !== 0 ? diff : a.login.localeCompare(b.login);
-  });
+          const existing = acc[contributor.login];
+          acc[contributor.login] = {
+            ...contributor,
+            contributions: (existing?.contributions || 0) + contributor.contributions,
+          };
+          return acc;
+        },
+        {} as Record<string, Contributor & { contributions: number }>,
+      ),
+    ) as Contributor[]
+  ).sort((a, b) => b.contributions - a.contributions || a.login.localeCompare(b.login));
 
   return (
     <div className='relative min-h-screen'>
@@ -186,8 +182,8 @@ export default async function TeamPage() {
             Our amazing contributors who help make BX Team projects better and better.
           </p>
           <div className='flex flex-wrap gap-4'>
-            {contributors.map((contributor: { login: string; avatar_url: string; html_url: string }) => (
-              <Contributor
+            {contributors.map((contributor: Contributor) => (
+              <ContributorAvatar
                 key={contributor.login}
                 url={contributor.html_url}
                 avatar={contributor.avatar_url}
