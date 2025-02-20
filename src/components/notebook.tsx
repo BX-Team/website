@@ -105,8 +105,8 @@ export function DocsLayout({
           >
             <SidebarHeader>
               {navMode === 'auto' && (
-                <div className='-my-2 flex min-h-14 flex-row items-center justify-between max-md:hidden'>
-                  <Link href={nav.url ?? '/'} className='inline-flex items-center gap-2.5 py-1 font-medium'>
+                <div className='-mt-0.5 flex flex-row justify-between max-md:hidden'>
+                  <Link href={nav.url ?? '/'} className='inline-flex items-center gap-2.5 font-medium'>
                     {nav.title}
                   </Link>
                   <SidebarCollapseTrigger
@@ -115,7 +115,7 @@ export function DocsLayout({
                         color: 'ghost',
                         size: 'icon-sm',
                       }),
-                      'text-fd-muted-foreground',
+                      'text-fd-muted-foreground mb-auto',
                     )}
                   />
                 </div>
@@ -180,7 +180,6 @@ function DocsNavbar({
 
   return (
     <Navbar
-      className={cn('flex h-14 flex-col', tabs.length > 0 && 'lg:h-26')}
       style={
         navMode === 'top'
           ? {
@@ -189,9 +188,7 @@ function DocsNavbar({
           : undefined
       }
     >
-      <div
-        className={cn('border-fd-foreground/10 flex flex-1 flex-row border-b px-4', navMode === 'auto' && 'md:px-6')}
-      >
+      <div className={cn('border-fd-foreground/10 flex h-14 flex-row border-b px-4', navMode === 'auto' && 'md:px-6')}>
         <div className={cn('flex flex-row items-center', navMode === 'top' && 'flex-1 pe-4')}>
           {sidebarCollapsible && navMode === 'auto' ? (
             <SidebarCollapseTrigger
@@ -271,7 +268,7 @@ function DocsNavbar({
         </div>
       </div>
       {tabs.length > 0 ? (
-        <LayoutTabs className='border-fd-foreground/10 border-b px-6 max-lg:hidden'>
+        <LayoutTabs className='border-fd-foreground/10 h-10 border-b px-6 max-lg:hidden'>
           {tabs.map((tab) => (
             <LayoutTab key={tab.url} {...tab} />
           ))}
