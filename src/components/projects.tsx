@@ -30,9 +30,9 @@ const projects: Project[] = [
   {
     name: 'DivineMC',
     description: 'Fork of Purpur compatible with Spigot plugins, offering the best performance for your server.',
-    downloadUrl: 'https://github.com/DivineMC/DivineMC/releases/latest',
+    downloadUrl: 'https://github.com/BX-Team/DivineMC/releases/latest',
     docUrl: '/docs/divinemc',
-    sourceUrl: 'https://github.com/DivineMC/DivineMC',
+    sourceUrl: 'https://github.com/BX-Team/DivineMC',
   },
 ];
 

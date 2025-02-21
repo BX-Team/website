@@ -9,7 +9,7 @@ export const siteConfig = {
     status: 'https://status.bxteam.org',
     maven: 'https://repo.bxteam.org',
     projects: {
-      divinemc: 'https://github.com/DivineMC/DivineMC',
+      divinemc: 'https://github.com/BX-Team/DivineMC',
     },
   },
 } as const;
