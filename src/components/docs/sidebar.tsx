@@ -13,6 +13,7 @@ import { ChevronDown, ExternalLink, SidebarIcon } from 'lucide-react';
 
 import {
   type ButtonHTMLAttributes,
+  Fragment,
   type HTMLAttributes,
   type PointerEventHandler,
   type ReactNode,
@@ -383,18 +384,17 @@ function useInternalContext(): InternalContext {
  */
 export function SidebarPageTree(props: { components?: Partial<SidebarComponents> }) {
   const { root } = useTreeContext();
+  const idRef = useRef(0);
 
   return useMemo(() => {
     const { Separator, Item, Folder } = props.components ?? {};
 
     function renderSidebarList(items: PageTree.Node[], level: number): ReactNode[] {
       return items.map((item, i) => {
-        const id = `${item.type}_${i}`;
-
         if (item.type === 'separator') {
-          if (Separator) return <Separator key={id} item={item} />;
+          if (Separator) return <Separator key={i} item={item} />;
           return (
-            <SidebarSeparator key={id} className={cn(i !== 0 && 'mt-8')}>
+            <SidebarSeparator key={i} className={cn(i !== 0 && 'mt-8')}>
               {item.icon}
               {item.name}
             </SidebarSeparator>
@@ -406,12 +406,12 @@ export function SidebarPageTree(props: { components?: Partial<SidebarComponents>
 
           if (Folder)
             return (
-              <Folder key={id} item={item} level={level}>
+              <Folder key={i} item={item} level={level}>
                 {children}
               </Folder>
             );
           return (
-            <PageTreeFolder key={id} item={item}>
+            <PageTreeFolder key={i} item={item}>
               {children}
             </PageTreeFolder>
           );
@@ -426,8 +426,8 @@ export function SidebarPageTree(props: { components?: Partial<SidebarComponents>
       });
     }
 
-    return renderSidebarList(root.children, 1);
-  }, [root, props.components]);
+    return <Fragment key={idRef.current++}>{renderSidebarList(root.children, 1)}</Fragment>;
+  }, [props.components, root.children]);
 }
 
 function PageTreeFolder({

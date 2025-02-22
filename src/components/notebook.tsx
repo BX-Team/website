@@ -70,7 +70,7 @@ export function DocsLayout({
   const tabs = getSidebarTabsFromOptions(tabOptions, props.tree) ?? [];
   const variables = cn(
     '[--fd-nav-height:calc(var(--spacing)*14)] [--fd-tocnav-height:36px] md:[--fd-sidebar-width:286px] xl:[--fd-toc-width:286px] xl:[--fd-tocnav-height:0px]',
-    tabs.length > 0 && tabMode === 'navbar' && 'lg:[--fd-nav-height:calc(var(--spacing)*26)]',
+    tabs.length > 0 && tabMode === 'navbar' && 'lg:[--fd-nav-height:calc(var(--spacing)*24)]',
   );
 
   const pageStyles: PageStyles = {
@@ -102,10 +102,13 @@ export function DocsLayout({
               navMode === 'top' ? 'bg-transparent' : 'md:[--fd-nav-height:0px]',
               sidebar.className,
             )}
+            inner={{
+              className: cn(navMode === 'top' ? 'md:pt-2.5' : 'md:pt-3.5', tabMode === 'navbar' && 'md:pt-0'),
+            }}
           >
             <SidebarHeader>
               {navMode === 'auto' && (
-                <div className='-mt-0.5 flex flex-row justify-between max-md:hidden'>
+                <div className='flex flex-row justify-between max-md:hidden'>
                   <Link href={nav.url ?? '/'} className='inline-flex items-center gap-2.5 font-medium'>
                     {nav.title}
                   </Link>
