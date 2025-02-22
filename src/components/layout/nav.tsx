@@ -3,7 +3,7 @@
 import Link, { type LinkProps } from 'fumadocs-core/link';
 import { useI18n } from 'fumadocs-ui/provider';
 
-import { type ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import { type ReactNode, createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 import { cn } from '../../lib/cn';
 
@@ -51,7 +51,11 @@ export function NavProvider({ transparentMode = 'none', children }: NavProviderP
     };
   }, [transparentMode]);
 
-  return <NavContext.Provider value={{ isTransparent: transparent }}>{children}</NavContext.Provider>;
+  return (
+    <NavContext.Provider value={useMemo(() => ({ isTransparent: transparent }), [transparent])}>
+      {children}
+    </NavContext.Provider>
+  );
 }
 
 export function useNav(): NavContextType {
