@@ -96,7 +96,7 @@ export function SidebarLinkItem({ item, ...props }: { item: LinkItemType; classN
     );
   }
 
-  if (item.type === 'custom') return item.children;
+  if (item.type === 'custom') return <div {...props}>{item.children}</div>;
 
   return (
     <SidebarItem href={item.url} icon={item.icon} external={item.external} {...props}>
