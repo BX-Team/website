@@ -20,7 +20,7 @@ export default async function Page(props: { params: Promise<{ slug?: string[] }>
   const lastUpdated = await getGithubLastEdit({
     owner: 'BX-Team',
     repo: 'website',
-    path: `public/content/${page.data._file.path}`,
+    path: `content/docs/${page.data._file.path}`,
   });
 
   return (
@@ -31,7 +31,7 @@ export default async function Page(props: { params: Promise<{ slug?: string[] }>
         owner: 'BX-Team',
         repo: 'website',
         sha: 'master',
-        path: `public/content/${page.data._file.path}`,
+        path: `content/docs/${page.data._file.path}`,
       }}
       lastUpdate={lastUpdated ? new Date(lastUpdated) : undefined}
       tableOfContent={{
