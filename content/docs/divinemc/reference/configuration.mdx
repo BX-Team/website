@@ -26,4 +26,157 @@ Configuration values change frequently at times. It is possible for the informat
 
 :::
 
-<WorkInProgress />
+## Default Configuration File
+```yml
+# This is the main configuration file for DivineMC.
+# If you need help with the configuration or have any questions related to DivineMC,
+# join us in our Discord server.
+# 
+# Discord: https://discord.gg/p7cxhw7E2M
+# Docs: https://bxteam.org/docs/divinemc
+# New builds: https://github.com/BX-Team/DivineMC/releases/latest
+
+world-settings:
+  default:
+    gameplay-mechanics:
+      projectiles:
+        snowball:
+          knockback: true
+          disable-saving: false
+        egg:
+          knockback: true
+        firework:
+          disable-saving: false
+    unsupported-features:
+      allow-entity-portal-with-passenger: true
+version: 5
+settings:
+  virtual-threads:
+    # Enables use of virtual threads that was added in Java 21
+    enabled: false
+    # Uses virtual threads for the Bukkit scheduler.
+    bukkit-scheduler: false
+    # Uses virtual threads for the Chat scheduler.
+    chat-scheduler: false
+    # Uses virtual threads for the Authenticator scheduler.
+    authenticator-scheduler: false
+    # Uses virtual threads for the Tab Complete scheduler.
+    tab-complete-scheduler: false
+    # Uses virtual threads for the MCUtil async executor.
+    async-executor: false
+    # Uses virtual threads for the Async Command Builder Thread Pool.
+    command-builder-scheduler: false
+  parallel-world-ticking:
+    thread-count: 4
+    log-container-creation-stacktraces: false
+  regionized-chunk-ticking:
+    # Enables regionized chunk ticking. This feature is similar to Folia
+    enable: false
+    # The amount of threads to allocate to regionized chunk ticking.
+    executor-thread-count: 4
+    # Configures the thread priority of the executor
+    executor-thread-priority: 5
+  multithreaded-tracker:
+    # Make entity tracking saving asynchronously, can improve performance significantly,
+    # especially in some massive entities in small area situations.
+    enable: true
+    # Enable compat mode ONLY if Citizens or NPC plugins using real entity has installed.
+    # Compat mode fixes visible issues with player type NPCs of Citizens.
+    # But we recommend to use packet based / virtual entity NPC plugin, e.g. ZNPC Plus, Adyeshach, Fancy NPC and etc.
+    compat-mode: false
+    max-threads: 1
+    keepalive: 60
+    queue-size: 0
+  tnt-optimization:
+    enable-faster-tnt-optimization: true
+    explosion-no-block-damage: false
+    tnt-random-range: -1.0
+  no-chat-reports:
+    # Enables or disables the No Chat Reports feature
+    enabled: false
+    # Should server include extra query data to help clients know that your server is secure
+    add-query-data: true
+    # Should the server convert all player messages to system messages
+    convert-to-game-message: true
+    debug-log: false
+    # Should the server require No Chat Reports on the client side
+    demand-on-client: false
+    # Message to send to the client when they are disconnected for not having No Chat Reports
+    disconnect-demand-on-client-message: You do not have No Chat Reports, and this
+      server is configured to require it on client!
+  misc:
+    skip-useless-secondary-poi-sensor: true
+    # Clumps experience orbs together to reduce entity count
+    clump-orbs: true
+    # Improves general gameplay experience of the player when the server is lagging, as they won't get lagged back (message 'moved too quickly')
+    ignore-moved-too-quickly-when-lagging: true
+    # Means ignoring messages like 'moved too quickly' and 'moved wrongly'
+    always-allow-weird-movement: true
+    update-suppression-crash-fix: true
+    # This feature is based on Secure Seed mod by Earthcomputer.
+    # 
+    # Terrain and biome generation remains the same, but all the ores and structures are generated with 1024-bit seed, instead of the usual 64-bit seed.
+    # This seed is almost impossible to crack, and there are no weird links between structures.
+    enable-secure-seed: false
+  async-pathfinding:
+    enable: true
+    max-threads: 2
+    keepalive: 60
+    queue-size: 0
+    # The policy to use when the queue is full and a new task is submitted.
+    # FLUSH_ALL: All pending tasks will be run on server thread.
+    # CALLER_RUNS: Newly submitted task will be run on server thread.
+    reject-policy: CALLER_RUNS
+  chunk-generation:
+    native-acceleration-enabled: true
+    # Enables AVX512 support for natives-math optimizations
+    allow-avx512: false
+    # Overrides the ISA target located by the native loader, which allows forcing AVX512 (must be a value between 6-9 for AVX512 support).
+    # Value must be between 1-9, and -1 to disable override
+    isa-target-level-override: -1
+    chunk-data-cache-soft-limit: 8192
+    chunk-data-cache-limit: 32678
+    # Changes the maximum view distance for the server, allowing clients to have render distances higher than 32
+    max-view-distance: 32
+    # Modifies what algorithm the chunk system will use to define thread counts. values: MOONRISE, C2ME, C2ME_AGGRESSIVE
+    chunk-worker-algorithm: C2ME
+    # Sets the priority of the thread pool used for chunk generation
+    thread-pool-priority: 6
+    # Smoothens the bedrock layer at the bottom of overworld, and on the top of nether during the world generation.
+    smooth-bedrock-layer: false
+    experimental:
+      # Whether to use density function compiler to accelerate world generation
+      # 
+      # Density function: https://minecraft.wiki/w/Density_function
+      # 
+      # This functionality compiles density functions from world generation
+      # datapacks (including vanilla generation) to JVM bytecode to increase
+      # performance by allowing JVM JIT to better optimize the code.
+      # All functions provided by vanilla are implemented.
+      # 
+      # Please test if this optimization actually benefits your server, as
+      # it can sometimes slow down chunk performance than speed it up.
+      enable-density-function-compiler: false
+      # Enables a port of the mod StructureLayoutOptimizer, which optimizes general Jigsaw structure generation
+      enable-structure-layout-optimizer: true
+      # Whether to use an alternative strategy to make structure layouts generate slightly even faster than
+      # the default optimization this mod has for template pool weights. This alternative strategy works by
+      # changing the list of pieces that structures collect from the template pool to not have duplicate entries.
+      # 
+      # This will not break the structure generation, but it will make the structure layout different than
+      # if this config was off (breaking vanilla seed parity). The cost of speed may be worth it in large
+      # modpacks where many structure mods are using very high weight values in their template pools.
+      deduplicate-shuffled-template-pool-element-list: false
+  lag-compensation:
+    # Improves the player experience when TPS is low
+    enabled: true
+    block-entity-acceleration: false
+    block-breaking-acceleration: true
+    eating-acceleration: true
+    potion-effect-acceleration: true
+    fluid-acceleration: true
+    pickup-acceleration: true
+    portal-acceleration: true
+    time-acceleration: true
+    random-tick-speed-acceleration: true
+```

@@ -1,0 +1,53 @@
+---
+icon: Table
+title: Regionized Chunk Ticking
+description: More info about a regionized chunk ticking system. 
+---
+
+<Callout type='info'>
+    This feature was originally took from [CanvasMC](https://github.com/CraftCanvasMC/Canvas), all credits go to them for the original implementation.
+</Callout>
+
+## Basics
+
+Regionized chunk ticking basically means that different areas of the world are ticked at the same time instead of one after another. 
+
+
+This concept may sound similar to another server software called [Folia](https://github.com/PaperMC/Folia). While both approaches share the same core idea, their implementations differ significantly. 
+If you're interested in learning about Folia's approach, you can check out [their documentation](https://docs.papermc.io/folia/reference/region-logic)!
+
+DivineMC's RCT implementation is much simpler. Each tick, all currently active chunks are compiled and then divided into as many non-connected groups as possible. 
+Once these groups are formed, the server processes them simultaneously instead of ticking them sequentially.
+While this approach is not as fast as Folia's, it provides better compatibility with existing plugins.
+
+<Callout type='warn'>
+    Additionally, RCT may cause compatibility issues with some plugins. If something breaks, try disabling RCT first!
+</Callout>
+
+## Technical Details
+
+Regionized Chunk Ticking is actually simpler than you might expect. We mainly had to solve two problems.
+
+### Grouping Chunks
+
+For the first challenge, the existing code was already structured to pass a list of chunks to a separate function for ticking. 
+We simply intercepted that list and split it into groups!
+The algorithm used for this task is Depth-first Search (DFS), executed from scratch every tick.
+
+DFS recursively processes each chunk, adding it to a group until no more connected and unvisited chunks remain. 
+Then, it moves to the next unvisited chunk and repeats the process until all chunks have been assigned to groups.
+By storing these groups in a list, we successfully separate the original list into multiple isolated chunk groups!
+
+### Ticking Chunks
+
+Parallel ticking often introduces complications, but our grouping method eliminates most risks.
+Since touching chunks are always in the same group, all ticked regions are guaranteed to have at least one chunk of space between them. 
+Additionally, because regions are rebuilt every tick, interactions only need to be considered within the current tick.
+There are very few, if any, cases where separate, non-connected chunks interact within the same tick. As long as those edge cases are accounted for, parallelization is safe!
+
+### DivineMC vs Folia
+
+If you're familiar with Folia, you may notice a key difference in RCT behavior. 
+In Folia, each region ticks independently, similar to how DivineMC handles different worlds separately. This means that if one region lags, the others remain unaffected.
+DivineMC, however, waits for all regions to finish processing before moving on to the next tick. 
+This design choice ensures stability since regions are rebuilt every tick. If the server didn’t wait for all regions to complete, some chunks could be ticked twice (or not at all) within the same tick cycle.

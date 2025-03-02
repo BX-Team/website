@@ -10,6 +10,10 @@
     "getting-started/installation",
     "getting-started/plugins",
 
+    "---Features---",
+    "features/parallel-world-ticking",
+    "features/regionized-chunk-ticking",
+
     "---Reference---",
     "reference/configuration",
 
