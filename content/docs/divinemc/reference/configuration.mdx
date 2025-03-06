@@ -34,7 +34,7 @@ Configuration values change frequently at times. It is possible for the informat
 # 
 # Discord: https://discord.gg/p7cxhw7E2M
 # Docs: https://bxteam.org/docs/divinemc
-# New builds: https://github.com/BX-Team/DivineMC/releases/latest
+# Downloads: https://github.com/BX-Team/DivineMC/releases
 
 world-settings:
   default:
@@ -48,29 +48,22 @@ world-settings:
         firework:
           disable-saving: false
     unsupported-features:
+      # Enables or disables the fix of MC-67 bug: https://bugs-legacy.mojang.com/browse/MC-67
       allow-entity-portal-with-passenger: true
+      # Bring back MC-59471, MC-129055 on 1.21.2+, which fixed in 1.21.2 snapshots 24w33a and 24w36a
+      allow-tripwire-dupe: false
 version: 5
 settings:
-  virtual-threads:
-    # Enables use of virtual threads that was added in Java 21
-    enabled: false
-    # Uses virtual threads for the Bukkit scheduler.
-    bukkit-scheduler: false
-    # Uses virtual threads for the Chat scheduler.
-    chat-scheduler: false
-    # Uses virtual threads for the Authenticator scheduler.
-    authenticator-scheduler: false
-    # Uses virtual threads for the Tab Complete scheduler.
-    tab-complete-scheduler: false
-    # Uses virtual threads for the MCUtil async executor.
-    async-executor: false
-    # Uses virtual threads for the Async Command Builder Thread Pool.
-    command-builder-scheduler: false
+  # Parallel World Ticking executes each world’s tick in a separate thread while ensuring that all worlds complete their tick before the next cycle begins.
+  # 
+  # Read more info about this feature at https://bxteam.org/docs/divinemc/features/parallel-world-ticking
   parallel-world-ticking:
     thread-count: 4
     log-container-creation-stacktraces: false
   regionized-chunk-ticking:
-    # Enables regionized chunk ticking. This feature is similar to Folia
+    # Enables regionized chunk ticking, similar to like Folia works.
+    # 
+    # Read more info about this feature at https://bxteam.org/docs/divinemc/features/regionized-chunk-ticking
     enable: false
     # The amount of threads to allocate to regionized chunk ticking.
     executor-thread-count: 4
@@ -87,46 +80,6 @@ settings:
     max-threads: 1
     keepalive: 60
     queue-size: 0
-  tnt-optimization:
-    enable-faster-tnt-optimization: true
-    explosion-no-block-damage: false
-    tnt-random-range: -1.0
-  no-chat-reports:
-    # Enables or disables the No Chat Reports feature
-    enabled: false
-    # Should server include extra query data to help clients know that your server is secure
-    add-query-data: true
-    # Should the server convert all player messages to system messages
-    convert-to-game-message: true
-    debug-log: false
-    # Should the server require No Chat Reports on the client side
-    demand-on-client: false
-    # Message to send to the client when they are disconnected for not having No Chat Reports
-    disconnect-demand-on-client-message: You do not have No Chat Reports, and this
-      server is configured to require it on client!
-  misc:
-    skip-useless-secondary-poi-sensor: true
-    # Clumps experience orbs together to reduce entity count
-    clump-orbs: true
-    # Improves general gameplay experience of the player when the server is lagging, as they won't get lagged back (message 'moved too quickly')
-    ignore-moved-too-quickly-when-lagging: true
-    # Means ignoring messages like 'moved too quickly' and 'moved wrongly'
-    always-allow-weird-movement: true
-    update-suppression-crash-fix: true
-    # This feature is based on Secure Seed mod by Earthcomputer.
-    # 
-    # Terrain and biome generation remains the same, but all the ores and structures are generated with 1024-bit seed, instead of the usual 64-bit seed.
-    # This seed is almost impossible to crack, and there are no weird links between structures.
-    enable-secure-seed: false
-  async-pathfinding:
-    enable: true
-    max-threads: 2
-    keepalive: 60
-    queue-size: 0
-    # The policy to use when the queue is full and a new task is submitted.
-    # FLUSH_ALL: All pending tasks will be run on server thread.
-    # CALLER_RUNS: Newly submitted task will be run on server thread.
-    reject-policy: CALLER_RUNS
   chunk-generation:
     native-acceleration-enabled: true
     # Enables AVX512 support for natives-math optimizations
@@ -138,12 +91,23 @@ settings:
     chunk-data-cache-limit: 32678
     # Changes the maximum view distance for the server, allowing clients to have render distances higher than 32
     max-view-distance: 32
-    # Modifies what algorithm the chunk system will use to define thread counts. values: MOONRISE, C2ME, C2ME_AGGRESSIVE
+    # Modifies what algorithm the chunk system will use to define thread counts.
+    # Valid values:
+    #  - MOONRISE: Default algorithm, used by default in Paper
+    #  - C2ME: Algorithm used by C2ME (old)
+    #  - C2ME_NEW: Modern algorithm used by C2ME
     chunk-worker-algorithm: C2ME
     # Sets the priority of the thread pool used for chunk generation
     thread-pool-priority: 6
+    # This feature is based on Secure Seed mod by Earthcomputer.
+    # 
+    # Terrain and biome generation remains the same, but all the ores and structures are generated with 1024-bit seed, instead of the usual 64-bit seed.
+    # This seed is almost impossible to crack, and there are no weird links between structures.
+    enable-secure-seed: false
     # Smoothens the bedrock layer at the bottom of overworld, and on the top of nether during the world generation.
     smooth-bedrock-layer: false
+    # Fixes MC-258859, fixing slopes visual bug in biomes like Snowy Slopes, Frozen Peaks, Jagged Peaks, and including Terralith.
+    slopes-visual-fix: false
     experimental:
       # Whether to use density function compiler to accelerate world generation
       # 
@@ -167,6 +131,49 @@ settings:
       # if this config was off (breaking vanilla seed parity). The cost of speed may be worth it in large
       # modpacks where many structure mods are using very high weight values in their template pools.
       deduplicate-shuffled-template-pool-element-list: false
+  misc:
+    skip-useless-secondary-poi-sensor: true
+    # Clumps experience orbs together to reduce entity count
+    clump-orbs: true
+    # Improves general gameplay experience of the player when the server is lagging, as they won't get lagged back (message 'moved too quickly')
+    ignore-moved-too-quickly-when-lagging: true
+    # Means ignoring messages like 'moved too quickly' and 'moved wrongly'
+    always-allow-weird-movement: true
+    update-suppression-crash-fix: true
+  tnt-optimization:
+    enable-faster-tnt-optimization: true
+    explosion-no-block-damage: false
+    tnt-random-range: -1.0
+  async-chunk-sending:
+    # Enables chunk sending runs off-main thread.
+    enable: true
+    # Amount of threads to use for async chunk sending. (If use-virtual-threads is enabled, this will be ignored)
+    thread-count: 1
+    # Similar to the 'virtual-thread' options. This will use the virtual thread executor for chunk sending.
+    use-virtual-threads: false
+    # DivineMC have optimization patches that speed ups world generation,
+    # so chunk loading/generating may be faster and with this, server can spam a ton of chunk packets to the client on server join.
+    # This setting will limit the amount of chunk packets sent to the client per tick, allowing a smoother ping when sending chunks on join
+    # 
+    # Set to -1 to disable rate limiting (not recommended)
+    rate-limit-chunk-sends: 50
+  network:
+    # Prevents players being disconnected by 'disconnect.spam' when sending too many chat packets
+    disable-disconnect-spam: false
+    # Replaces ConcurrentLinkedQueue with ArrayDeque in Connection for better performance
+    # and also uses the Netty event loop to ensure thread safety.
+    # 
+    # Note: May increase the Netty thread usage
+    connection-flush-queue-rewrite: true
+  async-pathfinding:
+    enable: true
+    max-threads: 2
+    keepalive: 60
+    queue-size: 0
+    # The policy to use when the queue is full and a new task is submitted.
+    # FLUSH_ALL: All pending tasks will be run on server thread.
+    # CALLER_RUNS: Newly submitted task will be run on server thread.
+    reject-policy: CALLER_RUNS
   lag-compensation:
     # Improves the player experience when TPS is low
     enabled: true
@@ -179,4 +186,36 @@ settings:
     portal-acceleration: true
     time-acceleration: true
     random-tick-speed-acceleration: true
+  no-chat-reports:
+    # Enables or disables the No Chat Reports feature
+    enabled: false
+    # Should server include extra query data to help clients know that your server is secure
+    add-query-data: true
+    # Should the server convert all player messages to system messages
+    convert-to-game-message: true
+    debug-log: false
+    # Should the server require No Chat Reports on the client side
+    demand-on-client: false
+    # Message to send to the client when they are disconnected for not having No Chat Reports
+    disconnect-demand-on-client-message: You do not have No Chat Reports, and this
+      server is configured to require it on client!
+  virtual-threads:
+    # Enables use of virtual threads that was added in Java 21
+    enabled: false
+    # Uses virtual threads for the Bukkit scheduler.
+    bukkit-scheduler: false
+    # Uses virtual threads for the Chat scheduler.
+    chat-scheduler: false
+    # Uses virtual threads for the Authenticator scheduler.
+    authenticator-scheduler: false
+    # Uses virtual threads for the Tab Complete scheduler.
+    tab-complete-scheduler: false
+    # Uses virtual threads for the MCUtil async executor.
+    async-executor: false
+    # Uses virtual threads for the Async Command Builder Thread Pool.
+    command-builder-scheduler: false
+    # Uses virtual threads for the Profile Lookup Pool, that is used for fetching player profiles.
+    profile-lookup-pool: false
+    # Uses virtual threads for the server text filter pool.
+    server-text-filter-pool: false
 ```
