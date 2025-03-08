@@ -11,8 +11,7 @@ export const buttonVariants = cva(
         primary: 'bg-fd-primary text-fd-primary-foreground hover:bg-fd-primary/80',
         outline: 'hover:bg-fd-accent hover:text-fd-accent-foreground border',
         ghost: 'hover:bg-fd-accent hover:text-fd-accent-foreground',
-        secondary:
-          'bg-fd-secondary text-fd-secondary-foreground hover:bg-fd-accent hover:text-fd-accent-foreground border',
+        secondary: 'bg-neutral-800 text-neutral-50 hover:bg-neutral-800/80',
       },
       size: {
         default: 'h-10 px-5 py-2',
