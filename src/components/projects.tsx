@@ -31,7 +31,7 @@ const projects: Project[] = [
     name: 'DivineMC',
     description:
       'A high-performance Purpur fork focused on maximizing server performance while maintaining plugin compatibility.',
-    downloadUrl: '/downloads/divinemct',
+    downloadUrl: '/downloads/divinemc',
     docUrl: '/docs/divinemc',
     sourceUrl: 'https://github.com/BX-Team/DivineMC',
   },
