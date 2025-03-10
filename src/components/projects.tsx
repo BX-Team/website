@@ -2,6 +2,12 @@ import { BookOpen, Download, Github } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 type Project = {
   name: string;
@@ -10,6 +16,19 @@ type Project = {
   docUrl: string;
   sourceUrl: string;
 };
+
+function parseDownloadLinks(downloadUrl: string) {
+  const parts = downloadUrl.split(';').map((str) => str.trim());
+  const regex = /\[([^\]]+)]\(([^)]+)\)/;
+  return parts.map((part) => {
+    const match = part.match(regex);
+    if (match) {
+      return { label: match[1], url: match[2] };
+    } else {
+      return { label: 'Download', url: part };
+    }
+  });
+}
 
 const projects: Project[] = [
   {
@@ -31,13 +50,16 @@ const projects: Project[] = [
     name: 'DivineMC',
     description:
       'A high-performance Purpur fork focused on maximizing server performance while maintaining plugin compatibility.',
-    downloadUrl: '/downloads/divinemc',
+    downloadUrl:
+      '[GitHub](https://github.com/BX-Team/DivineMC/releases);[MCJars](https://mcjars.app/DIVINEMC/versions)',
     docUrl: '/docs/divinemc',
     sourceUrl: 'https://github.com/BX-Team/DivineMC',
   },
 ];
 
 function ProjectCard({ name, description, downloadUrl, docUrl, sourceUrl }: Project) {
+  const downloadLinks = parseDownloadLinks(downloadUrl);
+
   return (
     <Card
       className='flex flex-col items-start justify-between p-8 transition-all hover:bg-neutral-800/50 hover:ring-1 hover:ring-neutral-700 md:flex-row md:items-center'
@@ -48,18 +70,45 @@ function ProjectCard({ name, description, downloadUrl, docUrl, sourceUrl }: Proj
         <p className='mt-4 text-base text-neutral-300'>{description}</p>
       </div>
       <div className='mt-6 flex flex-wrap gap-3 md:mt-0 md:ml-6'>
-        <Button asChild color='primary' size='sm'>
-          <a
-            href={downloadUrl}
-            target='_self'
-            rel='noopener noreferrer'
-            aria-label={`Download ${name}`}
-            className='flex items-center'
-          >
-            <Download className='mr-1 h-4 w-4' />
-            <span>Download</span>
-          </a>
-        </Button>
+        {downloadLinks.length > 1 ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button color='primary' size='sm'>
+                <Download className='mr-1 h-4 w-4' />
+                <span>Download</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {downloadLinks.map((link, index) => (
+                <DropdownMenuItem key={index}>
+                  <a
+                    href={link.url}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    aria-label={`Download ${link.label} for ${name}`}
+                    className='flex items-center'
+                  >
+                    {link.label}
+                  </a>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <Button asChild color='primary' size='sm'>
+            <a
+              href={downloadLinks[0].url}
+              target='_self'
+              rel='noopener noreferrer'
+              aria-label={`Download ${name}`}
+              className='flex items-center'
+            >
+              <Download className='mr-1 h-4 w-4' />
+              <span>{downloadLinks[0].label}</span>
+            </a>
+          </Button>
+        )}
+
         <Button asChild color='secondary' size='sm'>
           <a
             href={docUrl}
