@@ -17,7 +17,7 @@
         "axios": "^1.7.9",
         "class-variance-authority": "^0.7.1",
         "framer-motion": "^12.4.2",
-        "fumadocs-core": "15.0.17",
+        "fumadocs-core": "15.0.18",
         "fumadocs-mdx": "11.5.6",
         "fumadocs-ui": "15.0.17",
         "lucide-react": "^0.482.0",
@@ -775,7 +775,7 @@
 
     "framer-motion": ["framer-motion@12.4.4", "", { "dependencies": { "motion-dom": "^12.4.4", "motion-utils": "^12.0.0", "tslib": "^2.4.0" }, "peerDependencies": { "@emotion/is-prop-valid": "*", "react": "^18.0.0 || ^19.0.0", "react-dom": "^18.0.0 || ^19.0.0" }, "optionalPeers": ["@emotion/is-prop-valid", "react", "react-dom"] }, "sha512-JWkVwbJBgVkeZHNcnk8ififgwTF+5de9wbJnTLI+g9YqaGo75Xd5uRVDm9FR8chqRDOKcXv/71f40CGescYVmg=="],
 
-    "fumadocs-core": ["fumadocs-core@15.0.17", "", { "dependencies": { "@formatjs/intl-localematcher": "^0.6.0", "@orama/orama": "^3.1.3", "@shikijs/rehype": "^3.2.1", "@shikijs/transformers": "^3.2.1", "github-slugger": "^2.0.0", "hast-util-to-estree": "^3.1.3", "hast-util-to-jsx-runtime": "^2.3.6", "image-size": "^2.0.1", "negotiator": "^1.0.0", "react-remove-scroll": "^2.6.3", "remark": "^15.0.0", "remark-gfm": "^4.0.1", "scroll-into-view-if-needed": "^3.1.0", "shiki": "^3.2.1", "unist-util-visit": "^5.0.0" }, "peerDependencies": { "@oramacloud/client": "1.x.x || 2.x.x", "algoliasearch": "4.24.0", "next": "14.x.x || 15.x.x", "react": "18.x.x || 19.x.x", "react-dom": "18.x.x || 19.x.x" }, "optionalPeers": ["@oramacloud/client", "algoliasearch", "next", "react", "react-dom"] }, "sha512-bj9nVvQKK59bcS7L/x06Kg0W6zRqE8ZzztFf4h8DtQeeppco86E5uWkSD5FPy4jBXRJATNu1cZ3rPsNXV08psw=="],
+    "fumadocs-core": ["fumadocs-core@15.0.18", "", { "dependencies": { "@formatjs/intl-localematcher": "^0.6.0", "@orama/orama": "^3.1.3", "@shikijs/rehype": "^3.2.1", "@shikijs/transformers": "^3.2.1", "github-slugger": "^2.0.0", "hast-util-to-estree": "^3.1.3", "hast-util-to-jsx-runtime": "^2.3.6", "image-size": "^2.0.1", "negotiator": "^1.0.0", "react-remove-scroll": "^2.6.3", "remark": "^15.0.0", "remark-gfm": "^4.0.1", "scroll-into-view-if-needed": "^3.1.0", "shiki": "^3.2.1", "unist-util-visit": "^5.0.0" }, "peerDependencies": { "@oramacloud/client": "1.x.x || 2.x.x", "algoliasearch": "4.24.0", "next": "14.x.x || 15.x.x", "react": "18.x.x || 19.x.x", "react-dom": "18.x.x || 19.x.x" }, "optionalPeers": ["@oramacloud/client", "algoliasearch", "next", "react", "react-dom"] }, "sha512-rIr2GHrYIxZ0mLkylBUegqH8rUc3pCb17D6a8u7vspSNDly7x0Qd0/7nkrhEljZrCUqfKt5tSSLp9blpG4Vevg=="],
 
     "fumadocs-mdx": ["fumadocs-mdx@11.5.6", "", { "dependencies": { "@mdx-js/mdx": "^3.1.0", "@standard-schema/spec": "^1.0.0", "chokidar": "^4.0.3", "cross-spawn": "^7.0.6", "esbuild": "^0.25.0", "estree-util-value-to-estree": "^3.3.2", "fast-glob": "^3.3.3", "gray-matter": "^4.0.3", "unist-util-visit": "^5.0.0", "zod": "^3.24.2" }, "peerDependencies": { "@fumadocs/mdx-remote": "^1.2.0", "fumadocs-core": "^14.0.0 || ^15.0.0", "next": "14.x.x || 15.x.x" }, "optionalPeers": ["@fumadocs/mdx-remote"], "bin": { "fumadocs-mdx": "bin.js" } }, "sha512-XhzfR7WsI4qO9EdmRZQc/mRxMkSY2HQ7Fg2fv7ia4R3LN0Km7X8KSEry9lU2c0XmSHcospniW5o1FFgsAq4+mQ=="],
 
