@@ -21,7 +21,7 @@ which can be obtained in (most) package managers such as `apt` (Debian / Ubuntu;
 you will most likely use this for WSL), `homebrew` (macOS / Linux), and more:
 
 - `git` (package `git` everywhere);
-- A Java 21 or later JDK (packages vary, use Google/DuckDuckGo/etc.).
+- A Java 22 or later JDK (packages vary, use Google/DuckDuckGo/etc.).
     - [Adoptium](https://adoptium.net/) has builds for most operating systems.
     - DivineMC requires JDK 21 to build, however, makes use of Gradle's
       [Toolchains](https://docs.gradle.org/current/userguide/toolchains.html)
@@ -36,11 +36,11 @@ If you're compiling with Docker, you can use Adoptium's
 [`eclipse-temurin`](https://hub.docker.com/_/eclipse-temurin/) images like so:
 
 ```console
-# docker run -it -v "$(pwd)":/data --rm eclipse-temurin:21.0.5_11-jdk bash
+# docker run -it -v "$(pwd)":/data --rm eclipse-temurin:22.0.2_9-jdk bash
 Pulling image...
 
 root@abcdefg1234:/# javac -version
-javac 21.0.5
+javac 22.0.2
 ```
 
 ## Understanding Patches
@@ -344,9 +344,8 @@ possible.
 ```java
 public static boolean saveEmptyScoreboardTeams = false;
 private static void saveEmptyScoreboardTeams() {
-    // This is called automatically!
-    // The name also doesn't matter.
-    saveEmptyScoreboardTeams = getBoolean("settings.save-empty-scoreboard-teams", false);
+    saveEmptyScoreboardTeams = getBoolean("settings.save-empty-scoreboard-teams", saveEmptyScoreboardTeams,
+          "Example config option with comments");
 }
 ```
 
@@ -360,7 +359,7 @@ if (!DivineConfig.saveEmptyScoreboardTeams) {
 
 It is often preferred that you use the fully qualified name for the
 configuration class when accessing it, like so:
-`space.bxteam.divinemc.DivineConfig.valueHere`.  
+`org.bxteam.divinemc.DivineConfig.valueHere`.  
 If this is not done, a developer for DivineMC might fix that for you before
 merging, but it's always nice if you make it a habit where you only need 1-2
 lines changed.
@@ -370,9 +369,8 @@ lines changed.
 ```java
 public boolean useInhabitedTime = true;
 private void useInhabitedTime() {
-    // This is called automatically!
-    // The name also doesn't matter.
-    useInhabitedTime = getBoolean("use-chunk-inhabited-timer", true);
+    useInhabitedTime = getBoolean("use-chunk-inhabited-timer", useInhabitedTime,
+          "Example config option with comments");
 }
 ```
 
