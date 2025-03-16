@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     <DocsLayout
       tree={source.pageTree}
       {...baseOptions}
-      disableThemeSwitch={true}
+      themeSwitch={{ enabled: false }}
       nav={{
         title: (
           <div className='flex items-center gap-2'>

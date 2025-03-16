@@ -26,7 +26,15 @@ export interface HomeLayoutProps extends BaseLayoutProps, HTMLAttributes<HTMLEle
 }
 
 export function HomeLayout(props: HomeLayoutProps) {
-  const { nav, links, githubUrl, i18n: _i18n, disableThemeSwitch: _disableThemeSwitch, ...rest } = props;
+  const {
+    nav,
+    links,
+    githubUrl,
+    i18n: _i18n,
+    themeSwitch: _themeSwitch,
+    disableThemeSwitch: _disableThemeSwitch,
+    ...rest
+  } = props;
 
   const finalLinks = getLinks(links, githubUrl);
 
@@ -46,7 +54,7 @@ function Header({
   nav: { enableSearch = true, ...nav } = {},
   i18n = false,
   finalLinks,
-  disableThemeSwitch,
+  themeSwitch,
 }: HomeLayoutProps & {
   finalLinks: LinkItemType[];
 }) {
@@ -71,7 +79,7 @@ function Header({
             <LargeSearchToggle className='w-full max-w-[240px] max-lg:hidden' hideIfDisabled />
           </>
         ) : null}
-        {!disableThemeSwitch ? <ThemeToggle className='max-lg:hidden' /> : null}
+        {replaceOrDefault(themeSwitch, <ThemeToggle className='max-lg:hidden' mode={themeSwitch?.mode} />)}
         {i18n ? (
           <LanguageToggle className='max-lg:hidden'>
             <Languages className='size-5' />
@@ -104,7 +112,7 @@ function Header({
                   <ChevronDown className='text-fd-muted-foreground size-3' />
                 </LanguageToggle>
               ) : null}
-              {!disableThemeSwitch ? <ThemeToggle /> : null}
+              {replaceOrDefault(themeSwitch, <ThemeToggle mode={themeSwitch?.mode} />)}
             </div>
           </MenuContent>
         </Menu>

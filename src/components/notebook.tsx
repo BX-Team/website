@@ -31,7 +31,7 @@ import { LargeSearchToggle, SearchToggle } from './layout/search-toggle';
 import { ThemeToggle } from './layout/theme-toggle';
 import { BaseLinkItem, type LinkItemType } from './links';
 import { LayoutTab, LayoutTabs, Navbar, NavbarSidebarTrigger, SidebarLayoutTab } from './notebook.client';
-import { type BaseLayoutProps, getLinks } from './shared';
+import { type BaseLayoutProps, getLinks, replaceOrDefault } from './shared';
 import { buttonVariants } from './ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 
@@ -60,6 +60,7 @@ export function DocsLayout({
     ...sidebar
   } = {},
   i18n = false,
+  themeSwitch,
   ...props
 }: DocsLayoutProps) {
   checkPageTree(props.tree);
@@ -148,7 +149,10 @@ export function DocsLayout({
                   <Languages className='text-fd-muted-foreground size-5' />
                 </LanguageToggle>
               ) : null}
-              {!props.disableThemeSwitch ? <ThemeToggle className='md:hidden' mode='light-dark-system' /> : null}
+              {replaceOrDefault(
+                themeSwitch,
+                <ThemeToggle className='md:hidden' mode={themeSwitch?.mode ?? 'light-dark-system'} />,
+              )}
               {sidebarFooter}
             </SidebarFooter>
           </Aside>

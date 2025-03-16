@@ -426,6 +426,7 @@ export function SidebarPageTree(props: { components?: Partial<SidebarComponents>
     }
 
     return <Fragment key={root.$id}>{renderSidebarList(root.children, 1)}</Fragment>;
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- root.id is enough
   }, [props.components, root.$id]);
 }
 
