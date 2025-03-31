@@ -2,12 +2,8 @@ import type { PageTree } from 'fumadocs-core/server';
 
 import type { FC, ReactNode } from 'react';
 
-import { notFound } from 'next/navigation';
-
-import { cn } from '../../lib/cn';
-import type { Option } from '../layout/root-toggle';
-import { BaseLinkItem, type LinkItemType } from '../links';
-import { buttonVariants } from '../ui/button';
+import { cn } from '../../../lib/cn';
+import type { Option } from '../../layout/root-toggle';
 import {
   SidebarFolder,
   SidebarFolderContent,
@@ -15,7 +11,9 @@ import {
   SidebarFolderTrigger,
   SidebarItem,
   type SidebarProps,
-} from './sidebar';
+} from '../../layout/sidebar';
+import { buttonVariants } from '../../ui/button';
+import { BaseLinkItem, type LinkItemType } from '../links';
 
 export const layoutVariables = {
   '--fd-layout-offset': 'max(calc(50vw - var(--fd-layout-width) / 2), 0px)',
@@ -26,9 +24,6 @@ export interface TabOptions {
 }
 
 export interface SidebarOptions extends SidebarProps {
-  enabled: boolean;
-  component: ReactNode;
-
   collapsible?: boolean;
   components?: Partial<SidebarComponents>;
 
@@ -106,8 +101,7 @@ export function SidebarLinkItem({ item, ...props }: { item: LinkItemType; classN
 }
 
 export function checkPageTree(passed: unknown) {
-  if (!passed) notFound();
-  if (typeof passed === 'object' && 'children' in passed && Array.isArray(passed.children)) return;
+  if (passed && typeof passed === 'object' && 'children' in passed && Array.isArray(passed.children)) return;
 
   throw new Error(
     'You passed an invalid page tree to `<DocsLayout />`. Check your usage in layout.tsx if you have enabled i18n.',
@@ -138,16 +132,15 @@ function getSidebarTabs(pageTree: PageTree.Root, { transform = defaultTransform 
     const results: Option[] = [];
 
     if (node.root) {
-      const index = node.index ?? node.children.at(0);
+      const urls = getFolderUrls(node);
 
-      if (index?.type === 'page') {
+      if (urls.size > 0) {
         const option: Option = {
-          url: index.url,
+          url: urls.values().next().value ?? '',
           title: node.name,
           icon: node.icon,
           description: node.description,
-
-          urls: getFolderUrls(node, new Set()),
+          urls,
         };
 
         const mapped = transform ? transform(option, node) : option;
@@ -165,11 +158,11 @@ function getSidebarTabs(pageTree: PageTree.Root, { transform = defaultTransform 
   return findOptions(pageTree as PageTree.Folder);
 }
 
-function getFolderUrls(folder: PageTree.Folder, output: Set<string>): Set<string> {
+function getFolderUrls(folder: PageTree.Folder, output: Set<string> = new Set()): Set<string> {
   if (folder.index) output.add(folder.index.url);
 
   for (const child of folder.children) {
-    if (child.type === 'page') output.add(child.url);
+    if (child.type === 'page' && !child.external) output.add(child.url);
     if (child.type === 'folder') getFolderUrls(child, output);
   }
 

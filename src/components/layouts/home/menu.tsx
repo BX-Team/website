@@ -5,15 +5,15 @@ import Link from 'fumadocs-core/link';
 
 import type { ComponentPropsWithoutRef } from 'react';
 
-import { cn } from '../../lib/cn';
-import { BaseLinkItem, type LinkItemType } from '../links';
-import { buttonVariants } from '../ui/button';
+import { cn } from '../../../lib/cn';
+import { buttonVariants } from '../../ui/button';
 import {
   NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuTrigger,
-} from '../ui/navigation-menu';
+} from '../../ui/navigation-menu';
+import { BaseLinkItem, type LinkItemType } from '../links';
 
 const menuItemVariants = cva('', {
   variants: {

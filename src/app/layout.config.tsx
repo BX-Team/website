@@ -1,9 +1,9 @@
+import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import { Cloudy, Cuboid, DollarSign, Drill } from 'lucide-react';
 
 import Image from 'next/image';
 
 import { DiscordIcon } from '@/components/icon/discord';
-import type { BaseLayoutProps } from '@/components/shared';
 import { siteConfig } from '@/config/site';
 
 export const baseOptions: BaseLayoutProps = {

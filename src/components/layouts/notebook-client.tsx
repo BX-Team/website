@@ -1,21 +1,20 @@
 'use client';
 
+import { usePathname } from 'fumadocs-core/framework';
 import Link from 'fumadocs-core/link';
 import { SidebarTrigger } from 'fumadocs-core/sidebar';
-import { useSidebar } from 'fumadocs-ui/provider';
+import { useNav } from 'fumadocs-ui/contexts/layout';
+import { useSidebar } from 'fumadocs-ui/contexts/sidebar';
 import { Menu, X } from 'lucide-react';
 
 import { type ButtonHTMLAttributes, type HTMLAttributes } from 'react';
 
-import { usePathname } from 'next/navigation';
+import { cn } from '../../lib/cn';
+import { isActive } from '../../lib/is-active';
+import type { Option } from '../layout/root-toggle';
+import { buttonVariants } from '../ui/button';
 
-import { cn } from '../lib/cn';
-import { isActive } from '../lib/is-active';
-import { useNav } from './layout/nav';
-import type { Option } from './layout/root-toggle';
-import { buttonVariants } from './ui/button';
-
-export function Navbar(props: HTMLAttributes<HTMLElement>) {
+export function Navbar({ mode, ...props }: HTMLAttributes<HTMLElement> & { mode: 'top' | 'auto' }) {
   const { open, collapsed } = useSidebar();
   const { isTransparent } = useNav();
 
@@ -24,18 +23,11 @@ export function Navbar(props: HTMLAttributes<HTMLElement>) {
       id='nd-subnav'
       {...props}
       className={cn(
-        'fixed inset-x-0 top-(--fd-banner-height) z-10 pe-(--fd-layout-offset) backdrop-blur-lg transition-colors',
+        'fixed inset-x-0 top-(--fd-banner-height) z-10 px-(--fd-layout-offset) backdrop-blur-lg transition-colors',
         (!isTransparent || open) && 'bg-fd-background/80',
+        mode === 'auto' && !collapsed && 'ps-[calc(var(--fd-layout-offset)+var(--fd-sidebar-width))]',
         props.className,
       )}
-      style={
-        {
-          paddingInlineStart: collapsed
-            ? 'var(--fd-layout-offset)'
-            : 'calc(var(--fd-layout-offset) + var(--fd-sidebar-width))',
-          ...props.style,
-        } as object
-      }
     >
       {props.children}
     </header>

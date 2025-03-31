@@ -3,13 +3,12 @@
 import type { NavigationMenuContentProps, NavigationMenuTriggerProps } from '@radix-ui/react-navigation-menu';
 import { type VariantProps, cva } from 'class-variance-authority';
 import Link, { type LinkProps } from 'fumadocs-core/link';
+import { useNav } from 'fumadocs-ui/contexts/layout';
 
 import { type ComponentProps, type HTMLAttributes, useState } from 'react';
 
-import { cn } from '../../lib/cn';
-import { useNav } from '../layout/nav';
-import { BaseLinkItem } from '../links';
-import { buttonVariants } from '../ui/button';
+import { cn } from '../../../lib/cn';
+import { buttonVariants } from '../../ui/button';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -18,7 +17,8 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   NavigationMenuViewport,
-} from '../ui/navigation-menu';
+} from '../../ui/navigation-menu';
+import { BaseLinkItem } from '../links';
 
 const navItemVariants = cva(
   'text-fd-muted-foreground hover:text-fd-accent-foreground data-[active=true]:text-fd-primary inline-flex items-center gap-1 p-2 transition-colors [&_svg]:size-4',

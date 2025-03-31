@@ -3,35 +3,32 @@
 import type { CollapsibleContentProps, CollapsibleTriggerProps } from '@radix-ui/react-collapsible';
 import { type ScrollAreaProps } from '@radix-ui/react-scroll-area';
 import { cva } from 'class-variance-authority';
+import { usePathname } from 'fumadocs-core/framework';
 import Link, { type LinkProps } from 'fumadocs-core/link';
 import type { PageTree } from 'fumadocs-core/server';
 import * as Base from 'fumadocs-core/sidebar';
 import { useOnChange } from 'fumadocs-core/utils/use-on-change';
-import { useSidebar } from 'fumadocs-ui/provider';
-import { useTreeContext, useTreePath } from 'fumadocs-ui/provider';
-import { ChevronDown, ExternalLink, SidebarIcon } from 'lucide-react';
+import { useSidebar } from 'fumadocs-ui/contexts/sidebar';
+import { useTreeContext, useTreePath } from 'fumadocs-ui/contexts/tree';
+import { ChevronDown, ExternalLink } from 'lucide-react';
 
 import {
   type ButtonHTMLAttributes,
   Fragment,
   type HTMLAttributes,
-  type PointerEventHandler,
   type ReactNode,
   createContext,
-  useCallback,
   useContext,
   useMemo,
   useRef,
   useState,
 } from 'react';
 
-import { usePathname } from 'next/navigation';
-
 import { cn } from '../../lib/cn';
 import { isActive } from '../../lib/is-active';
+import type { SidebarComponents } from '../layouts/docs/shared';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible';
 import { ScrollArea, ScrollViewport } from '../ui/scroll-area';
-import type { SidebarComponents } from './shared';
 
 export interface SidebarProps extends HTMLAttributes<HTMLElement> {
   /**
@@ -85,42 +82,39 @@ export function CollapsibleSidebar(props: SidebarProps) {
     closeTimeRef.current = Date.now() + 150;
   });
 
-  const onEnter: PointerEventHandler = useCallback((e) => {
-    if (e.pointerType === 'touch' || closeTimeRef.current > Date.now()) return;
-    window.clearTimeout(timerRef.current);
-    setHover(true);
-  }, []);
-
-  const onLeave: PointerEventHandler = useCallback((e) => {
-    if (e.pointerType === 'touch') return;
-    window.clearTimeout(timerRef.current);
-
-    timerRef.current = window.setTimeout(
-      () => {
-        setHover(false);
-        closeTimeRef.current = Date.now() + 150;
-      },
-      Math.min(e.clientX, document.body.clientWidth - e.clientX) > 100 ? 0 : 500,
-    );
-  }, []);
-
   return (
     <Sidebar
       {...props}
-      onPointerEnter={collapsed ? onEnter : undefined}
-      onPointerLeave={collapsed ? onLeave : undefined}
+      onPointerEnter={(e) => {
+        if (!collapsed || e.pointerType === 'touch' || closeTimeRef.current > Date.now()) return;
+        window.clearTimeout(timerRef.current);
+        setHover(true);
+      }}
+      onPointerLeave={(e) => {
+        if (!collapsed || e.pointerType === 'touch') return;
+        window.clearTimeout(timerRef.current);
+
+        timerRef.current = window.setTimeout(
+          () => {
+            setHover(false);
+            closeTimeRef.current = Date.now() + 150;
+          },
+          Math.min(e.clientX, document.body.clientWidth - e.clientX) > 100 ? 0 : 500,
+        );
+      }}
       data-collapsed={collapsed}
       className={cn(
         'md:transition-all',
         collapsed &&
-          'md:-me-(--fd-sidebar-width) md:translate-x-[calc(var(--fd-sidebar-offset)*-1)] rtl:md:translate-x-(--fd-sidebar-offset)',
+          'md:-me-(--fd-sidebar-width) md:-translate-x-(--fd-sidebar-offset) rtl:md:translate-x-(--fd-sidebar-offset)',
         collapsed && hover && 'z-50 md:translate-x-0',
         collapsed && !hover && 'md:opacity-0',
         props.className,
       )}
       style={
         {
-          '--fd-sidebar-offset': 'calc(var(--fd-sidebar-width) - 20px)',
+          '--fd-sidebar-offset': 'calc(var(--fd-sidebar-width) - 6px)',
+          ...props.style,
         } as object
       }
     />
@@ -145,10 +139,9 @@ export function Sidebar({
     <Context.Provider value={context}>
       <Base.SidebarList
         id='nd-sidebar'
-        blockScrollingWidth={768} // md
         {...props}
         className={cn(
-          'bg-fd-card fixed top-[calc(var(--fd-banner-height)+var(--fd-nav-height))] z-30 text-sm md:sticky md:h-(--fd-sidebar-height)',
+          'bg-fd-card fixed top-[calc(var(--fd-banner-height)+var(--fd-nav-height))] z-20 text-sm md:sticky md:h-(--fd-sidebar-height)',
           'max-md:bg-fd-background/80 max-md:inset-x-0 max-md:bottom-0 max-md:text-[15px] max-md:backdrop-blur-lg max-md:data-[open=false]:invisible',
           props.className,
         )}
@@ -360,7 +353,7 @@ export function SidebarCollapseTrigger(props: ButtonHTMLAttributes<HTMLButtonEle
         setCollapsed((prev) => !prev);
       }}
     >
-      {props.children ?? <SidebarIcon />}
+      {props.children}
     </button>
   );
 }
@@ -426,8 +419,7 @@ export function SidebarPageTree(props: { components?: Partial<SidebarComponents>
     }
 
     return <Fragment key={root.$id}>{renderSidebarList(root.children, 1)}</Fragment>;
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- root.id is enough
-  }, [props.components, root.$id]);
+  }, [props.components, root]);
 }
 
 function PageTreeFolder({

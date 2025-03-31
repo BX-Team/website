@@ -1,20 +1,23 @@
 'use client';
 
-import { useSearchContext } from 'fumadocs-ui/provider';
-import { useI18n } from 'fumadocs-ui/provider';
+import { useI18n } from 'fumadocs-ui/contexts/i18n';
+import { useSearchContext } from 'fumadocs-ui/contexts/search';
 import { SearchIcon } from 'lucide-react';
 
 import { type ButtonHTMLAttributes } from 'react';
 
 import { cn } from '../../lib/cn';
-import { buttonVariants } from '../ui/button';
+import { type ButtonProps, buttonVariants } from '../ui/button';
 
 export function SearchToggle({
   hideIfDisabled,
+  size = 'icon',
+  color = 'ghost',
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement> & {
-  hideIfDisabled?: boolean;
-}) {
+}: ButtonHTMLAttributes<HTMLButtonElement> &
+  ButtonProps & {
+    hideIfDisabled?: boolean;
+  }) {
   const { setOpenSearch, enabled } = useSearchContext();
   if (hideIfDisabled && !enabled) return null;
 
@@ -23,8 +26,8 @@ export function SearchToggle({
       type='button'
       className={cn(
         buttonVariants({
-          size: 'icon',
-          color: 'ghost',
+          size,
+          color,
         }),
         props.className,
       )}

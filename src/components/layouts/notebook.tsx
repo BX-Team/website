@@ -1,20 +1,15 @@
+import Link from 'fumadocs-core/link';
 import type { PageTree } from 'fumadocs-core/server';
-import { TreeContextProvider } from 'fumadocs-ui/provider';
-import { type PageStyles, StylesProvider } from 'fumadocs-ui/provider';
-import { ChevronDown, Languages } from 'lucide-react';
+import { NavProvider, type PageStyles, StylesProvider } from 'fumadocs-ui/contexts/layout';
+import { TreeContextProvider } from 'fumadocs-ui/contexts/tree';
+import { ChevronDown, Languages, SidebarIcon } from 'lucide-react';
 
-import { Fragment, type HTMLAttributes } from 'react';
+import { Fragment, type HTMLAttributes, useMemo } from 'react';
 
-import Link from 'next/link';
-
-import { cn } from '../lib/cn';
-import {
-  SidebarLinkItem,
-  type SidebarOptions,
-  checkPageTree,
-  getSidebarTabsFromOptions,
-  layoutVariables,
-} from './docs/shared';
+import { cn } from '../../lib/cn';
+import { LanguageToggle } from '../layout/language-toggle';
+import { type Option, RootToggle } from '../layout/root-toggle';
+import { LargeSearchToggle, SearchToggle } from '../layout/search-toggle';
 import {
   CollapsibleSidebar,
   Sidebar,
@@ -23,17 +18,20 @@ import {
   SidebarHeader,
   SidebarPageTree,
   SidebarViewport,
-} from './docs/sidebar';
-import { LanguageToggle } from './layout/language-toggle';
-import { NavProvider, Title } from './layout/nav';
-import { type Option, RootToggle } from './layout/root-toggle';
-import { LargeSearchToggle, SearchToggle } from './layout/search-toggle';
-import { ThemeToggle } from './layout/theme-toggle';
+} from '../layout/sidebar';
+import { ThemeToggle } from '../layout/theme-toggle';
+import { buttonVariants } from '../ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import {
+  SidebarLinkItem,
+  type SidebarOptions,
+  checkPageTree,
+  getSidebarTabsFromOptions,
+  layoutVariables,
+} from './docs/shared';
 import { BaseLinkItem, type LinkItemType } from './links';
-import { LayoutTab, LayoutTabs, Navbar, NavbarSidebarTrigger, SidebarLayoutTab } from './notebook.client';
+import { LayoutTab, LayoutTabs, Navbar, NavbarSidebarTrigger, SidebarLayoutTab } from './notebook-client';
 import { type BaseLayoutProps, getLinks, replaceOrDefault } from './shared';
-import { buttonVariants } from './ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 
 export interface DocsLayoutProps extends BaseLayoutProps {
   tree: PageTree.Root;
@@ -66,9 +64,10 @@ export function DocsLayout({
   checkPageTree(props.tree);
   const navMode = nav.mode ?? 'auto';
   const links = getLinks(props.links ?? [], props.githubUrl);
+  const tabs = useMemo(() => getSidebarTabsFromOptions(tabOptions, props.tree) ?? [], [tabOptions, props.tree]);
+
   const Aside = sidebarCollapsible ? CollapsibleSidebar : Sidebar;
 
-  const tabs = getSidebarTabsFromOptions(tabOptions, props.tree) ?? [];
   const variables = cn(
     '[--fd-nav-height:calc(var(--spacing)*14)] [--fd-tocnav-height:36px] md:[--fd-sidebar-width:286px] xl:[--fd-toc-width:286px] xl:[--fd-tocnav-height:0px]',
     tabs.length > 0 && tabMode === 'navbar' && 'lg:[--fd-nav-height:calc(var(--spacing)*24)]',
@@ -121,7 +120,9 @@ export function DocsLayout({
                       }),
                       'text-fd-muted-foreground mb-auto',
                     )}
-                  />
+                  >
+                    <SidebarIcon />
+                  </SidebarCollapseTrigger>
                 </div>
               )}
               {nav.children}
@@ -173,28 +174,22 @@ export function DocsLayout({
 function DocsNavbar({
   sidebarCollapsible,
   links,
+  themeSwitch,
   nav = {},
   i18n,
   tabs,
 }: {
   nav: DocsLayoutProps['nav'];
   sidebarCollapsible: boolean;
-  i18n: boolean;
+  i18n: Required<DocsLayoutProps>['i18n'];
+  themeSwitch?: DocsLayoutProps['themeSwitch'];
   links: LinkItemType[];
   tabs: Option[];
 }) {
   const navMode = nav.mode ?? 'auto';
 
   return (
-    <Navbar
-      style={
-        navMode === 'top'
-          ? {
-              paddingInlineStart: 'var(--fd-layout-offset)',
-            }
-          : undefined
-      }
-    >
+    <Navbar mode={navMode}>
       <div className={cn('border-fd-foreground/10 flex h-14 flex-row border-b px-4', navMode === 'auto' && 'md:px-6')}>
         <div className={cn('flex flex-row items-center', navMode === 'top' && 'flex-1 pe-4')}>
           {sidebarCollapsible && navMode === 'auto' ? (
@@ -206,16 +201,16 @@ function DocsNavbar({
                 }),
                 'text-fd-muted-foreground -ms-1.5 me-2 data-[collapsed=false]:hidden max-md:hidden',
               )}
-            />
+            >
+              <SidebarIcon />
+            </SidebarCollapseTrigger>
           ) : null}
-          <Title
-            url={nav.url}
-            title={nav.title}
-            className={cn(
-              // show on sidebar on above md
-              navMode === 'auto' && 'md:hidden',
-            )}
-          />
+          <Link
+            href={nav.url ?? '/'}
+            className={cn('inline-flex items-center gap-2.5 font-semibold', navMode === 'auto' && 'md:hidden')}
+          >
+            {nav.title}
+          </Link>
         </div>
 
         <LargeSearchToggle
@@ -261,6 +256,10 @@ function DocsNavbar({
               <Languages className='text-fd-muted-foreground size-4.5' />
             </LanguageToggle>
           ) : null}
+          {replaceOrDefault(
+            themeSwitch,
+            <ThemeToggle className='ms-2 max-md:hidden' mode={themeSwitch?.mode ?? 'light-dark-system'} />,
+          )}
           {sidebarCollapsible && navMode === 'top' ? (
             <SidebarCollapseTrigger
               className={cn(
@@ -270,7 +269,9 @@ function DocsNavbar({
                 }),
                 'text-fd-muted-foreground ms-2 rounded-full max-md:hidden',
               )}
-            />
+            >
+              <SidebarIcon />
+            </SidebarCollapseTrigger>
           ) : null}
         </div>
       </div>
@@ -321,3 +322,5 @@ function NavbarLinkItem({ item, ...props }: { item: LinkItemType } & HTMLAttribu
     </BaseLinkItem>
   );
 }
+
+export { Navbar, NavbarSidebarTrigger };

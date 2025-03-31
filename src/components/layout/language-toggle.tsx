@@ -1,6 +1,6 @@
 'use client';
 
-import { useI18n } from 'fumadocs-ui/provider';
+import { useI18n } from 'fumadocs-ui/contexts/i18n';
 
 import { type ButtonHTMLAttributes, type HTMLAttributes } from 'react';
 

@@ -1,12 +1,11 @@
 'use client';
 
-import { useSidebar } from 'fumadocs-ui/provider';
+import { usePathname } from 'fumadocs-core/framework';
+import Link from 'fumadocs-core/link';
+import { useSidebar } from 'fumadocs-ui/contexts/sidebar';
 import { ChevronsUpDown } from 'lucide-react';
 
 import { type HTMLAttributes, type ReactNode, useMemo, useState } from 'react';
-
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 import { cn } from '../../lib/cn';
 import { isActive } from '../../lib/is-active';
@@ -63,7 +62,7 @@ export function RootToggle({
         <PopoverTrigger
           {...props}
           className={cn(
-            'hover:bg-fd-accent/50 hover:text-fd-accent-foreground flex flex-row items-center gap-2.5 rounded-lg py-1.5 ps-2 pe-4',
+            'hover:text-fd-accent-foreground flex flex-row items-center gap-2.5 rounded-lg py-1.5 ps-2 pe-4',
             props.className,
           )}
         >
@@ -95,7 +94,7 @@ export function RootToggle({
 function Item(props: Option) {
   return (
     <>
-      {props.icon}
+      <>{props.icon}</>
       <div className='flex-1 text-start'>
         <p className='text-sm font-medium'>{props.title}</p>
         {props.description ? <p className='text-fd-muted-foreground text-xs'>{props.description}</p> : null}

@@ -1,15 +1,15 @@
 import Link from 'fumadocs-core/link';
+import { NavProvider } from 'fumadocs-ui/contexts/layout';
 import { ChevronDown, Languages } from 'lucide-react';
 
 import { Fragment, type HTMLAttributes } from 'react';
 
-import { cn } from '../lib/cn';
+import { cn } from '../../lib/cn';
+import { LanguageToggle, LanguageToggleText } from '../layout/language-toggle';
+import { LargeSearchToggle, SearchToggle } from '../layout/search-toggle';
+import { ThemeToggle } from '../layout/theme-toggle';
 import { Menu, MenuContent, MenuLinkItem, MenuTrigger } from './home/menu';
 import { Navbar, NavbarLink, NavbarMenu, NavbarMenuContent, NavbarMenuLink, NavbarMenuTrigger } from './home/navbar';
-import { LanguageToggle, LanguageToggleText } from './layout/language-toggle';
-import { NavProvider, Title } from './layout/nav';
-import { LargeSearchToggle, SearchToggle } from './layout/search-toggle';
-import { ThemeToggle } from './layout/theme-toggle';
 import { type LinkItemType } from './links';
 import { type NavOptions, replaceOrDefault } from './shared';
 import { type BaseLayoutProps, getLinks } from './shared';
@@ -63,7 +63,9 @@ function Header({
 
   return (
     <Navbar>
-      <Title title={nav.title} url={nav.url} />
+      <Link href={nav.url ?? '/'} className='inline-flex items-center gap-2.5 font-semibold'>
+        {nav.title}
+      </Link>
       {nav.children}
       <ul className='flex flex-row items-center gap-2 px-6 max-sm:hidden'>
         {navItems

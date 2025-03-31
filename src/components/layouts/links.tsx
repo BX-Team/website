@@ -1,12 +1,11 @@
 'use client';
 
+import { usePathname } from 'fumadocs-core/framework';
 import Link from 'fumadocs-core/link';
 
 import { type AnchorHTMLAttributes, type HTMLAttributes, type ReactNode, forwardRef } from 'react';
 
-import { usePathname } from 'next/navigation';
-
-import { isActive } from '../lib/is-active';
+import { isActive } from '../../lib/is-active';
 
 interface BaseItem {
   /**
