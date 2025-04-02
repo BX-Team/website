@@ -36,7 +36,7 @@
       "devDependencies": {
         "@commitlint/cli": "^19.3.0",
         "@commitlint/config-conventional": "^19.2.2",
-        "@fumadocs/cli": "^0.0.8",
+        "@fumadocs/cli": "^0.1.0",
         "@tailwindcss/postcss": "^4.0.5",
         "@types/mdx": "^2.0.13",
         "@types/node": "22.13.17",
@@ -183,7 +183,7 @@
 
     "@formatjs/intl-localematcher": ["@formatjs/intl-localematcher@0.6.1", "", { "dependencies": { "tslib": "^2.8.0" } }, "sha512-ePEgLgVCqi2BBFnTMWPfIghu6FkbZnnBVhO2sSxvLfrdFw7wCHAHiDoM2h4NRgjbaY7+B7HgOLZGkK187pZTZg=="],
 
-    "@fumadocs/cli": ["@fumadocs/cli@0.0.8", "", { "dependencies": { "@clack/prompts": "^0.10.0", "commander": "^13.1.0", "execa": "^9.5.2", "package-manager-detector": "^0.2.9", "picocolors": "^1.1.1", "ts-morph": "^25.0.1" }, "bin": { "fumadocs": "dist/index.js" } }, "sha512-Cykk6jVDt1wHVOfas9S64TrF1uLgtV0ESLsXV5dgm1K5S9kyX+Nycogy/YTBqq05wuG7SI20byuUvX2QrUozSg=="],
+    "@fumadocs/cli": ["@fumadocs/cli@0.1.0", "", { "dependencies": { "@clack/prompts": "^0.10.0", "commander": "^13.1.0", "execa": "^9.5.2", "package-manager-detector": "^1.1.0", "picocolors": "^1.1.1", "ts-morph": "^25.0.1" }, "bin": { "fumadocs": "dist/index.js" } }, "sha512-z68rzCaufmglGC0DjImgvf1XgCqnXb6eKkG7jLzH6fggvL/KfeVqRAnc0SfJG8es53QzpRY435tIbggajfQiVA=="],
 
     "@iconify/types": ["@iconify/types@2.0.0", "", {}, "sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg=="],
 
@@ -1111,7 +1111,7 @@
 
     "p-locate": ["p-locate@6.0.0", "", { "dependencies": { "p-limit": "^4.0.0" } }, "sha512-wPrq66Llhl7/4AGC6I+cqxT07LhXvWL08LNXz1fENOw0Ap4sRZZ/gZpTTJ5jpurzzzfS2W/Ge9BY3LgLjCShcw=="],
 
-    "package-manager-detector": ["package-manager-detector@0.2.9", "", {}, "sha512-+vYvA/Y31l8Zk8dwxHhL3JfTuHPm6tlxM2A3GeQyl7ovYnSp1+mzAxClxaOr0qO1TtPxbQxetI7v5XqKLJZk7Q=="],
+    "package-manager-detector": ["package-manager-detector@1.1.0", "", {}, "sha512-Y8f9qUlBzW8qauJjd/eu6jlpJZsuPJm2ZAV0cDVd420o4EdpH5RPdoCv+60/TdJflGatr4sDfpAL6ArWZbM5tA=="],
 
     "parent-module": ["parent-module@1.0.1", "", { "dependencies": { "callsites": "^3.0.0" } }, "sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g=="],
 
@@ -1366,6 +1366,8 @@
     "zod": ["zod@3.24.2", "", {}, "sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ=="],
 
     "zwitch": ["zwitch@2.0.4", "", {}, "sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A=="],
+
+    "@antfu/install-pkg/package-manager-detector": ["package-manager-detector@0.2.9", "", {}, "sha512-+vYvA/Y31l8Zk8dwxHhL3JfTuHPm6tlxM2A3GeQyl7ovYnSp1+mzAxClxaOr0qO1TtPxbQxetI7v5XqKLJZk7Q=="],
 
     "@iconify/utils/globals": ["globals@15.15.0", "", {}, "sha512-7ACyT3wmyp3I61S4fG682L0VA2RGD9otkqGJIwNUMF1SWUombIIk+af1unuDYgMm082aHYwD+mzJvv9Iu8dsgg=="],
 
