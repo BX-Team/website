@@ -1,12 +1,21 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
+  "extends": [
+    "config:recommended",
+    "helpers:pinGitHubActionDigests",
+    ":preserveSemverRanges",
+    "group:allNonMajor",
+    ":automergeMinor",
+    ":automergePatch"
+  ],
   "labels": ["\uD83D\uDD04 dependencies"],
-  "packageRules": [
-    {
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
-    }
+  "baseBranches": ["master"],
+  "ignoreDeps": [
+    "@types/react",
+    "@types/react-dom",
+    "@types/node",
+    "typescript",
+    "lucide-react"
   ],
   "dependencyDashboard": false
 }
