@@ -4,10 +4,6 @@ title: Parallel World Ticking
 description: More info about a parallel world ticking system.
 ---
 
-<Callout type='warn'>
-    This feature is experimental. It enables DivineMC to tick multiple worlds concurrently. Note that while worlds are ticked in parallel, each tick cycle waits until all worlds have finished processing before proceeding. Consequently, overall performance is influenced by the slowest world tick.
-</Callout>
-
 <Callout type='info'>
     This feature was originally took from [SparklyPaper](https://github.com/SparklyPower/SparklyPaper), all credits go to them for the original implementation.
 </Callout>
@@ -42,7 +38,7 @@ To maintain data integrity, only the tick thread associated with a specific worl
 Any attempts to modify another world from an incorrect thread will result in an error. 
 Plugin developers must ensure that any cross-world interactions are scheduled to run on the appropriate main thread.
 
-Disabling off-main-thread exceptions is possible using the configuration flag `-DDivinemc.disableHardThrow=true`. 
+Disabling off-main-thread exceptions is possible using the configuration setting `settings.parallel-world-ticking.disable-hard-throw` in `divinemc.yml`. 
 However, this is not recommended because bypassing these checks may lead to data corruption. 
 Addressing thread synchronization issues directly is the preferred approach.
 
@@ -52,14 +48,15 @@ Parallel World Ticking is designed to work with most plugins, as events are gene
 However, certain operations—particularly those involving cross-world interactions (for example, teleporting players or entities between worlds during a server-level tick)—may encounter issues. 
 Such operations should be scheduled to run on the correct thread to avoid conflicts.
 
-Right now, we dont know plugins that are incompatible with this feature, but if you find one, please report it to us!
+If you want to make all your plugins compatible with Parallel World Ticking, you can set `settings.parallel-world-ticking.compatability-mode` to `true` in `divinemc.yml` to make the server run all tasks synchronously, instead of asynchronously.
+But be aware, with that option enabled, the server will lag more than usual, and the performance will be drastically reduced.
 
 ### Rationale for the Approach
 
 Integrating Parallel World Ticking directly into the base server software would require extensive modifications that might lead to compatibility issues with existing plugins and server configurations. 
 DivineMC offers this experimental feature as a managed solution, enabling improved performance in multi-world setups without the complexity of a multi-server architecture.
 
-For further technical details and implementation rationale, please refer to the [Parallel Implementation Notes](PARALLEL_NOTES.md).
+For further technical details and implementation rationale, please refer to the [Notes](#notes) below.
 
 ## Notes
 
