@@ -39,10 +39,11 @@ export function SelectTrigger({ className, children, ...props }: React.Component
   return (
     <Trigger
       className={cn(
-        'flex h-10 w-full items-center justify-between rounded-md border border-neutral-800',
-        'bg-neutral-900 px-3 py-2 text-sm text-neutral-200',
+        'flex h-10 w-full items-center justify-between rounded-md border-2 border-neutral-700',
+        'bg-neutral-800 px-3 py-2 text-sm text-neutral-200',
         'ring-offset-neutral-900 placeholder:text-neutral-500',
-        'focus:ring-1 focus:ring-neutral-800 focus:outline-none',
+        'focus:ring-2 focus:ring-blue-500 focus:outline-none',
+        'hover:border-blue-500/50 transition-colors',
         'disabled:cursor-not-allowed disabled:opacity-50',
         '[&>span]:line-clamp-1',
         className,
@@ -51,7 +52,7 @@ export function SelectTrigger({ className, children, ...props }: React.Component
     >
       {children}
       <Icon asChild>
-        <ChevronDown className='size-4 opacity-50' />
+        <ChevronDown className='size-4 opacity-70' />
       </Icon>
     </Trigger>
   );
@@ -68,7 +69,7 @@ export function SelectContent({
       <Content
         className={cn(
           'relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md',
-          'border border-neutral-800 bg-neutral-900 text-neutral-200 shadow-md',
+          'border-2 border-neutral-700 bg-neutral-800 text-neutral-200 shadow-lg',
           'data-[state=closed]:animate-out data-[state=open]:animate-in',
           'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
           'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
@@ -107,7 +108,8 @@ export function SelectItem({ className, children, ...props }: React.ComponentPro
     <Item
       className={cn(
         'relative flex w-full cursor-default items-center rounded-sm py-1.5 pr-8 pl-2 text-sm select-none',
-        'outline-none focus:bg-neutral-800 focus:text-neutral-200',
+        'outline-none focus:bg-blue-500/20 focus:text-neutral-200',
+        'hover:bg-blue-500/10 transition-colors',
         'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
         className,
       )}
@@ -115,7 +117,7 @@ export function SelectItem({ className, children, ...props }: React.ComponentPro
     >
       <span className='absolute right-2 flex size-3.5 items-center justify-center'>
         <ItemIndicator>
-          <Check className='size-4' />
+          <Check className='size-4 text-blue-500' />
         </ItemIndicator>
       </span>
       <ItemText>{children}</ItemText>

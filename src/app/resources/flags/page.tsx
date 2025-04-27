@@ -1,6 +1,5 @@
 'use client';
 
-import { Metadata } from "next";
 import { GradientBackground } from "@/components/ui/gradient-background";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Box, Code, CircleHelp, RefreshCw, SquareTerminal } from "lucide-react";
+import { Box, Code, RefreshCw, SquareTerminal } from "lucide-react";
 import { useState } from "react";
 import { generateResult } from "@/lib/flags/generateResult";
 import type { flagsSchema, ExtraFlagType } from "@/lib/flags/generateResult";
@@ -19,7 +18,7 @@ import { serverType } from "@/lib/flags/environment/serverType";
 const defaults: flagsSchema = {
   operatingSystem: "linux",
   serverType: "paper",
-  gui: false,
+  gui: true,
   variables: false,
   autoRestart: false,
   extraFlags: [],
@@ -155,13 +154,9 @@ export default function FlagsPage() {
                 />
                 <div className="flex justify-between text-sm text-neutral-400">
                   <span>0</span>
-                  <span>4</span>
                   <span>8</span>
-                  <span>12</span>
                   <span>16</span>
-                  <span>20</span>
                   <span>24</span>
-                  <span>28</span>
                   <span>32</span>
                 </div>
               </div>

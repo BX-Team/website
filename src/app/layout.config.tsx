@@ -65,6 +65,11 @@ export const baseOptions: BaseLayoutProps = {
       ],
     },
     {
+      text: 'Resources',
+      url: '/resources',
+      active: 'nested-url',
+    },
+    {
       text: 'Team',
       url: '/team',
       active: 'nested-url',
