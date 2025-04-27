@@ -84,12 +84,5 @@ export const baseOptions: BaseLayoutProps = {
       url: siteConfig.links.maven,
       active: 'nested-url',
     },
-    {
-      type: 'icon',
-      label: 'aria-label',
-      icon: <DiscordIcon />,
-      text: 'Discord',
-      url: siteConfig.links.discord,
-    },
   ],
 };
