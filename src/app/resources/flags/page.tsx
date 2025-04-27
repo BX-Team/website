@@ -16,6 +16,8 @@ import { serverType } from '@/lib/flags/environment/serverType';
 import { extraFlags } from '@/lib/flags/flags';
 import { generateResult } from '@/lib/flags/generateResult';
 import type { ExtraFlagType, flagsSchema } from '@/lib/flags/generateResult';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const defaults: flagsSchema = {
   operatingSystem: 'linux',
@@ -74,6 +76,18 @@ export default function FlagsPage() {
       ...prev,
       extraFlags: prev.extraFlags.includes(flag) ? prev.extraFlags.filter(f => f !== flag) : [...prev.extraFlags, flag],
     }));
+  };
+
+  const copyToClipboard = async (text: string) => {
+    if (typeof text !== 'string') {
+      throw new Error("The 'text' parameter must be a string.");
+    }
+
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (error) {
+      console.error('Failed to copy text: ', error);
+    }
   };
 
   const generatedScript = generateResult(config).script || '';
@@ -249,7 +263,8 @@ export default function FlagsPage() {
               <Button
                 className='absolute top-4 right-4'
                 onClick={() => {
-                  navigator.clipboard.writeText(generatedScript);
+                  copyToClipboard(generatedScript);
+                  toast.success('Copied script to clipboard!');
                 }}
               >
                 Copy
@@ -258,6 +273,19 @@ export default function FlagsPage() {
           </Card>
         </div>
       </div>
+      <ToastContainer
+        position='bottom-right'
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='colored'
+        transition={Bounce}
+      />
     </div>
   );
 }

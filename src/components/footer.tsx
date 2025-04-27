@@ -43,16 +43,12 @@ const SOCIALS: SocialItem[] = [
   {
     href: siteConfig.links.github,
     label: 'GitHub',
-    Icon: ({ className }: { className: string }) => (
-      <GitHubIcon className={className} />
-    ),
+    Icon: ({ className }: { className: string }) => <GitHubIcon className={className} />,
   },
   {
     href: siteConfig.links.discord,
     label: 'Discord',
-    Icon: ({ className }: { className: string }) => (
-      <DiscordIcon className={className} />
-    ),
+    Icon: ({ className }: { className: string }) => <DiscordIcon className={className} />,
   },
 ];
 
