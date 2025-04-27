@@ -2,7 +2,7 @@ import type { PageTree } from 'fumadocs-core/server';
 
 import type { FC, ReactNode } from 'react';
 
-import { cn } from '../../../lib/cn';
+import { cn } from '../@/lib/utils';
 import type { Option } from '../../layout/root-toggle';
 import {
   SidebarFolder,

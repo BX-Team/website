@@ -1,6 +1,6 @@
 import type * as React from 'react';
 
-import { cn } from '@/lib/cn';
+import { cn } from '@/lib/utils';
 
 export type CardProps<T extends React.ElementType = 'div'> = {
   as?: T;

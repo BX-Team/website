@@ -9,7 +9,7 @@ import { Menu, X } from 'lucide-react';
 
 import { type ButtonHTMLAttributes, type HTMLAttributes } from 'react';
 
-import { cn } from '../../lib/cn';
+import { cn } from '@/lib/utils';
 import { isActive } from '../../lib/is-active';
 import type { Option } from '../layout/root-toggle';
 import { buttonVariants } from '../ui/button';

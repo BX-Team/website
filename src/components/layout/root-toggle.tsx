@@ -7,7 +7,7 @@ import { ChevronsUpDown } from 'lucide-react';
 
 import { type HTMLAttributes, type ReactNode, useMemo, useState } from 'react';
 
-import { cn } from '../../lib/cn';
+import { cn } from '@/lib/utils';
 import { isActive } from '../../lib/is-active';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 

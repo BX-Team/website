@@ -4,7 +4,7 @@ import { ChevronDown, Languages } from 'lucide-react';
 
 import { Fragment, type HTMLAttributes } from 'react';
 
-import { cn } from '../../lib/cn';
+import { cn } from '@/lib/utils';
 import { LanguageToggle, LanguageToggleText } from '../layout/language-toggle';
 import { LargeSearchToggle, SearchToggle } from '../layout/search-toggle';
 import { ThemeToggle } from '../layout/theme-toggle';

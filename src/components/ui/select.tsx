@@ -21,7 +21,7 @@ import { Check, ChevronDown, ChevronUp } from 'lucide-react';
 
 import type * as React from 'react';
 
-import { cn } from '@/lib/cn';
+import { cn } from '@/lib/utils';
 
 export function Select(props: React.ComponentPropsWithoutRef<typeof Root>) {
   return <Root {...props} />;

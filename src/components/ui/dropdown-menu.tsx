@@ -5,7 +5,7 @@ import { Check, ChevronRight, Circle } from 'lucide-react';
 
 import * as React from 'react';
 
-import { cn } from '@/lib/cn';
+import { cn } from '@/lib/utils';
 
 const DropdownMenu = DropdownMenuPrimitive.Root;
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;

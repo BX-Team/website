@@ -6,7 +6,7 @@ import { SearchIcon } from 'lucide-react';
 
 import { type ButtonHTMLAttributes } from 'react';
 
-import { cn } from '../../lib/cn';
+import { cn } from '@/lib/utils';
 import { type ButtonProps, buttonVariants } from '../ui/button';
 
 export function SearchToggle({

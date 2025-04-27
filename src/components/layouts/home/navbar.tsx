@@ -7,7 +7,7 @@ import { useNav } from 'fumadocs-ui/contexts/layout';
 
 import { type ComponentProps, type HTMLAttributes, useState } from 'react';
 
-import { cn } from '../../../lib/cn';
+import { cn } from '@/lib/utils';
 import { buttonVariants } from '../../ui/button';
 import {
   NavigationMenu,

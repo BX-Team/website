@@ -6,7 +6,7 @@ import { useTheme } from 'next-themes';
 
 import { type HTMLAttributes, useLayoutEffect, useState } from 'react';
 
-import { cn } from '../../lib/cn';
+import { cn } from '@/lib/utils';
 
 const itemVariants = cva('text-fd-muted-foreground size-6.5 rounded-full p-1.5', {
   variants: {
