@@ -2,9 +2,19 @@ import { operatingSystem } from './environment/operatingSystem';
 import { serverType } from './environment/serverType';
 import { extraFlags, flags } from './flags';
 
-export type ExtraFlagType = "vectors" | "benchmarkedGraalVM" | "meowiceGraalVM";
+export type ExtraFlagType = 'vectors' | 'benchmarkedGraalVM' | 'meowiceGraalVM';
 
-export type AvailableFlags = "none" | "aikars" | "meowice" | "benchmarkedG1GC" | "benchmarkedZGC" | "benchmarkedShenandoah" | "hillttys" | "obyduxs" | "etils" | "proxy";
+export type AvailableFlags =
+  | 'none'
+  | 'aikars'
+  | 'meowice'
+  | 'benchmarkedG1GC'
+  | 'benchmarkedZGC'
+  | 'benchmarkedShenandoah'
+  | 'hillttys'
+  | 'obyduxs'
+  | 'etils'
+  | 'proxy';
 
 export interface flagsSchema {
   operatingSystem: string;
@@ -31,27 +41,34 @@ export function generateResult(parsed: flagsSchema): GenerateResult {
 
   const selectedServerType = serverType[parsed.serverType];
 
-  generatedFlags = selectedServerType.generate?.({
-    ...parsed,
-    'existingFlags': generatedFlags,
-  }) ?? generatedFlags;
+  generatedFlags =
+    selectedServerType.generate?.({
+      ...parsed,
+      existingFlags: generatedFlags,
+    }) ?? generatedFlags;
 
   if (parsed.extraFlags) {
     for (const currentFlags of parsed.extraFlags) {
-      if (!extraFlags[currentFlags].supports.includes(parsed.flags) || !selectedServerType.extraFlags?.includes(currentFlags)) continue;
+      if (
+        !extraFlags[currentFlags].supports.includes(parsed.flags) ||
+        !selectedServerType.extraFlags?.includes(currentFlags)
+      )
+        continue;
       const selectedFlags = extraFlags[currentFlags];
 
-      generatedFlags = selectedFlags.generate({
-        existingFlags: generatedFlags
-      }) ?? generatedFlags;
+      generatedFlags =
+        selectedFlags.generate({
+          existingFlags: generatedFlags,
+        }) ?? generatedFlags;
     }
   }
 
   const selectedOperatingSystem = operatingSystem[parsed.operatingSystem];
-  const result = selectedOperatingSystem.generate({
-    ...parsed,
-    'existingFlags': generatedFlags,
-  }) ?? generatedFlags;
+  const result =
+    selectedOperatingSystem.generate({
+      ...parsed,
+      existingFlags: generatedFlags,
+    }) ?? generatedFlags;
 
   const data: GenerateResult = {
     script: result.script,

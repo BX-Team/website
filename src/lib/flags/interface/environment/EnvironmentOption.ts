@@ -1,6 +1,6 @@
-import { AvailableConfig } from "../../config";
+import { AvailableConfig } from '../../config';
 
 export interface EnvironmentOption {
-    'icon': any, 
-    'config': AvailableConfig[]
+  icon: any;
+  config: AvailableConfig[];
 }

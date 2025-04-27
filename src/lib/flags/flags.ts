@@ -1,17 +1,27 @@
 import type { AvailableConfig } from './config';
 import type { AvailableOperatingSystem } from './environment/operatingSystem';
 import type { AvailableServerType } from './environment/serverType';
-import { Generate } from './interface/generate/Generate';
 import type { ExtraFlagType } from './generateResult';
+import { Generate } from './interface/generate/Generate';
 
 export type AvailableFlags = keyof typeof flags;
 export type AvailableExtraFlags = keyof typeof extraFlags;
 
 interface FlagOption {
-  'generate': Generate<AvailableConfig & AvailableOperatingSystem & AvailableServerType>
+  generate: Generate<AvailableConfig & AvailableOperatingSystem & AvailableServerType>;
 }
 
-export type SupportedFlagType = "aikars" | "meowice" | "benchmarkedG1GC" | "benchmarkedZGC" | "benchmarkedShenandoah" | "hillttys" | "obyduxs" | "etils" | "proxy" | "none";
+export type SupportedFlagType =
+  | 'aikars'
+  | 'meowice'
+  | 'benchmarkedG1GC'
+  | 'benchmarkedZGC'
+  | 'benchmarkedShenandoah'
+  | 'hillttys'
+  | 'obyduxs'
+  | 'etils'
+  | 'proxy'
+  | 'none';
 
 export interface FlagExtraOption {
   label: string;
@@ -122,17 +132,19 @@ export const flags = {
     generate: ({ memory }) => {
       return [
         ...baseAikar,
-        ...(memory < 12 ? [
-          '-XX:G1NewSizePercent=30',
-          '-XX:G1MaxNewSizePercent=40',
-          '-XX:G1HeapRegionSize=8M',
-          '-XX:G1ReservePercent=20',
-        ] : [
-          '-XX:G1NewSizePercent=40',
-          '-XX:G1MaxNewSizePercent=50',
-          '-XX:G1HeapRegionSize=16M',
-          '-XX:G1ReservePercent=15',
-        ]),
+        ...(memory < 12
+          ? [
+              '-XX:G1NewSizePercent=30',
+              '-XX:G1MaxNewSizePercent=40',
+              '-XX:G1HeapRegionSize=8M',
+              '-XX:G1ReservePercent=20',
+            ]
+          : [
+              '-XX:G1NewSizePercent=40',
+              '-XX:G1MaxNewSizePercent=50',
+              '-XX:G1HeapRegionSize=16M',
+              '-XX:G1ReservePercent=15',
+            ]),
       ];
     },
   } as FlagOption,
@@ -240,12 +252,7 @@ export const flags = {
   } as FlagOption,
   benchmarkedZGC: {
     generate: () => {
-      return [
-        ...baseBenchmarked,
-        '-XX:+UseZGC',
-        '-XX:AllocatePrefetchStyle=1',
-        '-XX:-ZProactive',
-      ];
+      return [...baseBenchmarked, '-XX:+UseZGC', '-XX:AllocatePrefetchStyle=1', '-XX:-ZProactive'];
     },
   } as FlagOption,
   benchmarkedShenandoah: {
@@ -263,19 +270,21 @@ export const flags = {
     generate: ({ memory }) => {
       return [
         ...baseEtil,
-        ...(memory < 12 ? [
-          '-XX:G1NewSizePercent=30',
-          '-XX:G1MaxNewSizePercent=40',
-          '-XX:G1HeapRegionSize=8M',
-          '-XX:G1ReservePercent=20',
-          '-XX:InitiatingHeapOccupancyPercent=15',
-        ] : [
-          '-XX:G1NewSizePercent=40',
-          '-XX:G1MaxNewSizePercent=50',
-          '-XX:G1HeapRegionSize=16M',
-          '-XX:G1ReservePercent=15',
-          '-XX:InitiatingHeapOccupancyPercent=20',
-        ]),
+        ...(memory < 12
+          ? [
+              '-XX:G1NewSizePercent=30',
+              '-XX:G1MaxNewSizePercent=40',
+              '-XX:G1HeapRegionSize=8M',
+              '-XX:G1ReservePercent=20',
+              '-XX:InitiatingHeapOccupancyPercent=15',
+            ]
+          : [
+              '-XX:G1NewSizePercent=40',
+              '-XX:G1MaxNewSizePercent=50',
+              '-XX:G1HeapRegionSize=16M',
+              '-XX:G1ReservePercent=15',
+              '-XX:InitiatingHeapOccupancyPercent=20',
+            ]),
       ];
     },
   } as FlagOption,
@@ -300,18 +309,15 @@ export const flags = {
 
 export const extraFlags: Record<ExtraFlagType, FlagExtraOption> = {
   vectors: {
-    label: "Modern Vectors",
-    description: "Enables SIMD operations to optimize map item rendering on Pufferfish and its forks.",
-    supports: ["aikars", "meowice", "benchmarkedG1GC"],
-    generate: ({ existingFlags }) => [
-      ...existingFlags,
-      '--add-modules=jdk.incubator.vector',
-    ],
+    label: 'Modern Vectors',
+    description: 'Enables SIMD operations to optimize map item rendering on Pufferfish and its forks.',
+    supports: ['aikars', 'meowice', 'benchmarkedG1GC'],
+    generate: ({ existingFlags }) => [...existingFlags, '--add-modules=jdk.incubator.vector'],
   },
   benchmarkedGraalVM: {
-    label: "Benchmarked (GraalVM)",
-    description: "Additional performance flags for Benchmarked (G1GC) exclusive to GraalVM users.",
-    supports: ["benchmarkedG1GC"],
+    label: 'Benchmarked (GraalVM)',
+    description: 'Additional performance flags for Benchmarked (G1GC) exclusive to GraalVM users.',
+    supports: ['benchmarkedG1GC'],
     generate: ({ existingFlags }) => [
       ...existingFlags,
       '-XX:+UnlockExperimentalVMOptions',
@@ -338,7 +344,7 @@ export const extraFlags: Record<ExtraFlagType, FlagExtraOption> = {
   meowiceGraalVM: {
     label: "MeowIce's Flags (GraalVM)",
     description: "Additional performance flags for MeowIce's Flags exclusive to GraalVM users.",
-    supports: ["meowice"],
+    supports: ['meowice'],
     generate: ({ existingFlags }) => [
       ...existingFlags,
       '-Djdk.nio.maxCachedBufferSize=262144',
@@ -357,5 +363,5 @@ export const extraFlags: Record<ExtraFlagType, FlagExtraOption> = {
       '-Dgraal.OptWriteMotion=true',
       '-Dgraal.CompilerConfiguration=enterprise',
     ],
-  }
+  },
 };

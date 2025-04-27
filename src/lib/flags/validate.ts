@@ -1,5 +1,6 @@
 import type { ZodType } from 'zod';
 import { z } from 'zod';
+
 import type { AvailableConfig } from './config';
 import { config } from './config';
 import type { AvailableOperatingSystem } from './environment/operatingSystem';
@@ -8,23 +9,26 @@ import type { AvailableServerType } from './environment/serverType';
 import { defaultServerType, serverType } from './environment/serverType';
 
 type GenerateConfigSchema = {
-  [key in AvailableConfig]: ZodType
-}
+  [key in AvailableConfig]: ZodType;
+};
 
 const operatingSystemKeys = Object.keys(operatingSystem);
 const serverTypeKeys = Object.keys(serverType);
 
 export const BaseConfigValidation = z.object({
   //@ts-ignore
-  'operatingSystem': z.enum(operatingSystemKeys).default(defaultOperatingSystem), // todo: types
+  operatingSystem: z.enum(operatingSystemKeys).default(defaultOperatingSystem), // todo: types
   //@ts-ignore
-  'serverType': z.enum(serverTypeKeys).default(defaultServerType), // todo: types
-  'withHTML': z.boolean().default(false),
-  'withFlags': z.boolean().default(true),
-  'withResult': z.boolean().default(true),
+  serverType: z.enum(serverTypeKeys).default(defaultServerType), // todo: types
+  withHTML: z.boolean().default(false),
+  withFlags: z.boolean().default(true),
+  withResult: z.boolean().default(true),
 });
 
-export function generateConfigSchema(requestOperatingSystem: AvailableOperatingSystem, requestServerType: AvailableServerType) {
+export function generateConfigSchema(
+  requestOperatingSystem: AvailableOperatingSystem,
+  requestServerType: AvailableServerType,
+) {
   const schema: GenerateConfigSchema = {};
 
   const selectedOperatingSystem = operatingSystem[requestOperatingSystem];
@@ -44,7 +48,10 @@ export function generateConfigSchema(requestOperatingSystem: AvailableOperatingS
   schema.flags = z.nativeEnum(selectedServerType.flags).default(selectedServerType.default.flags); // todo: types
 
   //@ts-ignore
-  schema.extraFlags = (!selectedServerType.extraFlags || selectedServerType.extraFlags.length === 0) ? z.never().optional() : z.array(z.nativeEnum(selectedServerType.extraFlags)).default(selectedServerType.default.extraFlags ?? []); // todo: types
+  schema.extraFlags =
+    !selectedServerType.extraFlags || selectedServerType.extraFlags.length === 0
+      ? z.never().optional()
+      : z.array(z.nativeEnum(selectedServerType.extraFlags)).default(selectedServerType.default.extraFlags ?? []); // todo: types
 
   return BaseConfigValidation.extend(schema);
 }

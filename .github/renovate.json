@@ -10,12 +10,6 @@
   ],
   "labels": ["\uD83D\uDD04 dependencies"],
   "baseBranches": ["master"],
-  "ignoreDeps": [
-    "@types/react",
-    "@types/react-dom",
-    "@types/node",
-    "typescript",
-    "lucide-react"
-  ],
+  "ignoreDeps": ["@types/react", "@types/react-dom", "@types/node", "typescript", "lucide-react"],
   "dependencyDashboard": false
 }

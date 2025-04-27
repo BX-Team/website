@@ -25,6 +25,7 @@ import {
 } from 'react';
 
 import { cn } from '@/lib/utils';
+
 import { isActive } from '../../lib/is-active';
 import type { SidebarComponents } from '../layouts/docs/shared';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible';

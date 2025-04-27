@@ -1,5 +1,5 @@
-import { EnvironmentOption } from "./EnvironmentOption";
+import { EnvironmentOption } from './EnvironmentOption';
 
 export interface EnvironmentOptions<OptionType = EnvironmentOption> {
-    readonly [key: string]: OptionType
+  readonly [key: string]: OptionType;
 }

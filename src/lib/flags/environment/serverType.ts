@@ -1,90 +1,69 @@
-import type { EnvironmentOptions } from '@/lib/flags/interface/environment/EnvironmentOptions';
-import type { ServerTypeOption } from '@/lib/flags/interface/environment/ServerTypeOption';
 import type { AvailableConfig } from '@/lib/flags/config';
 import type { AvailableExtraFlags, AvailableFlags } from '@/lib/flags/flags';
+import type { EnvironmentOptions } from '@/lib/flags/interface/environment/EnvironmentOptions';
+import type { ServerTypeOption } from '@/lib/flags/interface/environment/ServerTypeOption';
 
 export type AvailableServerType = keyof typeof serverType;
 
 interface SharedFlags<T = AvailableFlags> {
-  [key: string]: T[]
+  [key: string]: T[];
 }
 
-const sharedConfig: AvailableConfig[] = [
-  'fileName',
-  'flags',
-  'memory',
-  'autoRestart',
-  'variables',
-];
+const sharedConfig: AvailableConfig[] = ['fileName', 'flags', 'memory', 'autoRestart', 'variables'];
 
 const sharedFlags: SharedFlags = {
-  'bukkit': ['none', 'aikars', 'benchmarkedG1GC', 'benchmarkedZGC', 'benchmarkedShenandoah', 'hillttys', 'obyduxs', 'etils'],
-  'proxy': ['none', 'proxy'],
+  bukkit: [
+    'none',
+    'aikars',
+    'benchmarkedG1GC',
+    'benchmarkedZGC',
+    'benchmarkedShenandoah',
+    'hillttys',
+    'obyduxs',
+    'etils',
+  ],
+  proxy: ['none', 'proxy'],
 };
 
 const sharedExtraFlags: SharedFlags<AvailableExtraFlags> = {
-  'bukkit': ['benchmarkedGraalVM', 'meowiceGraalVM'],
+  bukkit: ['benchmarkedGraalVM', 'meowiceGraalVM'],
 };
 
 export const serverType: EnvironmentOptions<ServerTypeOption> = {
-  'paper': {
-    'icon': 'IconBucket',
-    'flags': [
-      ...sharedFlags.bukkit,
-    ],
-    'extraFlags': [
-      ...sharedExtraFlags.bukkit,
-    ],
-    'default': {
-      'flags': 'aikars',
+  paper: {
+    icon: 'IconBucket',
+    flags: [...sharedFlags.bukkit],
+    extraFlags: [...sharedExtraFlags.bukkit],
+    default: {
+      flags: 'aikars',
     },
-    'config': [
-      ...sharedConfig,
-      'gui',
-    ],
+    config: [...sharedConfig, 'gui'],
   },
-  'purpur': {
-    'icon': 'IconBucket',
-    'flags': [
-      ...sharedFlags.bukkit,
-    ],
-    'extraFlags': [
-      ...sharedExtraFlags.bukkit,
-      'vectors',
-    ],
-    'default': {
-      'flags': 'aikars',
-      'extraFlags': ['vectors'],
+  purpur: {
+    icon: 'IconBucket',
+    flags: [...sharedFlags.bukkit],
+    extraFlags: [...sharedExtraFlags.bukkit, 'vectors'],
+    default: {
+      flags: 'aikars',
+      extraFlags: ['vectors'],
     },
-    'config': [
-      ...sharedConfig,
-      'extraFlags',
-      'gui',
-    ],
+    config: [...sharedConfig, 'extraFlags', 'gui'],
   },
-  'velocity': {
-    'icon': 'IconNetwork',
-    'flags': [
-      ...sharedFlags.proxy,
-    ],
-    'default': {
-      'flags': 'proxy',
+  velocity: {
+    icon: 'IconNetwork',
+    flags: [...sharedFlags.proxy],
+    default: {
+      flags: 'proxy',
     },
-    'config': [
-      ...sharedConfig,
-    ],
+    config: [...sharedConfig],
   },
-  'waterfall': {
-    'icon': 'IconNetwork',
-    'default': {
-      'flags': 'proxy',
+  waterfall: {
+    icon: 'IconNetwork',
+    default: {
+      flags: 'proxy',
     },
-    'flags': [
-      ...sharedFlags.proxy,
-    ],
-    'config': [
-      ...sharedConfig,
-    ],
+    flags: [...sharedFlags.proxy],
+    config: [...sharedConfig],
   },
 };
 

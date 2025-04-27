@@ -43,7 +43,7 @@ export function SelectTrigger({ className, children, ...props }: React.Component
         'bg-neutral-800 px-3 py-2 text-sm text-neutral-200',
         'ring-offset-neutral-900 placeholder:text-neutral-500',
         'focus:ring-2 focus:ring-blue-500 focus:outline-none',
-        'hover:border-blue-500/50 transition-colors',
+        'transition-colors hover:border-blue-500/50',
         'disabled:cursor-not-allowed disabled:opacity-50',
         '[&>span]:line-clamp-1',
         className,
@@ -109,7 +109,7 @@ export function SelectItem({ className, children, ...props }: React.ComponentPro
       className={cn(
         'relative flex w-full cursor-default items-center rounded-sm py-1.5 pr-8 pl-2 text-sm select-none',
         'outline-none focus:bg-blue-500/20 focus:text-neutral-200',
-        'hover:bg-blue-500/10 transition-colors',
+        'transition-colors hover:bg-blue-500/10',
         'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
         className,
       )}

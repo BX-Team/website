@@ -5,18 +5,9 @@ import { Generate } from '../interface/generate/Generate';
 
 export type AvailableOperatingSystem = keyof typeof operatingSystem;
 
-const sharedConfig: AvailableConfig[] = [
-  'fileName',
-  'flags',
-  'extraFlags',
-  'memory',
-];
+const sharedConfig: AvailableConfig[] = ['fileName', 'flags', 'extraFlags', 'memory'];
 
-const sharedScriptConfig: AvailableConfig[] = [
-  'gui',
-  'autoRestart',
-  'variables',
-];
+const sharedScriptConfig: AvailableConfig[] = ['gui', 'autoRestart', 'variables'];
 
 function getMemory(memory: number, isContainer = false) {
   const binaryMemory = memory * 1024;
@@ -47,29 +38,20 @@ function getJava(config: Record<AvailableConfig | 'existingFlags', any>): string
 }
 
 interface GenerateNixResult {
-  'script': string[],
-  'flags': string[]
+  script: string[];
+  flags: string[];
 }
 
 type NixScript = Generate<AvailableConfig | 'existingFlags', GenerateNixResult>; // todo: dedupe
 
 const nixScript: NixScript = (config) => {
-  const base = [
-    '#!/usr/bin/env bash',
-    '',
-  ];
+  const base = ['#!/usr/bin/env bash', ''];
 
   let fileName = config.fileName;
   let memory: number | string = getMemory(config.memory);
 
   if (config.variables) {
-    base.push(
-      `fileName="${fileName}"`,
-      `memory=${memory}`,
-      '',
-      'declare -i memory',
-      '',
-    );
+    base.push(`fileName="${fileName}"`, `memory=${memory}`, '', 'declare -i memory', '');
 
     fileName = '"$fileName"';
     memory = '"$memory"';
@@ -96,55 +78,45 @@ const nixScript: NixScript = (config) => {
   }
 
   return {
-    'script': base,
-    'flags': config.existingFlags,
+    script: base,
+    flags: config.existingFlags,
   };
 };
 
 export const operatingSystem: EnvironmentOptions<OperatingSystemOption> = {
-  'linux': {
-    'icon': 'IconBrandDebian',
-    'file': {
-      'name': 'Bash Script',
-      'mime': 'text/plain',
-      'extension': '.sh',
+  linux: {
+    icon: 'IconBrandDebian',
+    file: {
+      name: 'Bash Script',
+      mime: 'text/plain',
+      extension: '.sh',
     },
-    'config': [
-      ...sharedConfig,
-      ...sharedScriptConfig,
-    ],
-    'generate': config => {
+    config: [...sharedConfig, ...sharedScriptConfig],
+    generate: (config) => {
       const nix = nixScript(config);
 
       return {
-        'script': nix.script.join('\n'),
-        'flags': nix.flags,
+        script: nix.script.join('\n'),
+        flags: nix.flags,
       };
     },
   },
-  'windows': {
-    'icon': 'IconBrandWindows',
-    'file': {
-      'name': 'Batch Script',
-      'mime': 'text/plain',
-      'extension': '.bat',
+  windows: {
+    icon: 'IconBrandWindows',
+    file: {
+      name: 'Batch Script',
+      mime: 'text/plain',
+      extension: '.bat',
     },
-    'config': [
-      ...sharedConfig,
-      ...sharedScriptConfig,
-    ],
-    'generate': config => {
+    config: [...sharedConfig, ...sharedScriptConfig],
+    generate: (config) => {
       const base = [];
 
       let fileName = config.fileName;
       let memory: number | string = getMemory(config.memory);
 
       if (config.variables) {
-        base.push(
-          `set fileName="${fileName}"`,
-          `set /A memory=${memory}`,
-          '',
-        );
+        base.push(`set fileName="${fileName}"`, `set /A memory=${memory}`, '');
 
         fileName = '%fileName%';
         memory = '%memory%';
@@ -171,42 +143,36 @@ export const operatingSystem: EnvironmentOptions<OperatingSystemOption> = {
       }
 
       return {
-        'script': base.join('\n'),
-        'flags': config.existingFlags,
+        script: base.join('\n'),
+        flags: config.existingFlags,
       };
     },
   },
-  'macos': {
-    'icon': 'IconBrandApple',
-    'file': {
-      'name': 'Command Script',
-      'mime': 'text/plain',
-      'extension': '.command',
+  macos: {
+    icon: 'IconBrandApple',
+    file: {
+      name: 'Command Script',
+      mime: 'text/plain',
+      extension: '.command',
     },
-    'config': [
-      ...sharedConfig,
-      ...sharedScriptConfig,
-    ],
-    'generate': config => {
+    config: [...sharedConfig, ...sharedScriptConfig],
+    generate: (config) => {
       const nix = nixScript(config);
 
       // First line of *nix files should contain shebang
       nix.script.splice(1, 0, 'cd "`dirname $0`"');
 
       return {
-        'script': nix.script.join('\n'),
-        'flags': nix.flags,
+        script: nix.script.join('\n'),
+        flags: nix.flags,
       };
     },
   },
-  'pterodactyl': {
-    'icon': 'IconServer',
-    'file': false,
-    'config': [
-      ...sharedConfig,
-      'variables',
-    ],
-    'generate': config => {
+  pterodactyl: {
+    icon: 'IconServer',
+    file: false,
+    config: [...sharedConfig, 'variables'],
+    generate: (config) => {
       const base = [];
 
       let fileName = config.fileName;
@@ -217,15 +183,11 @@ export const operatingSystem: EnvironmentOptions<OperatingSystemOption> = {
         memory = '$(({{SERVER_MEMORY}}*85/100))';
       }
 
-      const flags = [
-        ...config.existingFlags,
-        '-Dterminal.jline=false',
-        '-Dterminal.ansi=true',
-      ];
+      const flags = [...config.existingFlags, '-Dterminal.jline=false', '-Dterminal.ansi=true'];
 
       const java = getJava({
         ...config,
-        'existingFlags': flags,
+        existingFlags: flags,
         fileName,
         memory,
       });
@@ -233,30 +195,28 @@ export const operatingSystem: EnvironmentOptions<OperatingSystemOption> = {
       base.push(java);
 
       return {
-        'script': base.join('\n'),
+        script: base.join('\n'),
         flags,
       };
     },
   },
-  'command': {
-    'icon': 'IconTerminal',
-    'file': false,
-    'config': [
-      ...sharedConfig,
-    ],
-    'generate': config => {
+  command: {
+    icon: 'IconTerminal',
+    file: false,
+    config: [...sharedConfig],
+    generate: (config) => {
       const base = [];
 
       const java = getJava({
         ...config,
-        'memory': getMemory(config.memory),
+        memory: getMemory(config.memory),
       });
 
       base.push(java);
 
       return {
-        'script': base.join('\n'),
-        'flags': config.existingFlags,
+        script: base.join('\n'),
+        flags: config.existingFlags,
       };
     },
   },

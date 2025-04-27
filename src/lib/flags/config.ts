@@ -1,5 +1,6 @@
 import type { ZodType } from 'zod';
 import { z } from 'zod';
+
 import { defaultOperatingSystem } from './environment/operatingSystem';
 import { defaultServerType, serverType } from './environment/serverType';
 import { extraFlags, flags } from './flags';
@@ -8,45 +9,45 @@ export type AvailableConfig = keyof typeof config;
 
 export interface Config {
   [key: string]: {
-    'isAdvanced'?: boolean,
-    'type': ZodType,
-    'default'?: any
-  }
+    isAdvanced?: boolean;
+    type: ZodType;
+    default?: any;
+  };
 }
 
 type DefaultConfig = {
-  [key in AvailableConfig]: any
-}
+  [key in AvailableConfig]: any;
+};
 
 export const config: Config = {
-  'fileName': {
-    'type': z.string().min(1).max(25),
-    'default': 'server.jar',
+  fileName: {
+    type: z.string().min(1).max(25),
+    default: 'server.jar',
   },
-  'flags': {
+  flags: {
     //@ts-ignore
-    'type': z.nativeEnum(Object.keys(flags)),
+    type: z.nativeEnum(Object.keys(flags)),
   },
-  'extraFlags': {
+  extraFlags: {
     //@ts-ignore
-    'type': z.array(z.nativeEnum(Object.keys(extraFlags))),
+    type: z.array(z.nativeEnum(Object.keys(extraFlags))),
   },
-  'memory': {
-    'type': z.number().min(2).max(16),
-    'default': 4,
+  memory: {
+    type: z.number().min(2).max(16),
+    default: 4,
   },
-  'gui': {
-    'type': z.boolean(),
-    'default': false,
+  gui: {
+    type: z.boolean(),
+    default: false,
   },
-  'autoRestart': {
-    'type': z.boolean(),
-    'default': false,
+  autoRestart: {
+    type: z.boolean(),
+    default: false,
   },
-  'variables': {
-    'type': z.boolean(),
-    'isAdvanced': true,
-    'default': false,
+  variables: {
+    type: z.boolean(),
+    isAdvanced: true,
+    default: false,
   },
 };
 
