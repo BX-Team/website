@@ -225,7 +225,7 @@ function DocsNavbar({
         <div className='flex flex-1 flex-row items-center justify-end'>
           <div className='flex flex-row items-center gap-6 px-4 empty:hidden max-lg:hidden'>
             {links
-              .filter((item) => item.type !== 'icon')
+              .filter(item => item.type !== 'icon')
               .map((item, i) => (
                 <NavbarLinkItem
                   key={i}
@@ -238,7 +238,7 @@ function DocsNavbar({
           <SearchToggle hideIfDisabled className='md:hidden' />
           <NavbarSidebarTrigger className='md:hidden' />
           {links
-            .filter((item) => item.type === 'icon')
+            .filter(item => item.type === 'icon')
             .map((item, i) => (
               <BaseLinkItem
                 key={i}
@@ -278,7 +278,7 @@ function DocsNavbar({
       </div>
       {tabs.length > 0 ? (
         <LayoutTabs className='border-fd-foreground/10 h-10 border-b px-6 max-lg:hidden'>
-          {tabs.map((tab) => (
+          {tabs.map(tab => (
             <LayoutTab key={tab.url} {...tab} />
           ))}
         </LayoutTabs>

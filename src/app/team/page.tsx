@@ -95,7 +95,7 @@ function ContributorAvatar({ url, avatar, username }: { url: string; avatar: str
 export default async function TeamPage() {
   const repos = ['DivineMC', 'NDailyRewards', 'Nexus', 'commons', 'website'];
   const responses = await Promise.all(
-    repos.map((repo) =>
+    repos.map(repo =>
       fetch(`https://api.github.com/repos/BX-Team/${repo}/contributors`, {
         headers: { Accept: 'application/vnd.github.v3+json' },
         next: { revalidate: 3600 },
@@ -103,11 +103,11 @@ export default async function TeamPage() {
     ),
   );
 
-  if (responses.some((res) => !res.ok)) {
+  if (responses.some(res => !res.ok)) {
     throw new Error('Failed to fetch contributors');
   }
 
-  const contributorsData = await Promise.all(responses.map((res) => res.json()));
+  const contributorsData = await Promise.all(responses.map(res => res.json()));
 
   const contributors = (
     Object.values(
@@ -166,7 +166,7 @@ export default async function TeamPage() {
                 </h2>
                 <p className='mt-2 mb-6 text-neutral-300'>{description}</p>
                 <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
-                  {members.map((member) => (
+                  {members.map(member => (
                     <TeamMember key={member.name} {...member} />
                   ))}
                 </div>

@@ -86,12 +86,12 @@ export function CollapsibleSidebar(props: SidebarProps) {
   return (
     <Sidebar
       {...props}
-      onPointerEnter={(e) => {
+      onPointerEnter={e => {
         if (!collapsed || e.pointerType === 'touch' || closeTimeRef.current > Date.now()) return;
         window.clearTimeout(timerRef.current);
         setHover(true);
       }}
-      onPointerLeave={(e) => {
+      onPointerLeave={e => {
         if (!collapsed || e.pointerType === 'touch') return;
         window.clearTimeout(timerRef.current);
 
@@ -254,7 +254,7 @@ export function SidebarFolder({
 }) {
   const [open, setOpen] = useState(defaultOpen);
 
-  useOnChange(defaultOpen, (v) => {
+  useOnChange(defaultOpen, v => {
     if (v) setOpen(v);
   });
 
@@ -299,12 +299,12 @@ export function SidebarFolderLink(props: LinkProps) {
       {...props}
       data-active={active}
       className={cn(itemVariants({ active }), 'w-full', props.className)}
-      onClick={(e) => {
+      onClick={e => {
         if ((e.target as HTMLElement).hasAttribute('data-icon')) {
-          setOpen((prev) => !prev);
+          setOpen(prev => !prev);
           e.preventDefault();
         } else {
-          setOpen((prev) => !active || !prev);
+          setOpen(prev => !active || !prev);
         }
       }}
       prefetch={prefetch}
@@ -351,7 +351,7 @@ export function SidebarCollapseTrigger(props: ButtonHTMLAttributes<HTMLButtonEle
       data-collapsed={collapsed}
       {...props}
       onClick={() => {
-        setCollapsed((prev) => !prev);
+        setCollapsed(prev => !prev);
       }}
     >
       {props.children}

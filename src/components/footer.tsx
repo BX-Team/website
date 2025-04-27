@@ -131,7 +131,7 @@ export function Footer() {
           </section>
 
           <div className='grid gap-8 sm:grid-cols-2 lg:col-span-3 lg:grid-cols-3'>
-            {LINK_SECTIONS.map((section) => (
+            {LINK_SECTIONS.map(section => (
               <LinkColumn key={section.title} title={section.title} links={section.links} />
             ))}
           </div>

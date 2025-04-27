@@ -32,7 +32,7 @@ export function LanguageToggle(props: LanguageSelectProps): React.ReactElement {
       </PopoverTrigger>
       <PopoverContent className='flex flex-col overflow-hidden p-0'>
         <p className='text-fd-muted-foreground mb-1 p-2 text-xs font-medium'>{context.text.chooseLanguage}</p>
-        {context.locales.map((item) => (
+        {context.locales.map(item => (
           <button
             key={item.locale}
             type='button'
@@ -56,7 +56,7 @@ export function LanguageToggle(props: LanguageSelectProps): React.ReactElement {
 
 export function LanguageToggleText(props: HTMLAttributes<HTMLSpanElement>): React.ReactElement {
   const context = useI18n();
-  const text = context.locales?.find((item) => item.locale === context.locale)?.name;
+  const text = context.locales?.find(item => item.locale === context.locale)?.name;
 
   return <span {...props}>{text}</span>;
 }

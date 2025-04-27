@@ -37,12 +37,12 @@ export default async function ResourcesPage() {
           </p>
         </header>
 
-        {sections.map((sec) => (
+        {sections.map(sec => (
           <section key={sec.title} className='mt-12 sm:mt-16'>
             <h2 className='text-2xl font-semibold text-white'>{sec.title}</h2>
             <p className='mt-2 mb-6 text-neutral-300'>{sec.sub}</p>
             <div className='grid grid-cols-[repeat(auto-fit,_minmax(240px,_1fr))] gap-6'>
-              {sec.items.map((item) => (
+              {sec.items.map(item => (
                 <Link key={item.title} href={item.href} passHref>
                   <Card className='p-5 transition-all hover:bg-neutral-800/50 hover:ring-1 hover:ring-neutral-700'>
                     <h3 className='font-semibold text-white'>{item.title}</h3>

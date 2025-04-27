@@ -18,9 +18,9 @@ type Project = {
 };
 
 function parseDownloadLinks(downloadUrl: string) {
-  const parts = downloadUrl.split(';').map((str) => str.trim());
+  const parts = downloadUrl.split(';').map(str => str.trim());
   const regex = /\[([^\]]+)]\(([^)]+)\)/;
-  return parts.map((part) => {
+  return parts.map(part => {
     const match = part.match(regex);
     if (match) {
       return { label: match[1], url: match[2] };
@@ -149,7 +149,7 @@ export function Projects() {
 
         <section className='mt-12'>
           <div className='space-y-8'>
-            {projects.map((project) => (
+            {projects.map(project => (
               <ProjectCard key={project.name} {...project} />
             ))}
           </div>

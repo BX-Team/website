@@ -44,7 +44,7 @@ interface GenerateNixResult {
 
 type NixScript = Generate<AvailableConfig | 'existingFlags', GenerateNixResult>; // todo: dedupe
 
-const nixScript: NixScript = (config) => {
+const nixScript: NixScript = config => {
   const base = ['#!/usr/bin/env bash', ''];
 
   let fileName = config.fileName;
@@ -92,7 +92,7 @@ export const operatingSystem: EnvironmentOptions<OperatingSystemOption> = {
       extension: '.sh',
     },
     config: [...sharedConfig, ...sharedScriptConfig],
-    generate: (config) => {
+    generate: config => {
       const nix = nixScript(config);
 
       return {
@@ -109,7 +109,7 @@ export const operatingSystem: EnvironmentOptions<OperatingSystemOption> = {
       extension: '.bat',
     },
     config: [...sharedConfig, ...sharedScriptConfig],
-    generate: (config) => {
+    generate: config => {
       const base = [];
 
       let fileName = config.fileName;
@@ -156,7 +156,7 @@ export const operatingSystem: EnvironmentOptions<OperatingSystemOption> = {
       extension: '.command',
     },
     config: [...sharedConfig, ...sharedScriptConfig],
-    generate: (config) => {
+    generate: config => {
       const nix = nixScript(config);
 
       // First line of *nix files should contain shebang
@@ -172,7 +172,7 @@ export const operatingSystem: EnvironmentOptions<OperatingSystemOption> = {
     icon: 'IconServer',
     file: false,
     config: [...sharedConfig, 'variables'],
-    generate: (config) => {
+    generate: config => {
       const base = [];
 
       let fileName = config.fileName;
@@ -204,7 +204,7 @@ export const operatingSystem: EnvironmentOptions<OperatingSystemOption> = {
     icon: 'IconTerminal',
     file: false,
     config: [...sharedConfig],
-    generate: (config) => {
+    generate: config => {
       const base = [];
 
       const java = getJava({

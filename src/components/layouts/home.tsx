@@ -59,8 +59,8 @@ function Header({
 }: HomeLayoutProps & {
   finalLinks: LinkItemType[];
 }) {
-  const navItems = finalLinks.filter((item) => ['nav', 'all'].includes(item.on ?? 'all'));
-  const menuItems = finalLinks.filter((item) => ['menu', 'all'].includes(item.on ?? 'all'));
+  const navItems = finalLinks.filter(item => ['nav', 'all'].includes(item.on ?? 'all'));
+  const menuItems = finalLinks.filter(item => ['menu', 'all'].includes(item.on ?? 'all'));
 
   return (
     <Navbar>
@@ -70,7 +70,7 @@ function Header({
       {nav.children}
       <ul className='flex flex-row items-center gap-2 px-6 max-sm:hidden'>
         {navItems
-          .filter((item) => !isSecondary(item))
+          .filter(item => !isSecondary(item))
           .map((item, i) => (
             <NavbarLinkItem key={i} item={item} className='text-sm' />
           ))}
@@ -99,7 +99,7 @@ function Header({
           </MenuTrigger>
           <MenuContent className='sm:flex-row sm:items-center sm:justify-end'>
             {menuItems
-              .filter((item) => !isSecondary(item))
+              .filter(item => !isSecondary(item))
               .map((item, i) => (
                 <MenuLinkItem key={i} item={item} className='sm:hidden' />
               ))}

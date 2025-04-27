@@ -92,7 +92,7 @@ export function MenuTrigger({
   return (
     <NavigationMenuTrigger
       {...props}
-      onPointerMove={enableHover ? undefined : (e) => e.preventDefault()}
+      onPointerMove={enableHover ? undefined : e => e.preventDefault()}
       className={cn(
         buttonVariants({
           size: 'icon',

@@ -60,7 +60,7 @@ export default function FlagsPage() {
   const [config, setConfig] = useState<flagsSchema>(defaults);
 
   const handleInputChange = (field: keyof flagsSchema, value: any) => {
-    setConfig((prev) => ({ ...prev, [field]: value }));
+    setConfig(prev => ({ ...prev, [field]: value }));
   };
 
   const handleFileNameChange = (value: string) => {
@@ -70,11 +70,9 @@ export default function FlagsPage() {
   };
 
   const handleExtraFlagToggle = (flag: ExtraFlagType) => {
-    setConfig((prev) => ({
+    setConfig(prev => ({
       ...prev,
-      extraFlags: prev.extraFlags.includes(flag)
-        ? prev.extraFlags.filter((f) => f !== flag)
-        : [...prev.extraFlags, flag],
+      extraFlags: prev.extraFlags.includes(flag) ? prev.extraFlags.filter(f => f !== flag) : [...prev.extraFlags, flag],
     }));
   };
 
@@ -100,7 +98,7 @@ export default function FlagsPage() {
                 <Input
                   id='fileName'
                   value={config.fileName}
-                  onChange={(e) => handleFileNameChange(e.target.value)}
+                  onChange={e => handleFileNameChange(e.target.value)}
                   placeholder='server.jar'
                 />
               </div>
@@ -110,13 +108,13 @@ export default function FlagsPage() {
                   <Label htmlFor='environment'>Environment</Label>
                   <Select
                     value={config.operatingSystem}
-                    onValueChange={(value) => handleInputChange('operatingSystem', value)}
+                    onValueChange={value => handleInputChange('operatingSystem', value)}
                   >
                     <SelectTrigger id='environment'>
                       <SelectValue placeholder='Select environment' />
                     </SelectTrigger>
                     <SelectContent>
-                      {environmentOptions.map((option) => (
+                      {environmentOptions.map(option => (
                         <SelectItem key={option.value} value={option.value}>
                           {option.name}
                         </SelectItem>
@@ -127,12 +125,12 @@ export default function FlagsPage() {
 
                 <div className='space-y-2'>
                   <Label htmlFor='software'>Software</Label>
-                  <Select value={config.serverType} onValueChange={(value) => handleInputChange('serverType', value)}>
+                  <Select value={config.serverType} onValueChange={value => handleInputChange('serverType', value)}>
                     <SelectTrigger id='software'>
                       <SelectValue placeholder='Select software' />
                     </SelectTrigger>
                     <SelectContent>
-                      {softwareOptions.map((option) => (
+                      {softwareOptions.map(option => (
                         <SelectItem key={option.value} value={option.value}>
                           {option.name}
                         </SelectItem>
@@ -167,12 +165,12 @@ export default function FlagsPage() {
             <div className='space-y-4'>
               <div className='space-y-2'>
                 <Label htmlFor='flags'>Flags</Label>
-                <Select value={config.flags} onValueChange={(value) => handleInputChange('flags', value)}>
+                <Select value={config.flags} onValueChange={value => handleInputChange('flags', value)}>
                   <SelectTrigger id='flags'>
                     <SelectValue placeholder='Select flags' />
                   </SelectTrigger>
                   <SelectContent>
-                    {flagOptions.map((option) => (
+                    {flagOptions.map(option => (
                       <SelectItem key={option.value} value={option.value}>
                         {option.name}
                       </SelectItem>
@@ -188,7 +186,7 @@ export default function FlagsPage() {
                     <Checkbox
                       id='gui'
                       checked={config.gui}
-                      onCheckedChange={(checked) => handleInputChange('gui', checked)}
+                      onCheckedChange={checked => handleInputChange('gui', checked)}
                     />
                     <Label htmlFor='gui' className='flex items-center gap-2'>
                       <SquareTerminal className='h-4 w-4' /> No GUI
@@ -198,7 +196,7 @@ export default function FlagsPage() {
                     <Checkbox
                       id='variables'
                       checked={config.variables}
-                      onCheckedChange={(checked) => handleInputChange('variables', checked)}
+                      onCheckedChange={checked => handleInputChange('variables', checked)}
                     />
                     <Label htmlFor='variables' className='flex items-center gap-2'>
                       <Code className='h-4 w-4' /> Use Variables
@@ -208,7 +206,7 @@ export default function FlagsPage() {
                     <Checkbox
                       id='autoRestart'
                       checked={config.autoRestart}
-                      onCheckedChange={(checked) => handleInputChange('autoRestart', checked)}
+                      onCheckedChange={checked => handleInputChange('autoRestart', checked)}
                     />
                     <Label htmlFor='autoRestart' className='flex items-center gap-2'>
                       <RefreshCw className='h-4 w-4' /> Auto-restart

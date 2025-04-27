@@ -43,7 +43,7 @@ export function RootToggle({
   const pathname = usePathname();
 
   const selected = useMemo(() => {
-    return options.findLast((item) =>
+    return options.findLast(item =>
       item.urls
         ? item.urls.has(pathname.endsWith('/') ? pathname.slice(0, -1) : pathname)
         : isActive(item.url, pathname, true),
@@ -72,7 +72,7 @@ export function RootToggle({
         </PopoverTrigger>
       ) : null}
       <PopoverContent className='w-(--radix-popover-trigger-width) overflow-hidden p-0'>
-        {options.map((item) => (
+        {options.map(item => (
           <Link
             key={item.url}
             href={item.url}
