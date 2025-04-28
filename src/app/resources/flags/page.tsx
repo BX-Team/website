@@ -16,8 +16,8 @@ import { serverType } from '@/lib/flags/environment/serverType';
 import { extraFlags } from '@/lib/flags/flags';
 import { generateResult } from '@/lib/flags/generateResult';
 import type { ExtraFlagType, flagsSchema } from '@/lib/flags/generateResult';
-import { Bounce, ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Toaster } from '@/components/ui/sonner';
+import { toast } from "sonner"
 
 const defaults: flagsSchema = {
   operatingSystem: 'linux',
@@ -286,19 +286,7 @@ export default function FlagsPage() {
           </Card>
         </div>
       </div>
-      <ToastContainer
-        position='bottom-right'
-        autoClose={2000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme='colored'
-        transition={Bounce}
-      />
+      <Toaster richColors />
     </div>
   );
 }
