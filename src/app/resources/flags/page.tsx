@@ -66,9 +66,17 @@ export default function FlagsPage() {
   };
 
   const handleFileNameChange = (value: string) => {
-    if (value.replace(/ /g, '') === '') return;
-    if (!value.endsWith('.jar')) value += '.jar';
     handleInputChange('fileName', value);
+  };
+
+  const handleFileNameBlur = () => {
+    if (config.fileName && !config.fileName.endsWith('.jar')) {
+      handleInputChange('fileName', config.fileName + '.jar');
+    }
+  };
+
+  const getFileNameForScript = () => {
+    return config.fileName || 'server.jar';
   };
 
   const handleExtraFlagToggle = (flag: ExtraFlagType) => {
@@ -90,7 +98,7 @@ export default function FlagsPage() {
     }
   };
 
-  const generatedScript = generateResult(config).script || '';
+  const generatedScript = generateResult({ ...config, fileName: getFileNameForScript() }).script || '';
 
   return (
     <div className='relative min-h-screen'>
@@ -113,6 +121,7 @@ export default function FlagsPage() {
                   id='fileName'
                   value={config.fileName}
                   onChange={e => handleFileNameChange(e.target.value)}
+                  onBlur={handleFileNameBlur}
                   placeholder='server.jar'
                 />
               </div>
@@ -157,7 +166,7 @@ export default function FlagsPage() {
               <div className='space-y-2'>
                 <Label>Memory (GB)</Label>
                 <Slider
-                  min={0}
+                  min={0.5}
                   max={32}
                   step={0.5}
                   value={[config.memory]}
@@ -179,33 +188,37 @@ export default function FlagsPage() {
             <div className='space-y-4'>
               <div className='space-y-2'>
                 <Label htmlFor='flags'>Flags</Label>
-                <Select value={config.flags} onValueChange={value => handleInputChange('flags', value)}>
-                  <SelectTrigger id='flags'>
-                    <SelectValue placeholder='Select flags' />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {flagOptions.map(option => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <div className='flex gap-2'>
+                  <Select value={config.flags} onValueChange={value => handleInputChange('flags', value)}>
+                    <SelectTrigger id='flags'>
+                      <SelectValue placeholder='Select flags' />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {flagOptions.map(option => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
               <div className='space-y-2'>
                 <Label>Additional Options</Label>
                 <div className='space-y-2'>
-                  <div className='flex items-center space-x-2'>
-                    <Checkbox
-                      id='gui'
-                      checked={config.gui}
-                      onCheckedChange={checked => handleInputChange('gui', checked)}
-                    />
-                    <Label htmlFor='gui' className='flex items-center gap-2'>
-                      <SquareTerminal className='h-4 w-4' /> No GUI
-                    </Label>
-                  </div>
+                  {config.serverType !== 'velocity' && config.serverType !== 'waterfall' && (
+                    <div className='flex items-center space-x-2'>
+                      <Checkbox
+                        id='gui'
+                        checked={config.gui}
+                        onCheckedChange={checked => handleInputChange('gui', checked)}
+                      />
+                      <Label htmlFor='gui' className='flex items-center gap-2'>
+                        <SquareTerminal className='h-4 w-4' /> No GUI
+                      </Label>
+                    </div>
+                  )}
                   <div className='flex items-center space-x-2'>
                     <Checkbox
                       id='variables'

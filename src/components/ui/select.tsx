@@ -42,8 +42,8 @@ export function SelectTrigger({ className, children, ...props }: React.Component
         'flex h-10 w-full items-center justify-between rounded-md border-2 border-neutral-700',
         'bg-neutral-800 px-3 py-2 text-sm text-neutral-200',
         'ring-offset-neutral-900 placeholder:text-neutral-500',
-        'focus:ring-2 focus:ring-blue-500 focus:outline-none',
-        'transition-colors hover:border-blue-500/50',
+        'focus:ring-2 focus:ring-white focus:outline-none',
+        'transition-colors hover:border-white/50',
         'disabled:cursor-not-allowed disabled:opacity-50',
         '[&>span]:line-clamp-1',
         className,
@@ -108,8 +108,8 @@ export function SelectItem({ className, children, ...props }: React.ComponentPro
     <Item
       className={cn(
         'relative flex w-full cursor-default items-center rounded-sm py-1.5 pr-8 pl-2 text-sm select-none',
-        'outline-none focus:bg-blue-500/20 focus:text-neutral-200',
-        'transition-colors hover:bg-blue-500/10',
+        'outline-none focus:bg-white/20 focus:text-neutral-200',
+        'transition-colors hover:bg-white/10',
         'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
         className,
       )}
@@ -117,7 +117,7 @@ export function SelectItem({ className, children, ...props }: React.ComponentPro
     >
       <span className='absolute right-2 flex size-3.5 items-center justify-center'>
         <ItemIndicator>
-          <Check className='size-4 text-blue-500' />
+          <Check className='size-4 text-white' />
         </ItemIndicator>
       </span>
       <ItemText>{children}</ItemText>

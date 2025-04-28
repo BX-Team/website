@@ -13,9 +13,9 @@ function Checkbox({ className, ...props }: React.ComponentProps<typeof CheckboxP
       data-slot='checkbox'
       className={cn(
         'peer border-2 border-neutral-700 bg-neutral-800',
-        'data-[state=checked]:border-blue-500 data-[state=checked]:bg-blue-500',
-        'focus-visible:ring-2 focus-visible:ring-blue-500/50',
-        'transition-colors hover:border-blue-500/50',
+        'data-[state=checked]:border-white data-[state=checked]:bg-white',
+        'focus-visible:ring-2 focus-visible:ring-white/50',
+        'transition-colors hover:border-white/50',
         'aria-invalid:ring-destructive/20 aria-invalid:border-destructive',
         'size-5 shrink-0 rounded-md shadow-sm',
         'disabled:cursor-not-allowed disabled:opacity-50',
@@ -25,7 +25,7 @@ function Checkbox({ className, ...props }: React.ComponentProps<typeof CheckboxP
     >
       <CheckboxPrimitive.Indicator
         data-slot='checkbox-indicator'
-        className='flex items-center justify-center text-white transition-none'
+        className='flex items-center justify-center text-black transition-none'
       >
         <CheckIcon className='size-4' />
       </CheckboxPrimitive.Indicator>
