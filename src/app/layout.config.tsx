@@ -35,22 +35,22 @@ export const baseOptions: BaseLayoutProps = {
           },
         },
         {
+          icon: <Cuboid />,
+          text: 'DivineMC',
+          description: 'Fork of Purpur compatible with Spigot plugins, offering the best performance for your server.',
+          url: '/docs/divinemc',
+          menu: {
+            className: 'lg:col-start-2 lg:row-start-1 lg:col-span-1',
+          },
+        },
+        {
           icon: <DollarSign />,
           text: 'NDailyRewards',
           description:
             'Simple and lightweight plugin that allows you to reward your players for playing on your server every day.',
           url: '/docs/ndailyrewards',
           menu: {
-            className: 'lg:col-start-2 lg:row-start-1 lg:col-span-1 text-sm',
-          },
-        },
-        {
-          icon: <Cuboid />,
-          text: 'DivineMC',
-          description: 'Fork of Purpur compatible with Spigot plugins, offering the best performance for your server.',
-          url: '/docs/divinemc',
-          menu: {
-            className: 'lg:col-start-1 lg:row-start-2 lg:col-span-1 text-sm',
+            className: 'lg:col-start-3 lg:row-start-1 lg:col-span-1',
           },
         },
         {
@@ -59,7 +59,7 @@ export const baseOptions: BaseLayoutProps = {
           description: 'Synchronize time and weather from the real world to the game.',
           url: '/docs/realworldsync',
           menu: {
-            className: 'lg:col-start-2 lg:row-start-2 lg:col-span-1 text-lg',
+            className: 'lg:col-start-4 lg:row-start-1 lg:col-span-1',
           },
         },
       ],
