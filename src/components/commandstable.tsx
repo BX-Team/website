@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import React, { useEffect, useState } from 'react';
 import { Toaster } from '@/components/ui/sonner';
-import { toast } from "sonner"
+import { toast } from 'sonner';
 
 interface Command {
   name: string;

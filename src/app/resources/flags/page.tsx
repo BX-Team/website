@@ -17,7 +17,7 @@ import { extraFlags } from '@/lib/flags/flags';
 import { generateResult } from '@/lib/flags/generateResult';
 import type { ExtraFlagType, flagsSchema } from '@/lib/flags/generateResult';
 import { Toaster } from '@/components/ui/sonner';
-import { toast } from "sonner"
+import { toast } from 'sonner';
 
 const defaults: flagsSchema = {
   operatingSystem: 'linux',
