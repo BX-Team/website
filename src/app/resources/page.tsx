@@ -6,14 +6,6 @@ import { GradientBackground } from '@/components/ui/gradient-background';
 export default async function ResourcesPage() {
   const sections = [
     {
-      title: 'Gradient Tools',
-      sub: 'Tools to help you create gradient text in Minecraft.',
-      items: [
-        { title: 'RGB Generator', href: '/resources/rgb', desc: 'Hex gradient text generator, Powered by BX Team.' },
-        { title: 'Animated TAB', href: '/resources/animtab', desc: 'TAB plugin gradient animation creator' },
-      ],
-    },
-    {
       title: 'Server Tools',
       sub: 'Tools to help configure and setup Minecraft servers.',
       items: [
