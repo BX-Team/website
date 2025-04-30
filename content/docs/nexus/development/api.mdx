@@ -12,7 +12,7 @@ To use Nexus API you need to add our repository and Nexus to your repositories a
 
 Depending on the build system you are using, add the following code to your project:
 
-<Tabs items={['Gradle Kotlin', 'Gradle Groovy', 'Maven']}>
+<Tabs groupId="language" items={['Gradle Kotlin', 'Gradle Groovy', 'Maven']}>
   <Tab value='Gradle Kotlin'>
     ```kotlin
     maven { url = uri("https://repo.bxteam.org/releases") }
@@ -34,7 +34,7 @@ Depending on the build system you are using, add the following code to your proj
   </Tab>
 </Tabs>
 
-<Tabs items={['Gradle Kotlin', 'Gradle Groovy', 'Maven']}>
+<Tabs groupId="language" items={['Gradle Kotlin', 'Gradle Groovy', 'Maven']}>
   <Tab value='Gradle Kotlin'>
     ```kotlin
     implementation("space.bxteam:nexus:0.4.0")
