@@ -1,0 +1,66 @@
+---
+icon: MonitorCog
+title: Setting up Sentry
+description: A basic guide to setting up Sentry integration with DivineMC.
+---
+
+# Setting up Sentry Integration
+
+<Steps>
+  <Step>
+    ## Prerequisites
+
+    1. **Sentry Account:** You need an account on [sentry.io](https://sentry.io/). They offer free tiers suitable for many servers.  
+    2. **Sentry Project:** Create a new project within your Sentry organization.  
+       - When asked for the platform, choose **Java**. If Java isn't immediately visible, select "Other" or search for it.  
+    3. **DSN (Data Source Name):** Once your project is created, navigate to its settings. Under **Client Keys (DSN)** copy the DSN string, which looks like:  
+       ```
+       https://xxxxxxxxxxxxxxxxxxxxxxxx@o######.ingest.sentry.io/#######
+       ```
+  </Step>
+
+  <Step>
+    ## Configuration Steps
+
+    1. **Open DivineMC config file**  
+       Open `divinemc.yml` file located in the root of your server directory.
+
+    2. **Find the Sentry Section**  
+       Locate the `sentry:` block, which by default looks like:
+       ```yaml
+       sentry:
+         # The DSN for Sentry, a service that provides real-time crash reporting that helps you monitor and fix crashes in real time. Leave blank to disable. Obtain link at https://sentry.io
+         dsn: ''
+         # Logs with a level higher than or equal to this level will be recorded.
+         log-level: WARN
+         # Only log Throwable exceptions to Sentry.
+         only-log-thrown: true
+       ```
+
+    3. **Configure the Settings**  
+       - **`dsn`:** Replace the empty quotes with your DSN, e.g.  
+         ```yaml
+         dsn: 'https://xxxxxxxxxxxxxxxxxxxxxxxx@o######.ingest.sentry.io/#######'
+         ```  
+       - **`log-level`:** Choose severity threshold (`ERROR`, `WARN`, `INFO`, `DEBUG`). Default is `WARN`.  
+       - **`only-log-thrown`:**  
+         - `true`: Only send logs with a Java `Throwable` (recommended).  
+         - `false`: Send any log at or above the threshold.  
+  </Step>
+
+  <Step>
+    ## Save & Restart
+
+    Finally, save the `divinemc.yml` file and restart your server. Sentry should now be integrated and ready to capture errors and logs based on your configuration.
+  </Step>
+</Steps>
+
+# Troubleshooting Tips
+
+- **Errors not appearing?**  
+  - Confirm DSN is correct and in quotes.  
+  - Ensure firewall allows outbound to <code>ingest.sentry.io:443</code>.  
+
+- **Too much noise?**  
+  - Raise <code>log-level</code> to <code>ERROR</code>.  
+  - Ensure <code>only-log-thrown</code> remains <code>true</code>.  

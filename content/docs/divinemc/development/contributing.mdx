@@ -21,7 +21,7 @@ which can be obtained in (most) package managers such as `apt` (Debian / Ubuntu;
 you will most likely use this for WSL), `homebrew` (macOS / Linux), and more:
 
 - `git` (package `git` everywhere);
-- A Java 22 or later JDK (packages vary, use Google/DuckDuckGo/etc.).
+- A Java 21 or later JDK (packages vary, use Google/DuckDuckGo/etc.).
     - [Adoptium](https://adoptium.net/) has builds for most operating systems.
     - DivineMC requires JDK 21 to build, however, makes use of Gradle's
       [Toolchains](https://docs.gradle.org/current/userguide/toolchains.html)
@@ -36,11 +36,11 @@ If you're compiling with Docker, you can use Adoptium's
 [`eclipse-temurin`](https://hub.docker.com/_/eclipse-temurin/) images like so:
 
 ```console
-# docker run -it -v "$(pwd)":/data --rm eclipse-temurin:22.0.2_9-jdk bash
+# docker run -it -v "$(pwd)":/data --rm eclipse-temurin:21.0.6_7-jdk bash
 Pulling image...
 
 root@abcdefg1234:/# javac -version
-javac 22.0.2
+javac 21.0.6
 ```
 
 ## Understanding Patches

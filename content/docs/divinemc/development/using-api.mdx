@@ -1,0 +1,66 @@
+---
+icon: Wrench
+title: Using DivineMC API
+description: A basic guide to using the DivineMC API.
+---
+
+# API
+
+DivineMC have some updates to default Paper API, so you can use DivineMC API to access some features that are not available in Paper API.
+
+<Tabs items={['build.gradle.kts', 'pom.xml']}>
+  <Tab value='build.gradle.kts'>
+    ```kotlin
+    repositories {
+        maven {
+            url = uri("https://repo.bxteam.org/snapshots")
+        }
+    }
+
+    dependencies {
+        compileOnly("org.bxteam.divinemc:divinemc-api:1.21.5-R0.1-SNAPSHOT")
+    }
+
+    java {
+        toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+    }
+    ```
+  </Tab>
+  <Tab value='pom.xml'>
+    ```xml
+    <repository>
+        <id>bx-team-snapshots</id>
+        <name>BX Team Repository</name>
+        <url>https://repo.bxteam.org/snapshots</url>
+    </repository>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.bxteam.divinemc</groupId>
+            <artifactId>divinemc-api</artifactId>
+            <version>1.21.5-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+    ```
+  </Tab>
+</Tabs>
+
+# Dev Bundle
+
+Dev bundle is a tool provided by paperweight, which can easily access Minecraft NMS code during plugin development, See how to setup it and more details in [paperweight-userdev](https://docs.papermc.io/paper/dev/userdev).
+
+To be able to use the dev bundle provided by DivineMC, you need to make following changes to the dependency that provides in the tutorial above.
+
+```kotlin
+repositories {
+  maven {
+    url = uri("https://repo.bxteam.org/snapshots")
+  }
+}
+
+dependencies {
+    paperweight.paperDevBundle("1.21.5-R0.1-SNAPSHOT") // [!code --]
+    paperweight.devBundle("org.bxteam.divinemc", "1.21.5-R0.1-SNAPSHOT") // [!code ++]
+}
+```
