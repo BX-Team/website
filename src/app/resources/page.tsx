@@ -25,7 +25,7 @@ export default async function ResourcesPage() {
         <header className='mx-auto max-w-3xl text-center'>
           <h1 className='text-3xl font-bold sm:text-4xl lg:text-5xl'>Resources</h1>
           <p className='mt-4 text-neutral-300 sm:text-lg'>
-            Our site provides various tools and resources to help Minecraft server owners and developers.
+            A collection of tools and resources to help you with your Minecraft server.
           </p>
         </header>
 

@@ -3,7 +3,6 @@ import { Cloudy, Cuboid, DollarSign, Drill } from 'lucide-react';
 
 import Image from 'next/image';
 
-import { DiscordIcon } from '@/components/icons';
 import { siteConfig } from '@/config/site';
 
 export const baseOptions: BaseLayoutProps = {
