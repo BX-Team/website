@@ -1,10 +1,10 @@
 'use client';
 
 import axios from 'axios';
-import { Bounce, ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import React, { useEffect, useState } from 'react';
+import { Toaster } from '@/components/ui/sonner';
+import { toast } from 'sonner';
 
 interface Command {
   name: string;
@@ -75,19 +75,7 @@ const CommandsTable: React.FC = () => {
           ))}
         </tbody>
       </table>
-      <ToastContainer
-        position='bottom-right'
-        autoClose={2000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme='colored'
-        transition={Bounce}
-      />
+      <Toaster richColors />
     </div>
   );
 };

@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import Image from 'next/image';
 
 import { baseOptions } from '@/app/layout.config';
-import { DocsLayout } from '@/components/layouts/notebook';
+import { DocsLayout } from 'fumadocs-ui/layouts/notebook';
 import { source } from '@/lib/source';
 
 export default function Layout({ children }: { children: ReactNode }) {
