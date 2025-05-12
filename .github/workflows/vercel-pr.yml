@@ -1,0 +1,26 @@
+name: Deploy Preview to Vercel
+
+on:
+  pull_request:
+    branches:
+      - "master"
+  
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.commits[0].message, '[skip-deploy]')"
+    environment:
+      name: Preview
+      url: ${{ steps.vercel-deploy.outputs.preview-url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v20
+        id: vercel-deploy
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}
