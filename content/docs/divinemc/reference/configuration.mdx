@@ -52,126 +52,20 @@ world-settings:
       allow-entity-portal-with-passenger: true
       # Bring back MC-59471, MC-129055 on 1.21.2+, which fixed in 1.21.2 snapshots 24w33a and 24w36a
       allow-tripwire-dupe: false
-version: 5
-settings:
-  multithreaded-tracker:
-    # Make entity tracking saving asynchronously, can improve performance significantly,
-    # especially in some massive entities in small area situations.
-    enable: true
-    # Enable compat mode ONLY if Citizens or NPC plugins using real entity has installed.
-    # Compat mode fixes visible issues with player type NPCs of Citizens.
-    # But we recommend to use packet based / virtual entity NPC plugin, e.g. ZNPC Plus, Adyeshach, Fancy NPC and etc.
-    compat-mode: false
-    max-threads: 1
-    keepalive: 60
-    queue-size: 0
-  parallel-world-ticking:
-    # Enables Parallel World Ticking, which executes each world’s tick in a separate thread while ensuring that all worlds complete their tick before the next cycle begins.
-    # 
-    # Read more info about this feature at https://bxteam.org/docs/divinemc/features/parallel-world-ticking
-    enable: false
-    thread-count: 4
-    log-container-creation-stacktraces: false
-    # Disables annoying 'not on main thread' throws. But, THIS IS NOT RECOMMENDED because you SHOULD FIX THE ISSUES THEMSELVES instead of RISKING DATA CORRUPTION! If you lose something, take the blame on yourself.
-    disable-hard-throw: false
-    # Enables compatibility mode for plugins that are not compatible with Parallel World Ticking. This makes all async tasks run synchronously.
-    compatability-mode: false
-  regionized-chunk-ticking:
-    # Enables regionized chunk ticking, similar to like Folia works.
-    # 
-    # Read more info about this feature at https://bxteam.org/docs/divinemc/features/regionized-chunk-ticking
-    enable: false
-    # The amount of threads to allocate to regionized chunk ticking.
-    executor-thread-count: 4
-    # Configures the thread priority of the executor
-    executor-thread-priority: 7
-  virtual-threads:
-    # Enables use of virtual threads that was added in Java 21
-    enabled: false
-    # Uses virtual threads for the Bukkit scheduler.
-    bukkit-scheduler: false
-    # Uses virtual threads for the Chat scheduler.
-    chat-scheduler: false
-    # Uses virtual threads for the Authenticator scheduler.
-    authenticator-scheduler: false
-    # Uses virtual threads for the Tab Complete scheduler.
-    tab-complete-scheduler: false
-    # Uses virtual threads for the MCUtil async executor.
-    async-executor: false
-    # Uses virtual threads for the Async Command Builder Thread Pool.
-    command-builder-scheduler: false
-    # Uses virtual threads for the Profile Lookup Pool, that is used for fetching player profiles.
-    profile-lookup-pool: false
-    # Uses virtual threads for the server text filter pool.
-    server-text-filter-pool: false
-  # DAB is an optimization that reduces the frequency of brain ticks. Brain ticks are very intensive, which is why they
-  # are limited. DAB can be tuned to meet your preferred performance-experience tradeoff. The farther away entities
-  # are from players, the less frequently their brains will be ticked. While DAB does impact the AI goal selector
-  # behavior of all entities, the only entities who's brain ticks are limited are: Villager, Axolotl, Hoglin, Zombified Piglin and Goat
-  dab:
-    # Enables DAB feature
-    enabled: true
-    # This value determines how far away an entity has to be
-    start-distance: 12
-    # How often in ticks, the furthest entity will get their pathfinders and behaviors ticked.
-    maximum-activation-frequency: 20
-    # Modifies an entity's tick frequency.
-    # The exact calculation to obtain the tick frequency for an entity is: freq = (distanceToPlayer^2) / (2^value), where value is this configuration setting.
-    # Large servers may want to reduce the value to 7, but this value should never be reduced below 6. If you want further away entities to tick more often, set the value to 9
-    activation-distance-mod: 8
-    # When this is enabled, non-aquatic entities in the water will not be affected by DAB.
-    dont-enable-if-in-water: false
-    # Use this configuration option to specify that certain entities should not be impacted by DAB.
-    blacked-entities: []
-  async-pathfinding:
-    enable: true
-    max-threads: 2
-    keepalive: 60
-    queue-size: 0
-    # The policy to use when the queue is full and a new task is submitted.
-    # FLUSH_ALL: All pending tasks will be run on server thread.
-    # CALLER_RUNS: Newly submitted task will be run on server thread.
-    reject-policy: CALLER_RUNS
-  misc:
-    skip-useless-secondary-poi-sensor: true
-    # Clumps experience orbs together to reduce entity count
-    clump-orbs: true
-    # Improves general gameplay experience of the player when the server is lagging, as they won't get lagged back (message 'moved too quickly')
-    ignore-moved-too-quickly-when-lagging: true
-    # Means ignoring messages like 'moved too quickly' and 'moved wrongly'
-    always-allow-weird-movement: true
-    update-suppression-crash-fix: true
-    # Fixes memory waste caused by sending empty chunks as if they contain blocks. Can significantly reduce memory usage.
-    use-compact-bit-storage: false
-    # Fixes incorrect bounce logic in SlimeBlock.
-    fix-incorrect-bounce-logic: false
-    # Whether to force the use of vanilla commands over plugin commands.
-    force-minecraft-command: false
-    # Disables leaf block decay.
-    disable-leaf-decay: false
-    # Caches the parse results of command blocks, can significantly reduce performance impact.
-    command-block-parse-results-caching: true
-    # Enables optimization that will offload much of the computational effort involved with spawning new mobs to a different thread.
-    enable-async-spawning: true
-  lag-compensation:
-    # Improves the player experience when TPS is low
-    enabled: true
-    block-entity-acceleration: false
-    block-breaking-acceleration: true
-    eating-acceleration: true
-    potion-effect-acceleration: true
-    fluid-acceleration: true
-    pickup-acceleration: true
-    portal-acceleration: true
-    time-acceleration: true
-    random-tick-speed-acceleration: true
-  network:
+version: 6
+network:
+  general:
     # Prevents players being disconnected by 'disconnect.spam' when sending too many chat packets
     disable-disconnect-spam: false
     # Disables being disconnected from 'multiplayer.disconnect.invalid_player_movement' (also declines the packet handling).
     graceful-teleport-handling: false
     # Prevents the server from responding to pings before the server is fully booted.
     dont-respond-ping-before-start: true
+  player-profile-result-caching:
+    # Enables caching of player profile results on first join.
+    enabled: true
+    # The amount of time in minutes to cache player profile results.
+    timeout: 1440
   no-chat-reports:
     # Enables or disables the No Chat Reports feature
     enabled: false
@@ -185,20 +79,49 @@ settings:
     # Message to send to the client when they are disconnected for not having No Chat Reports
     disconnect-demand-on-client-message: You do not have No Chat Reports, and this
       server is configured to require it on client!
-  # The linear region file format is a custom region file format that is designed to be more efficient than the MCA format.
+misc:
+  secure-seed:
+    # This feature is based on Secure Seed mod by Earthcomputer.
+    # 
+    # Terrain and biome generation remains the same, but all the ores and structures are generated with 1024-bit seed, instead of the usual 64-bit seed.
+    # This seed is almost impossible to crack, and there are no weird links between structures.
+    enable: false
+  lag-compensation:
+    # Improves the player experience when TPS is low
+    enabled: true
+    block-entity-acceleration: false
+    block-breaking-acceleration: true
+    eating-acceleration: true
+    potion-effect-acceleration: true
+    fluid-acceleration: true
+    pickup-acceleration: true
+    portal-acceleration: true
+    time-acceleration: true
+    random-tick-speed-acceleration: true
+  # The linear region file format is a custom region file format that is designed to be more efficient than the ANVIL format.
   # It uses uses ZSTD compression instead of ZLIB. This format saves about 50% of disk space.
   # Read more information about linear region format at https://github.com/xymb-endcrystalme/LinearRegionFileFormatTools
   # WARNING: If you are want to use this format, make sure to create backup of your world before switching to it, there is potential risk to lose chunk data.
-  linear-region-format:
+  region-format:
     # The type of region file format to use for storing chunk data.
     # Valid values:
     #  - LINEAR: Linear region file format
-    #  - MCA: Anvil region file format (default)
-    type: MCA
+    #  - ANVIL: Anvil region file format (default)
+    type: ANVIL
+    # The implementation of the linear region file format to use.
+    # Valid values:
+    #  - V1: Basic and default linear implementation
+    #  - V2: Introduces a grid-based compression scheme for better data management and flexibility (default)
+    implementation: V2
+    # The maximum number of threads to use for flushing linear region files.
+    # If this value is less than or equal to 0, it will be set to the number of available processors + this value.
+    flush-max-threads: 4
+    # The delay in milliseconds to wait before flushing next files.
+    flush-delay: 100
+    # Whether to use virtual threads for flushing.
+    use-virtual-thread: false
     # The compression level to use for the linear region file format.
     compression-level: 1
-    # The frequency in seconds to flush the linear region file format.
-    flush-frequency: 5
   sentry:
     # The DSN for Sentry, a service that provides real-time crash reporting that helps you monitor and fix crashes in real time. Leave blank to disable. Obtain link at https://sentry.io
     dsn: ''
@@ -206,6 +129,24 @@ settings:
     log-level: WARN
     # Only log Throwable exceptions to Sentry.
     only-log-thrown: true
+fixes:
+  gameplay:
+    # Fixes incorrect bounce logic in SlimeBlock.
+    fix-incorrect-bounce-logic: false
+    update-suppression-crash-fix: true
+    # Improves general gameplay experience of the player when the server is lagging, as they won't get lagged back (message 'moved too quickly')
+    ignore-moved-too-quickly-when-lagging: true
+    # Means ignoring messages like 'moved too quickly' and 'moved wrongly'
+    always-allow-weird-movement: true
+  misc:
+    # Whether to force the use of vanilla commands over plugin commands.
+    force-minecraft-command: false
+    # Disables leaf block decay.
+    disable-leaf-decay: false
+  bug:
+    # Fixes MC-258859, fixing slopes visual bug in biomes like Snowy Slopes, Frozen Peaks, Jagged Peaks, and including Terralith.
+    fix-mc-258859: false
+performance:
   chunks:
     chunk-data-cache-soft-limit: 8192
     chunk-data-cache-limit: 32678
@@ -231,18 +172,18 @@ settings:
     chunk-task-priority: EUCLIDEAN_CIRCLE_PATTERN
     # Sets the priority of the thread pool used for chunk generation
     thread-pool-priority: 6
-    # This feature is based on Secure Seed mod by Earthcomputer.
-    # 
-    # Terrain and biome generation remains the same, but all the ores and structures are generated with 1024-bit seed, instead of the usual 64-bit seed.
-    # This seed is almost impossible to crack, and there are no weird links between structures.
-    enable-secure-seed: false
-    # Makes chunk sending asynchronous, which can significantly reduce main thread load when many players are loading chunks.
-    enable-async-chunk-sending: true
     # Smoothens the bedrock layer at the bottom of overworld, and on the top of nether during the world generation.
     smooth-bedrock-layer: false
-    # Fixes MC-258859, fixing slopes visual bug in biomes like Snowy Slopes, Frozen Peaks, Jagged Peaks, and including Terralith.
-    slopes-visual-fix: false
     experimental:
+      # Whether to use density function compiler to accelerate world generation
+      # 
+      # Density function: https://minecraft.wiki/w/Density_function
+      # 
+      # This functionality compiles density functions from world generation
+      # datapacks (including vanilla generation) to JVM bytecode to increase
+      # performance by allowing JVM JIT to better optimize the code.
+      # All functions provided by vanilla are implemented.
+      enable-density-function-compiler: false
       # Enables a port of the mod StructureLayoutOptimizer, which optimizes general Jigsaw structure generation
       enable-structure-layout-optimizer: true
       # Whether to use an alternative strategy to make structure layouts generate slightly even faster than
@@ -257,4 +198,111 @@ settings:
     enable-faster-tnt-optimization: true
     explosion-no-block-damage: false
     tnt-random-range: -1.0
+  optimizations:
+    skip-useless-secondary-poi-sensor: true
+    # Clumps experience orbs together to reduce entity count
+    clump-orbs: true
+    # Optimizes the suffocation check by selectively skipping the check in a way that still appears vanilla.
+    # This option should be left enabled on most servers, but is provided as a configuration option if the vanilla deviation is undesirable.
+    enable-suffocation-optimization: true
+    # Fixes memory waste caused by sending empty chunks as if they contain blocks. Can significantly reduce memory usage.
+    use-compact-bit-storage: false
+    # Caches the parse results of command blocks, can significantly reduce performance impact.
+    command-block-parse-results-caching: true
+    # Enables optimization from Carpet Fixes mod, using a prebaked list of all the possible colors and combinations for sheep.
+    sheep-optimization: true
+    # When enabled, improving performance and reducing lag during the dragon’s resurrection event.
+    optimized-dragon-respawn: false
+    # If enabled, optimizes chunk loading and block state lookups by reducing the number of chunk accesses required during operations such as Enderman teleportation.
+    reduce-chunk-load-and-lookup: true
+    hopper-throttle-when-full:
+      # When enabled, hoppers will throttle if target container is full.
+      enabled: false
+      # The amount of ticks to skip when the hopper is throttled.
+      skip-ticks: 0
+  # DAB is an optimization that reduces the frequency of brain ticks. Brain ticks are very intensive, which is why they
+  # are limited. DAB can be tuned to meet your preferred performance-experience tradeoff. The farther away entities
+  # are from players, the less frequently their brains will be ticked. While DAB does impact the AI goal selector
+  # behavior of all entities, the only entities who's brain ticks are limited are: Villager, Axolotl, Hoglin, Zombified Piglin and Goat
+  dab:
+    # Enables DAB feature
+    enabled: true
+    # This value determines how far away an entity has to be
+    start-distance: 12
+    # How often in ticks, the furthest entity will get their pathfinders and behaviors ticked.
+    maximum-activation-frequency: 20
+    # Modifies an entity's tick frequency.
+    # The exact calculation to obtain the tick frequency for an entity is: freq = (distanceToPlayer^2) / (2^value), where value is this configuration setting.
+    # Large servers may want to reduce the value to 7, but this value should never be reduced below 6. If you want further away entities to tick more often, set the value to 9
+    activation-distance-mod: 8
+    # When this is enabled, non-aquatic entities in the water will not be affected by DAB.
+    dont-enable-if-in-water: false
+    # Use this configuration option to specify that certain entities should not be impacted by DAB.
+    blacked-entities: []
+  virtual-threads:
+    # Enables use of virtual threads that was added in Java 21
+    enabled: false
+    # Uses virtual threads for the Bukkit scheduler.
+    bukkit-scheduler: false
+    # Uses virtual threads for the Chat scheduler.
+    chat-scheduler: false
+    # Uses virtual threads for the Authenticator scheduler.
+    authenticator-scheduler: false
+    # Uses virtual threads for the Tab Complete scheduler.
+    tab-complete-scheduler: false
+    # Uses virtual threads for the MCUtil async executor.
+    async-executor: false
+    # Uses virtual threads for the Async Command Builder Thread Pool.
+    command-builder-scheduler: false
+    # Uses virtual threads for the Profile Lookup Pool, that is used for fetching player profiles.
+    profile-lookup-pool: false
+    # Uses virtual threads for the server text filter pool.
+    server-text-filter-pool: false
+async:
+  parallel-world-ticking:
+    # Enables Parallel World Ticking, which executes each world's tick in a separate thread while ensuring that all worlds complete their tick before the next cycle begins.
+    # 
+    # Read more info about this feature at https://bxteam.org/docs/divinemc/features/parallel-world-ticking
+    enable: false
+    thread-count: 4
+    log-container-creation-stacktraces: false
+    # Disables annoying 'not on main thread' throws. But, THIS IS NOT RECOMMENDED because you SHOULD FIX THE ISSUES THEMSELVES instead of RISKING DATA CORRUPTION! If you lose something, take the blame on yourself.
+    disable-hard-throw: false
+    # Enables compatibility mode for plugins that are not compatible with Parallel World Ticking. This makes all async tasks run synchronously.
+    compatability-mode: false
+  regionized-chunk-ticking:
+    # Enables regionized chunk ticking, similar to like Folia works.
+    # 
+    # Read more info about this feature at https://bxteam.org/docs/divinemc/features/regionized-chunk-ticking
+    enable: false
+    # The amount of threads to allocate to regionized chunk ticking.
+    executor-thread-count: 4
+    # Configures the thread priority of the executor
+    executor-thread-priority: 7
+  pathfinding:
+    enable: true
+    max-threads: 2
+    keepalive: 60
+    queue-size: 0
+    # The policy to use when the queue is full and a new task is submitted.
+    # FLUSH_ALL: All pending tasks will be run on server thread.
+    # CALLER_RUNS: Newly submitted task will be run on server thread.
+    reject-policy: CALLER_RUNS
+  multithreaded-tracker:
+    # Make entity tracking saving asynchronously, can improve performance significantly,
+    # especially in some massive entities in small area situations.
+    enable: true
+    # Enable compat mode ONLY if Citizens or NPC plugins using real entity has installed.
+    # Compat mode fixes visible issues with player type NPCs of Citizens.
+    # But we recommend to use packet based / virtual entity NPC plugin, e.g. ZNPC Plus, Adyeshach, Fancy NPC and etc.
+    compat-mode: false
+    max-threads: 1
+    keepalive: 60
+    queue-size: 0
+  chunk-sending:
+    # Makes chunk sending asynchronous, which can significantly reduce main thread load when many players are loading chunks.
+    enable: true
+  mob-spawning:
+    # Enables optimization that will offload much of the computational effort involved with spawning new mobs to a different thread.
+    enable: true
 ```
