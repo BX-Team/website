@@ -12,6 +12,7 @@
 
     "---Features---",
     "features/parallel-world-ticking",
+    "features/regionized-chunk-ticking",
 
     "---Guides---",
     "guides/setting-up-sentry",

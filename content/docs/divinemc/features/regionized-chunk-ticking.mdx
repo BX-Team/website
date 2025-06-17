@@ -1,11 +1,11 @@
 ---
 icon: Table
 title: Regionized Chunk Ticking
-description: More info about a regionized chunk ticking system. 
+description: Basic introduction to Regionized Chunk Ticking (RCT) in DivineMC, its benefits, and how it works.
 ---
 
 <Callout type='info'>
-    This feature was originally took from [CanvasMC](https://github.com/CraftCanvasMC/Canvas), all credits go to them for the original implementation.
+    This feature was originally took from [CanvasMC](https://github.com/CraftCanvasMC/Canvas), before introduction of Threading Regions. All credits go to them for the original implementation.
 </Callout>
 
 ## Basics
@@ -20,10 +20,6 @@ DivineMC's RCT implementation is much simpler. Each tick, all currently active c
 Once these groups are formed, the server processes them simultaneously instead of ticking them sequentially.
 While this approach is not as fast as Folia's, it provides better compatibility with existing plugins.
 
-<Callout type='warn'>
-    Additionally, RCT may cause compatibility issues with some plugins. If something breaks, try disabling RCT first!
-</Callout>
-
 ## Technical Details
 
 Regionized Chunk Ticking is actually simpler than you might expect. We mainly had to solve two problems.
@@ -32,11 +28,14 @@ Regionized Chunk Ticking is actually simpler than you might expect. We mainly ha
 
 For the first challenge, the existing code was already structured to pass a list of chunks to a separate function for ticking. 
 We simply intercepted that list and split it into groups!
-The algorithm used for this task is Depth-first Search (DFS), executed from scratch every tick.
 
-DFS recursively processes each chunk, adding it to a group until no more connected and unvisited chunks remain. 
-Then, it moves to the next unvisited chunk and repeats the process until all chunks have been assigned to groups.
-By storing these groups in a list, we successfully separate the original list into multiple isolated chunk groups!
+In our latest implementation, we use a more efficient approach to group chunks. The algorithm now:
+
+1. First identifies chunks around each player based on view distance
+2. Merges overlapping player regions to form larger cohesive regions
+3. Uses a thread pool to process these regions simultaneously
+
+This approach ensures that player-centered regions are ticked efficiently while maintaining server stability.
 
 ### Ticking Chunks
 
@@ -45,9 +44,23 @@ Since touching chunks are always in the same group, all ticked regions are guara
 Additionally, because regions are rebuilt every tick, interactions only need to be considered within the current tick.
 There are very few, if any, cases where separate, non-connected chunks interact within the same tick. As long as those edge cases are accounted for, parallelization is safe!
 
+### Parallel Entity Ticking (PET)
+
+Our latest update introduces Parallel Entity Ticking (PET), a feature designed specifically to complement RCT. With PET:
+
+1. Entities are assigned to their respective regions based on their chunk location
+2. Each region ticks its own entities in parallel
+3. Entities outside of any player region are ticked separately
+
+This approach significantly improves performance on servers with many entities, as entity processing is often one of the most CPU-intensive tasks in Minecraft. By distributing entity ticking across multiple threads, we can utilize modern multi-core processors much more efficiently.
+
+PET includes special synchronization mechanisms to ensure thread safety while minimizing overhead, making it both safe and efficient.
+
 ### DivineMC vs Folia
 
 If you're familiar with Folia, you may notice a key difference in RCT behavior. 
 In Folia, each region ticks independently, similar to how DivineMC handles different worlds separately. This means that if one region lags, the others remain unaffected.
 DivineMC, however, waits for all regions to finish processing before moving on to the next tick. 
-This design choice ensures stability since regions are rebuilt every tick. If the server didn’t wait for all regions to complete, some chunks could be ticked twice (or not at all) within the same tick cycle.
+This design choice ensures stability since regions are rebuilt every tick. If the server didn't wait for all regions to complete, some chunks could be ticked twice (or not at all) within the same tick cycle.
+
+While our approach may not achieve the same level of isolation as Folia, it strikes a balance between performance improvement and plugin compatibility, making it a practical solution for most Minecraft servers.

@@ -8,10 +8,11 @@ description: Basic information about DivineMC.
 DivineMC is a high-performance Purpur fork focused on maximizing server performance while maintaining plugin compatibility. We are exploring new ways to improve the performance of Minecraft servers, and we are committed to providing the best possible experience for our users. DivineMC is designed to be compatible with Spigot plugins, so you can use your favorite plugins without any issues.
 
 ## Key Features
-- All worlds **are ticked in parallel**, so the server can take full advantage of multicore processors.
-- **Implemented Secure Seed mod** that changes default 64-bit seed to a 1024-bit seed, making it almost impossible to crack the seed.
+- **Regionized Chunk Ticking** feature that allows to tick chunks in parallel, similar to how Folia does it.
+- Implemented **Parallel world ticking** feature, that allows to server take advantage of multiple CPU cores to tick worlds.
+- Implemented **Secure Seed** mod that changes default 64-bit seed to a 1024-bit seed, making it almost impossible to crack the seed.
 - **Optimized chunk generation** that can generate chunks up to 70% faster than vanilla.
-- **Async** pathfinding, mob spawning and entity tracker
+- **Async** pathfinding, entity tracker, mob spawning and chunk sending.
 - Implemented **Linear region file format**
 - **Fixes** some Minecraft bugs
 - Integrated with [Sentry](https://sentry.io/welcome/) to easy track all errors coming from your server in excruciating detail (original by [Pufferfish](https://github.com/pufferfish-gg/Pufferfish))
