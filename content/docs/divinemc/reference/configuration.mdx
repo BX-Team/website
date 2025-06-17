@@ -38,6 +38,11 @@ Configuration values change frequently at times. It is possible for the informat
 
 world-settings:
   default:
+    unsupported-features:
+      # Enables or disables the fix of MC-67 bug: https://bugs-legacy.mojang.com/browse/MC-67
+      allow-entity-portal-with-passenger: true
+      # Bring back MC-59471, MC-129055 on 1.21.2+, which fixed in 1.21.2 snapshots 24w33a and 24w36a
+      allow-tripwire-dupe: false
     gameplay-mechanics:
       projectiles:
         snowball:
@@ -47,11 +52,6 @@ world-settings:
           knockback: true
         firework:
           disable-saving: false
-    unsupported-features:
-      # Enables or disables the fix of MC-67 bug: https://bugs-legacy.mojang.com/browse/MC-67
-      allow-entity-portal-with-passenger: true
-      # Bring back MC-59471, MC-129055 on 1.21.2+, which fixed in 1.21.2 snapshots 24w33a and 24w36a
-      allow-tripwire-dupe: false
 version: 6
 network:
   general:
