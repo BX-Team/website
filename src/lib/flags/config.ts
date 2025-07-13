@@ -25,12 +25,10 @@ export const config: Config = {
     default: 'server.jar',
   },
   flags: {
-    //@ts-ignore
-    type: z.nativeEnum(Object.keys(flags)),
+    type: z.enum(Object.keys(flags) as [string, ...string[]]),
   },
   extraFlags: {
-    //@ts-ignore
-    type: z.array(z.nativeEnum(Object.keys(extraFlags))),
+    type: z.array(z.enum(Object.keys(extraFlags) as [string, ...string[]])),
   },
   memory: {
     type: z.number().min(2).max(16),
