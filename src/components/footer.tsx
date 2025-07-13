@@ -33,9 +33,7 @@ const LINK_SECTIONS: { title: string; links: LinkItem[] }[] = [
   },
   {
     title: 'Resources',
-    links: [
-      { href: '/resources/flags', label: 'Flags Generator' },
-    ],
+    links: [{ href: '/resources/flags', label: 'Flags Generator' }],
   },
   {
     title: 'Community',

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.1.1/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["bun.lock", "content/docs"]
+    "includes": ["**", "!**/bun.lock", "!**/content/docs"]
   },
   "formatter": {
     "enabled": true,
@@ -19,54 +19,43 @@
     "lineWidth": 120,
     "attributePosition": "auto",
     "bracketSpacing": true,
-    "ignore": ["**/bun.lock", "content/docs"]
+    "includes": ["**", "!**/bun.lock", "!**/content/docs"]
   },
-  "organizeImports": {
-    "enabled": true
-  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
-      "a11y": {
-        "all": true
-      },
+      "a11y": {},
       "complexity": {
-        "all": true,
         "noForEach": "off"
       },
       "correctness": {
-        "all": true,
         "noUndeclaredVariables": "off",
-        "useImportExtensions": "off"
+        "useImportExtensions": "off",
+        "noUnknownPseudoClass": "off"
       },
       "nursery": {
-        "all": true,
         "useExplicitType": "off",
-        "useConsistentCurlyBraces": "off",
-        "useComponentExportOnlyModules": "off",
-        "noSecrets": "off",
-        "noProcessEnv": "off",
-        "noUnknownPseudoClass": "off",
-        "noNestedTernary": "off"
+        "noSecrets": "off"
       },
       "performance": {
-        "all": true,
         "useTopLevelRegex": "off"
       },
       "style": {
-        "all": true,
         "noImplicitBoolean": "off",
         "useNamingConvention": "off",
         "useBlockStatements": "off",
         "noDefaultExport": "off",
         "useExplicitLengthCheck": "off",
-        "useDefaultSwitchClause": "off"
+        "useDefaultSwitchClause": "off",
+        "useConsistentCurlyBraces": "off",
+        "useComponentExportOnlyModules": "off",
+        "noProcessEnv": "off",
+        "noNestedTernary": "off"
       },
       "suspicious": {
-        "all": true,
         "noConsole": "off",
-        "noConsoleLog": "off",
         "noReactSpecificProps": "off",
         "noArrayIndexKey": "off"
       }
