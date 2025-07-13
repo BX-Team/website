@@ -35,7 +35,6 @@ const LINK_SECTIONS: { title: string; links: LinkItem[] }[] = [
     title: 'Resources',
     links: [
       { href: '/resources/flags', label: 'Flags Generator' },
-      { href: 'https://bin.bxteam.org', label: 'ByteBin' },
     ],
   },
   {
