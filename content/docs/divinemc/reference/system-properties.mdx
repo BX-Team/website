@@ -4,14 +4,6 @@ title: System Properties
 description: A comprehensive list of system properties available in DivineMC, including their descriptions and default values.
 ---
 
-## JVM System Properties
-
-These properties need to be specified as JVM arguments using the `-D` prefix.
-
-| Property | Description | Default |
-|----------|-------------|---------|
-| `DivineMC.EnableReloadCommand` | Enables the reload command, which is disabled by default in DivineMC | `false` |
-
 ## Command Line Arguments
 
 These arguments should be specified after the `-jar` file in your startup command.
@@ -23,13 +15,7 @@ These arguments should be specified after the `-jar` file in your startup comman
 ### Examples
 
 ```bash
-# Enable reload command
-java -DDivineMC.EnableReloadCommand=true -jar divinemc.jar
-
 # Add extra plugins directory
 java -jar divine.jar -add-plugin-dir="/path/to/extra/plugins"
-
-# Combining both options
-java -DDivineMC.EnableReloadCommand=true -jar divinemc.jar -add-plugin-dir="/path/to/extra/plugins"
 ```
 
