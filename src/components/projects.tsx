@@ -32,11 +32,13 @@ function parseDownloadLinks(downloadUrl: string) {
 
 const projects: Project[] = [
   {
-    name: 'Nexus',
-    description: 'Powerful plugin that gives you ability to personalize your Minecraft server with useful features.',
-    downloadUrl: 'https://modrinth.com/plugin/nexuss',
-    docUrl: '/docs/nexus',
-    sourceUrl: 'https://github.com/BX-Team/Nexus',
+    name: 'DivineMC',
+    description:
+      'A high-performance Purpur fork focused on maximizing server performance while maintaining plugin compatibility.',
+    downloadUrl:
+      '[GitHub](https://github.com/BX-Team/DivineMC/releases);[MCJars](https://mcjars.app/DIVINEMC/versions)',
+    docUrl: '/docs/divinemc',
+    sourceUrl: 'https://github.com/BX-Team/DivineMC',
   },
   {
     name: 'NDailyRewards',
@@ -45,15 +47,6 @@ const projects: Project[] = [
     downloadUrl: 'https://modrinth.com/plugin/ndailyrewards',
     docUrl: '/docs/ndailyrewards',
     sourceUrl: 'https://github.com/BX-Team/NDailyRewards',
-  },
-  {
-    name: 'DivineMC',
-    description:
-      'A high-performance Purpur fork focused on maximizing server performance while maintaining plugin compatibility.',
-    downloadUrl:
-      '[GitHub](https://github.com/BX-Team/DivineMC/releases);[MCJars](https://mcjars.app/DIVINEMC/versions)',
-    docUrl: '/docs/divinemc',
-    sourceUrl: 'https://github.com/BX-Team/DivineMC',
   },
 ];
 

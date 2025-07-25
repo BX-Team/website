@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: ['BX Team', 'Minecraft', 'DivineMC', 'NDailyRewards', 'Nexus'],
+  keywords: ['BX Team', 'Minecraft', 'DivineMC', 'NDailyRewards'],
 };
 
 export default function Layout({ children }: { children: ReactNode }) {
