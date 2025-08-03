@@ -16,7 +16,7 @@ type TeamSection = {
 
 const TEAM_MEMBERS: Record<string, TeamSection> = {
   'Leadership Team': {
-    description: 'The main team that leads the project and makes strategic decisions.',
+    description: 'The main team that leads the projects and makes strategic decisions.',
     members: [
       {
         name: 'NONPLAYT',
@@ -36,11 +36,16 @@ const TEAM_MEMBERS: Record<string, TeamSection> = {
     ],
   },
   'Other members': {
-    description: 'The team responsible for the moderation and management of the project.',
+    description: 'The team responsible for the moderation and management of the projects.',
     members: [
       {
         name: 'ROUMAY',
         role: 'Discord Moderator',
+      },
+      {
+        name: 'p4ts4k',
+        github: 'P4TS4KK',
+        role: 'Task Manager',
       },
     ],
   },
