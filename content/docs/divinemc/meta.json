@@ -1,6 +1,6 @@
 {
   "title": "DivineMC",
-  "description": "A high-performance Purpur fork focused on maximizing server performance while maintaining plugin compatibility.",
+  "description": "Multi-functional fork of Purpur, which focuses on the flexibility of your server and its optimization.",
   "icon": "Cuboid",
   "root": true,
   "pages": [

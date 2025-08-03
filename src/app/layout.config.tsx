@@ -26,7 +26,7 @@ export const baseOptions: BaseLayoutProps = {
         {
           icon: <Cuboid />,
           text: 'DivineMC',
-          description: 'Fork of Purpur compatible with Spigot plugins, offering the best performance for your server.',
+          description: 'Multi-functional fork of Purpur, which focuses on the flexibility of your server and its optimization.',
           url: '/docs/divinemc',
           menu: {
             className: 'flex-1 min-w-0',
