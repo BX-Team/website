@@ -127,17 +127,38 @@ const ConfigViewer = ({ config, comments = {}, title = 'Configuration' }: Config
     }
 
     if (Array.isArray(value)) {
+      if (value.length === 0) {
+        return (
+          <div key={path} className='mb-0'>
+            <div className='flex items-center hover:bg-fd-muted/20 py-0.5 px-2 transition-all duration-200 group'>
+              <span className='font-mono text-sm text-fd-foreground whitespace-pre'>
+                {indentSpaces}
+                {key}: []
+              </span>
+              {comment && (
+                <button
+                  onClick={() => toggleComment(path)}
+                  className='ml-2 text-xs text-fd-muted-foreground hover:text-fd-foreground flex-shrink-0'
+                >
+                  {visibleComments.has(path) ? (
+                    <ChevronDown className='w-3 h-3 inline' />
+                  ) : (
+                    <ChevronRight className='w-3 h-3 inline' />
+                  )}
+                </button>
+              )}
+            </div>
+            {comment && renderComment(comment, path, depth)}
+          </div>
+        );
+      }
+      
       return (
         <div key={path} className='mb-0'>
           <div className='flex items-center hover:bg-fd-muted/20 py-0.5 px-2 transition-all duration-200 group'>
             <span className='font-mono text-sm text-fd-foreground whitespace-pre'>
               {indentSpaces}
-              {key}: [
-              {value.length === 0
-                ? ']'
-                : value
-                    .map((item, index) => (typeof item === 'object' ? JSON.stringify(item) : String(item)))
-                    .join(', ') + ']'}
+              {key}:
             </span>
             {comment && (
               <button
@@ -153,6 +174,13 @@ const ConfigViewer = ({ config, comments = {}, title = 'Configuration' }: Config
             )}
           </div>
           {comment && renderComment(comment, path, depth)}
+          <div>
+            {value.map((item, index) => (
+              <div key={index} className='font-mono text-sm text-amber-500 dark:text-amber-400 whitespace-pre pl-2'>
+                {indentSpaces}  - "{typeof item === 'object' ? JSON.stringify(item) : String(item)}"
+              </div>
+            ))}
+          </div>
         </div>
       );
     }

@@ -13,12 +13,12 @@ Depending on the build system you are using, add the following code to your proj
 <Tabs groupId="language" items={['Gradle Kotlin', 'Gradle Groovy', 'Maven']}>
   <Tab value={'Gradle Kotlin'}>
     ```kotlin
-    maven("https://repo.bx-team.space/releases")
+    maven("https://repo.bxteam.org/releases")
     ```
   </Tab>
   <Tab value={'Gradle Groovy'}>
     ```groovy
-    maven { url "https://repo.bx-team.space/releases" }
+    maven { url "https://repo.bxteam.org/releases" }
     ```
   </Tab>
   <Tab value={'Maven'}>
@@ -26,7 +26,7 @@ Depending on the build system you are using, add the following code to your proj
     <repository>
         <id>bx-team-releases</id>
         <name>BX Team Maven repository</name>
-        <url>https://repo.bx-team.space/releases</url>
+        <url>https://repo.bxteam.org/releases</url>
     </repository>
     ```
   </Tab>
@@ -38,23 +38,23 @@ Depending on the build system you are using, add the following code to your proj
   <Tab value={'Gradle Kotlin'}>
     ```kotlin
     dependencies {
-        implementation("space.bxteam:ndailyrewards:3.1.0")
+        implementation("org.bxteam:ndailyrewards:3.2.1")
     }
     ```
   </Tab>
   <Tab value={'Gradle Groovy'}>
     ```groovy
     dependencies {
-        implementation "space.bxteam:ndailyrewards:3.1.0"
+        implementation "org.bxteam:ndailyrewards:3.2.1"
     }
     ```
   </Tab>
   <Tab value={'Maven'}>
     ```xml
     <dependency>
-        <groupId>space.bxteam</groupId>
+        <groupId>org.bxteam</groupId>
         <artifactId>ndailyrewards</artifactId>
-        <version>3.1.0</version>
+        <version>3.2.1</version>
     </dependency>
     ```
   </Tab>
