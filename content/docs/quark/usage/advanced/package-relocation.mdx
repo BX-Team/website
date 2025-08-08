@@ -1,0 +1,139 @@
+---
+title: Package Relocation
+description: Use package relocation to avoid namespace conflicts between libraries.
+icon: GitBranch
+---
+
+Package relocation renames packages in library JARs to prevent namespace conflicts, especially important in plugin environments where multiple plugins might bundle different versions of the same library.
+
+## Why Package Relocation?
+
+When multiple plugins use the same library, conflicts can occur if they're loaded into the same classpath:
+
+- **Problem**: Plugin A loads Gson 2.8.9, Plugin B loads Gson 2.10.1 → version conflicts
+- **Solution**: Plugin A uses `com.google.gson`, Plugin B uses `com.google.gson.relocated`
+
+## Basic Package Relocation
+
+### Simple Relocation
+
+```java
+// Create relocation rule
+Relocation relocation = Relocation.of("com.google.gson", "com.google.gson.relocated");
+
+// Load dependency with relocation
+List<Dependency> dependencies = Arrays.asList(
+    Dependency.of("com.google.code.gson", "gson", "2.10.1")
+);
+List<Relocation> relocations = Arrays.asList(relocation);
+
+libraryManager.loadDependencies(dependencies, relocations);
+```
+
+### Using the Builder Pattern
+
+```java
+Relocation relocation = Relocation.builder()
+    .from("com.google.gson")
+    .to("com.google.gson.relocated")
+    .build();
+```
+
+## Advanced Relocation
+
+### Multiple Package Relocation
+
+```java
+List<Relocation> relocations = Arrays.asList(
+    Relocation.of("com.google.gson", "com.google.gson.relocated"),
+    Relocation.of("com.google.gson.reflect", "com.google.gson.reflect.relocated"),
+    Relocation.of("com.google.gson.stream", "com.google.gson.stream.relocated")
+);
+
+libraryManager.loadDependencies(dependencies, relocations);
+```
+
+### Isolated Class Loaders with Relocation
+
+```java
+// Create isolated class loader
+IsolatedClassLoader isolatedLoader = libraryManager.createNamedIsolatedClassLoader("gson-loader");
+
+List<Dependency> gsonDeps = Arrays.asList(
+    Dependency.of("com.google.code.gson", "gson", "2.10.1")
+);
+List<Relocation> gsonRelocations = Arrays.asList(
+    Relocation.of("com.google.gson", "com.google.gson.isolated")
+);
+
+// Load into isolated class loader
+libraryManager.loadDependencies(isolatedLoader, gsonDeps, gsonRelocations);
+```
+
+## Working with Relocated Classes
+
+### Loading Relocated Classes
+
+```java
+// After relocation, use the new package name
+try {
+    // Original: com.google.gson.Gson
+    // Relocated: com.google.gson.relocated.Gson
+    Class<?> gsonClass = Class.forName("com.google.gson.relocated.Gson");
+    Object gson = gsonClass.getDeclaredConstructor().newInstance();
+    
+    // Use reflection to work with relocated classes
+    Method toJson = gsonClass.getMethod("toJson", Object.class);
+    String json = (String) toJson.invoke(gson, myObject);
+} catch (Exception e) {
+    logger.error("Failed to use relocated Gson", e);
+}
+```
+
+## Best Practices
+
+### Naming Conventions
+
+```java
+// Good: Descriptive suffixes
+Relocation.of("com.google.gson", "com.google.gson.relocated");
+Relocation.of("org.yaml", "org.yaml.relocated");
+
+// Good: Version-specific names
+Relocation.of("com.google.gson", "com.google.gson.v2_10_1");
+```
+
+### Automatic Caching
+
+Quark automatically caches relocated JARs to avoid repeated processing:
+
+```java
+// First call - JAR is relocated and cached
+libraryManager.loadDependencies(dependencies, relocations);
+
+// Second call - Uses cached relocated JAR
+libraryManager.loadDependencies(dependencies, relocations);
+```
+
+## Troubleshooting
+
+### Common Issues
+
+- **ClassNotFoundException**: Use the correct relocated package name
+- **Method not found**: Relocated classes might have different signatures
+- **Serialization issues**: Relocated classes might not be compatible with existing data
+
+### Debug Relocation
+
+```java
+// Enable debug logging
+libraryManager.setLogLevel(LogLevel.DEBUG);
+
+// Check loaded dependencies
+Map<Dependency, Path> loaded = libraryManager.getLoadedDependencies();
+for (Map.Entry<Dependency, Path> entry : loaded.entrySet()) {
+    if (entry.getValue().toString().contains("relocated")) {
+        System.out.println("Relocated: " + entry.getKey() + " -> " + entry.getValue());
+    }
+}
+```

@@ -1,5 +1,5 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { Cloudy, Cuboid, DollarSign, Drill } from 'lucide-react';
+import { Atom, Cloudy, Cuboid, DollarSign, Drill } from 'lucide-react';
 
 import Image from 'next/image';
 
@@ -29,7 +29,17 @@ export const baseOptions: BaseLayoutProps = {
           description: 'Multi-functional fork of Purpur, which focuses on the flexibility of your server and its optimization.',
           url: '/docs/divinemc',
           menu: {
-            className: 'flex-1 min-w-0',
+            className: 'lg:col-start-1 lg:row-start-1 lg:col-span-1',
+          },
+        },
+        {
+          icon: <Atom />,
+          text: 'Quark',
+          description:
+            'A lightweight, runtime dependency management system for plugins running on Minecraft server platforms.',
+          url: '/docs/quark',
+          menu: {
+            className: 'lg:col-start-2 lg:row-start-1 lg:col-span-1',
           },
         },
         {
@@ -39,7 +49,7 @@ export const baseOptions: BaseLayoutProps = {
             'Simple and lightweight plugin that allows you to reward your players for playing on your server every day.',
           url: '/docs/ndailyrewards',
           menu: {
-            className: 'flex-1 min-w-0',
+            className: 'lg:col-start-3 lg:row-start-1 lg:col-span-1',
           },
         },
         {
@@ -48,7 +58,7 @@ export const baseOptions: BaseLayoutProps = {
           description: 'Synchronize time and weather from the real world to the game.',
           url: '/docs/realworldsync',
           menu: {
-            className: 'flex-1 min-w-0',
+            className: 'lg:col-start-4 lg:row-start-1 lg:col-span-1',
           },
         },
       ],

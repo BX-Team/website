@@ -1,0 +1,142 @@
+---
+title: Dependency Management
+description: Load and manage Maven dependencies at runtime with Quark.
+icon: Package
+---
+
+Quark provides comprehensive dependency management with runtime Maven dependency loading and full transitive dependency resolution.
+
+## Basic Dependency Loading
+
+### Simple Loading Methods
+
+```java
+// Load single dependency
+libraryManager.loadDependency("com.google.code.gson", "gson", "2.10.1");
+
+// Load using coordinates string
+libraryManager.loadDependency("org.yaml:snakeyaml:2.0");
+
+// Load multiple dependencies
+List<Dependency> dependencies = Arrays.asList(
+    Dependency.of("com.google.code.gson", "gson", "2.10.1"),
+    Dependency.of("org.yaml", "snakeyaml", "2.0")
+);
+libraryManager.loadDependencies(dependencies);
+```
+
+## Advanced Dependency Configuration
+
+### Using the Dependency Builder
+
+```java
+Dependency dependency = Dependency.builder()
+    .groupId("com.example")
+    .artifactId("my-library")
+    .version("1.0.0")
+    .classifier("sources")                                    // Optional classifier
+    .optional(true)                                          // Mark as optional
+    .scope("runtime")                                        // Set scope
+    .fallbackRepository("https://custom-repo.com/maven/")    // Fallback repository
+    .build();
+
+libraryManager.loadDependency(dependency);
+```
+
+### Working with Classifiers
+
+```java
+// Load main JAR
+libraryManager.loadDependency("com.example:library:1.0.0");
+
+// Load sources JAR
+libraryManager.loadDependency("com.example:library:1.0.0:sources");
+
+// Using builder
+Dependency withSources = Dependency.of("com.example", "library", "1.0.0")
+    .withClassifier("sources");
+```
+
+## Dependency Resolution Configuration
+
+### Control Transitive Dependencies
+
+```java
+// Limit transitive dependency depth
+libraryManager.maxTransitiveDepth(2);
+
+// Exclude specific group IDs
+libraryManager.excludeGroupIds("javax.servlet", "log4j");
+
+// Apply optimization defaults
+libraryManager.optimizeDependencyDownloads();
+```
+
+### Exclusions and Filters
+
+```java
+// Skip optional dependencies
+libraryManager.skipOptionalDependencies(true);
+
+// Skip test dependencies  
+libraryManager.skipTestDependencies(true);
+
+// Exclude artifact patterns
+libraryManager.excludeArtifacts("*:commons-logging", "org.slf4j:*");
+```
+
+## Dependency Information
+
+### Check Loaded Dependencies
+
+```java
+// Check if dependency is loaded
+Dependency gson = Dependency.of("com.google.code.gson", "gson", "2.10.1");
+if (libraryManager.isDependencyLoaded(gson)) {
+    System.out.println("Gson is loaded!");
+}
+
+// Get all loaded dependencies
+Map<Dependency, Path> loaded = libraryManager.getLoadedDependencies();
+for (Map.Entry<Dependency, Path> entry : loaded.entrySet()) {
+    System.out.println(entry.getKey() + " -> " + entry.getValue());
+}
+```
+
+### Dependency Utilities
+
+```java
+Dependency dep = Dependency.of("com.example", "library", "1.0.0");
+
+// Get coordinate representations
+String coords = dep.getCoordinates();           // "com.example:library:1.0.0"
+String groupArtifact = dep.getGroupArtifactId(); // "com.example:library"
+
+// Create variations
+Dependency newVersion = dep.withVersion("2.0.0");
+Dependency withClassifier = dep.withClassifier("sources");
+Dependency withScope = dep.withScope("test");
+```
+
+## Error Handling
+
+Handle dependency loading failures:
+
+```java
+try {
+    libraryManager.loadDependency("com.example:nonexistent:1.0.0");
+} catch (LibraryManager.LibraryLoadException e) {
+    logger.error("Failed to load dependency: " + e.getMessage());
+    // Handle appropriately
+}
+```
+
+## Statistics and Monitoring
+
+```java
+// Get library manager statistics
+LibraryManager.LibraryManagerStats stats = libraryManager.getStats();
+System.out.println("Repositories: " + stats.repositoryCount());
+System.out.println("Loaded dependencies: " + stats.loadedDependencyCount());
+System.out.println("Isolated class loaders: " + stats.isolatedClassLoaderCount());
+```

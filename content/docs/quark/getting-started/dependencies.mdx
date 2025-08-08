@@ -1,0 +1,61 @@
+---
+title: 1. Dependencies
+description: How to add Quark to your plugin
+icon: Pickaxe
+---
+
+To use Quark you need to add BX Team Repository to your repositories and Quark to your dependencies in your project.
+
+Depending on the build system you are using, add the following code to your project:
+
+<Tabs groupId="language" items={['Gradle Kotlin', 'Gradle Groovy', 'Maven']}>
+  <Tab value={'Gradle Kotlin'}>
+    ```kotlin
+    maven("https://repo.bxteam.org/releases")
+    ```
+  </Tab>
+  <Tab value={'Gradle Groovy'}>
+    ```groovy
+    maven { url "https://repo.bxteam.org/releases" }
+    ```
+  </Tab>
+  <Tab value={'Maven'}>
+    ```xml
+    <repository>
+        <id>bx-team-releases</id>
+        <name>BX Team Maven repository</name>
+        <url>https://repo.bxteam.org/releases</url>
+    </repository>
+    ```
+  </Tab>
+</Tabs>
+
+<Tabs groupId="language" items={['Gradle Kotlin', 'Gradle Groovy', 'Maven']}>
+  <Tab value={'Gradle Kotlin'}>
+    ```kotlin
+    dependencies {
+        implementation("org.bxteam.quark:{platform}:1.0.0")
+    }
+    ```
+  </Tab>
+  <Tab value={'Gradle Groovy'}>
+    ```groovy
+    dependencies {
+        implementation "org.bxteam.quark:{platform}:1.0.0"
+    }
+    ```
+  </Tab>
+  <Tab value={'Maven'}>
+    ```xml
+    <dependency>
+        <groupId>org.bxteam.quark</groupId>
+        <artifactId>{platform}</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+    ```
+  </Tab>
+</Tabs>
+
+<Callout title="Replacing {platform}" type="error">
+  Replace `{platform}` with the platform you want to use (See [platforms](/docs/quark/supported-platforms)).
+</Callout>

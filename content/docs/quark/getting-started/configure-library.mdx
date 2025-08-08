@@ -1,0 +1,114 @@
+---
+title: 2. Configuring Library
+icon: Keyboard
+---
+
+Quark provides platform-specific library managers that handle dependency loading for different Minecraft server platforms. Each platform has its own manager class that you'll need to initialize in your plugin.
+
+<Tabs items={['Bukkit', 'Paper', 'BungeeCord', 'Velocity']}>
+<Tab value="Bukkit">
+```java
+public class BukkitTestPlugin extends JavaPlugin {
+    private BukkitLibraryManager libraryManager;
+
+    @Override
+    public void onLoad() {
+        libraryManager = new BukkitLibraryManager(this);
+        libraryManager.addGoogleMavenCentralMirror();
+
+        libraryManager.loadDependency("com.google.code.gson", "gson", "2.10.1");
+    }
+
+    @Override
+    public void onDisable() {
+        if (libraryManager != null) {
+            libraryManager.close();
+        }
+    }
+}
+```
+</Tab>
+
+<Tab value="Paper">
+```java
+public class PaperTestPlugin extends JavaPlugin {
+    private PaperLibraryManager libraryManager;
+
+    @Override
+    public void onLoad() {
+        libraryManager = new PaperLibraryManager(this);
+        libraryManager.addGoogleMavenCentralMirror();
+
+        libraryManager.loadDependency("com.google.code.gson", "gson", "2.10.1");
+    }
+
+    @Override
+    public void onDisable() {
+        if (libraryManager != null) {
+            libraryManager.close();
+        }
+    }
+}
+```
+</Tab>
+
+<Tab value="BungeeCord">
+```java
+public class BungeeTestPlugin extends Plugin {
+    private BungeeLibraryManager libraryManager;
+
+    @Override
+    public void onLoad() {
+        libraryManager = new BungeeLibraryManager(this);
+        libraryManager.addGoogleMavenCentralMirror();
+
+        libraryManager.loadDependency("com.google.code.gson", "gson", "2.10.1");
+    }
+
+    @Override
+    public void onDisable() {
+        if (libraryManager != null) {
+            libraryManager.close();
+        }
+    }
+}
+```
+</Tab>
+
+<Tab value="Velocity">
+```java
+@Plugin(id = "velocity-test-plugin", name = "Velocity Test Plugin", version = "1.0.0")
+public class VelocityTestPlugin {
+    private final ProxyServer server;
+    private final Logger logger;
+    private final Path dataDirectory;
+    private final PluginManager pluginManager;
+
+    private VelocityLibraryManager<VelocityTestPlugin> libraryManager;
+
+    @Inject
+    public VelocityTestPlugin(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory, PluginManager pluginManager) {
+        this.server = server;
+        this.logger = logger;
+        this.dataDirectory = dataDirectory;
+        this.pluginManager = pluginManager;
+    }
+
+    @Subscribe
+    public void onProxyInitialization(ProxyInitializeEvent event) {
+        libraryManager = new VelocityLibraryManager<>(this, logger, dataDirectory, pluginManager);
+        libraryManager.addGoogleMavenCentralMirror();
+
+        libraryManager.loadDependency("com.google.code.gson", "gson", "2.10.1");
+    }
+
+    @Subscribe
+    public void onProxyShutdown(ProxyShutdownEvent event) {
+        if (libraryManager != null) {
+            libraryManager.close();
+        }
+    }
+}
+```
+</Tab>
+</Tabs>

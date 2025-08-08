@@ -1,0 +1,18 @@
+{
+  "title": "Quark",
+  "description": "A lightweight, runtime dependency management system for plugins running on Minecraft server platforms.",
+  "icon": "Atom",
+  "root": true,
+  "pages": [
+    "index",
+    "supported-platforms",
+
+    "---Getting Started---",
+    "getting-started/dependencies",
+    "getting-started/configure-library",
+
+    "---Usage---",
+    "usage/advanced",
+    "usage/api-reference"
+  ]
+}

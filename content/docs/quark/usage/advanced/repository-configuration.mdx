@@ -1,0 +1,79 @@
+---
+title: Repository Configuration
+description: Configure Maven repositories for dependency resolution in Quark.
+icon: Database
+---
+
+Quark supports multiple Maven repositories for dependency resolution, allowing access to libraries from various sources.
+
+## Built-in Repository Methods
+
+### Google Maven Central Mirror (Recommended)
+
+```java
+// Add Google Maven Central mirror (recommended)
+libraryManager.addGoogleMavenCentralMirror();
+```
+
+**Recommended** for accessing Maven Central artifacts. Complies with Maven Central's Terms of Service and provides fast, reliable access.
+
+### Other Built-in Repositories
+
+```java
+// Sonatype OSS repository
+libraryManager.addSonatype();
+
+// JitPack repository (for Git-based projects)
+libraryManager.addJitPack();
+
+// Local Maven repository (~/.m2/repository)
+libraryManager.addMavenLocal();
+```
+
+### Legacy Maven Central (Deprecated)
+
+```java
+// ⚠️ DEPRECATED: Use addGoogleMavenCentralMirror() instead
+libraryManager.addMavenCentral();
+```
+
+<Callout title='Warning' type='warn'>
+  Direct use of Maven Central may violate their Terms of Service. Use `addGoogleMavenCentralMirror()` instead.
+</Callout>
+
+## Custom Repository Configuration
+
+### Adding Custom Repositories
+
+```java
+// Add custom repository by URL
+libraryManager.addRepository("https://custom-repo.com/maven/");
+```
+
+### Fallback Repositories
+
+Specify fallback repositories for specific dependencies:
+
+```java
+Dependency dependency = Dependency.builder()
+    .groupId("com.example")
+    .artifactId("my-library")
+    .version("1.0.0")
+    .fallbackRepository("https://fallback-repo.com/maven/")
+    .build();
+
+libraryManager.loadDependency(dependency);
+```
+
+## Repository Management
+
+### Viewing Configured Repositories
+
+```java
+// Get all configured repositories
+Collection<Repository> repositories = libraryManager.getRepositories();
+
+for (Repository repo : repositories) {
+    System.out.println("Repository: " + repo.getUrl());
+}
+```
