@@ -6,6 +6,7 @@
   "pages": [
     "index",
     "supported-platforms",
+    "examples",
 
     "---Getting Started---",
     "getting-started/dependencies",
