@@ -152,7 +152,7 @@ const ConfigViewer = ({ config, comments = {}, title = 'Configuration' }: Config
           </div>
         );
       }
-      
+
       return (
         <div key={path} className='mb-0'>
           <div className='flex items-center hover:bg-fd-muted/20 py-0.5 px-2 transition-all duration-200 group'>
@@ -177,7 +177,7 @@ const ConfigViewer = ({ config, comments = {}, title = 'Configuration' }: Config
           <div>
             {value.map((item, index) => (
               <div key={index} className='font-mono text-sm text-amber-500 dark:text-amber-400 whitespace-pre pl-2'>
-                {indentSpaces}  - "{typeof item === 'object' ? JSON.stringify(item) : String(item)}"
+                {indentSpaces} - "{typeof item === 'object' ? JSON.stringify(item) : String(item)}"
               </div>
             ))}
           </div>

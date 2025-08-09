@@ -26,7 +26,8 @@ export const baseOptions: BaseLayoutProps = {
         {
           icon: <Cuboid />,
           text: 'DivineMC',
-          description: 'Multi-functional fork of Purpur, which focuses on the flexibility of your server and its optimization.',
+          description:
+            'Multi-functional fork of Purpur, which focuses on the flexibility of your server and its optimization.',
           url: '/docs/divinemc',
           menu: {
             className: 'lg:col-start-1 lg:row-start-1 lg:col-span-1',
