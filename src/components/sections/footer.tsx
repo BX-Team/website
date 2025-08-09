@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { siteConfig } from '@/config/site';
-import { DiscordIcon, GitHubIcon } from './icons';
+import { DiscordIcon, GitHubIcon } from '../icons';
 interface LinkItem {
   href: string;
   label: string;
