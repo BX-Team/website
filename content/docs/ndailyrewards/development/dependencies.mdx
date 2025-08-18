@@ -25,7 +25,6 @@ Depending on the build system you are using, add the following code to your proj
     ```xml
     <repository>
         <id>bx-team-releases</id>
-        <name>BX Team Maven repository</name>
         <url>https://repo.bxteam.org/releases</url>
     </repository>
     ```
@@ -38,14 +37,14 @@ Depending on the build system you are using, add the following code to your proj
   <Tab value={'Gradle Kotlin'}>
     ```kotlin
     dependencies {
-        implementation("org.bxteam:ndailyrewards:3.2.1")
+        implementation("org.bxteam:ndailyrewards:3.3.0")
     }
     ```
   </Tab>
   <Tab value={'Gradle Groovy'}>
     ```groovy
     dependencies {
-        implementation "org.bxteam:ndailyrewards:3.2.1"
+        implementation "org.bxteam:ndailyrewards:3.3.0"
     }
     ```
   </Tab>
@@ -54,7 +53,8 @@ Depending on the build system you are using, add the following code to your proj
     <dependency>
         <groupId>org.bxteam</groupId>
         <artifactId>ndailyrewards</artifactId>
-        <version>3.2.1</version>
+        <version>3.3.0</version>
+        <scope>provided</scope>
     </dependency>
     ```
   </Tab>
