@@ -25,7 +25,7 @@ export function Hero() {
         <div className='grid items-center gap-8 lg:grid-cols-2 lg:gap-16'>
           <div className='text-center lg:text-left'>
             <h1 className='text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl xl:text-6xl'>
-                Welcome to <p>BX Team</p>
+              Welcome to <p>BX Team</p>
             </h1>
 
             <p className='mt-6 text-base leading-7 text-neutral-300 sm:text-lg sm:leading-8 lg:text-xl lg:leading-9'>
