@@ -2,7 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended",
-    "helpers:pinGitHubActionDigests",
     ":preserveSemverRanges",
     "group:allNonMajor",
     ":automergeMinor",
@@ -11,5 +10,9 @@
   "labels": ["\uD83D\uDD04 dependencies"],
   "baseBranches": ["master"],
   "ignoreDeps": ["@types/react", "@types/react-dom", "@types/node", "typescript", "lucide-react"],
-  "dependencyDashboard": false
+  "schedule": [
+    "before 4am on Monday"
+  ],
+  "semanticCommitType": "build",
+  "commitMessagePrefix": "chore(deps): "
 }
