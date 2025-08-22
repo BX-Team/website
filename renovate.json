@@ -7,9 +7,19 @@
     ":automergeMinor",
     ":automergePatch"
   ],
-  "labels": ["\uD83D\uDD04 dependencies"],
-  "baseBranches": ["master"],
-  "ignoreDeps": ["@types/react", "@types/react-dom", "@types/node", "typescript", "lucide-react"],
+  "labels": [
+    "🔄 dependencies"
+  ],
+  "baseBranchPatterns": [
+    "master"
+  ],
+  "ignoreDeps": [
+    "@types/react",
+    "@types/react-dom",
+    "@types/node",
+    "typescript",
+    "lucide-react"
+  ],
   "schedule": [
     "before 4am on Monday"
   ],
