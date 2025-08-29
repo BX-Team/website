@@ -11,23 +11,20 @@ Package relocation renames packages in library JARs to prevent namespace conflic
 When multiple plugins use the same library, conflicts can occur if they're loaded into the same classpath:
 
 - **Problem**: Plugin A loads Gson 2.8.9, Plugin B loads Gson 2.10.1 → version conflicts
-- **Solution**: Plugin A uses `com.google.gson`, Plugin B uses `com.google.gson.relocated`
+- **Solution**: Plugin A uses `com.google.gson`, Plugin B uses `com.pluginb.libs.gson`
 
-## Basic Package Relocation
+## Creating Relocations
 
 ### Simple Relocation
 
 ```java
-// Create relocation rule
-Relocation relocation = Relocation.of("com.google.gson", "com.google.gson.relocated");
+// Create a simple relocation rule
+Relocation relocation = Relocation.of("com.google.gson", "com.myplugin.libs.gson");
 
-// Load dependency with relocation
-List<Dependency> dependencies = Arrays.asList(
-    Dependency.of("com.google.code.gson", "gson", "2.10.1")
-);
-List<Relocation> relocations = Arrays.asList(relocation);
-
-libraryManager.loadDependencies(dependencies, relocations);
+// Check if relocation would actually change anything
+if (relocation.isEffective()) {
+    System.out.println("Relocation: " + relocation.getDescription());
+}
 ```
 
 ### Using the Builder Pattern
@@ -35,19 +32,39 @@ libraryManager.loadDependencies(dependencies, relocations);
 ```java
 Relocation relocation = Relocation.builder()
     .from("com.google.gson")
-    .to("com.google.gson.relocated")
+    .to("com.myplugin.libs.gson")
     .build();
+
+// Get human-readable description
+String description = relocation.getDescription(); // "com.google.gson -> com.myplugin.libs.gson"
 ```
 
-## Advanced Relocation
+## Loading Dependencies with Relocation
+
+### Basic Relocation Loading
+
+```java
+// Create dependencies and relocations
+List<Dependency> dependencies = List.of(
+    Dependency.of("com.google.code.gson", "gson", "2.10.1")
+);
+
+List<Relocation> relocations = List.of(
+    Relocation.of("com.google.gson", "com.myplugin.libs.gson")
+);
+
+// Load with relocation applied to main classpath
+libraryManager.loadDependencies(dependencies, relocations);
+```
 
 ### Multiple Package Relocation
 
 ```java
-List<Relocation> relocations = Arrays.asList(
-    Relocation.of("com.google.gson", "com.google.gson.relocated"),
-    Relocation.of("com.google.gson.reflect", "com.google.gson.reflect.relocated"),
-    Relocation.of("com.google.gson.stream", "com.google.gson.stream.relocated")
+// Relocate multiple related packages
+List<Relocation> relocations = List.of(
+    Relocation.of("com.google.gson", "com.myplugin.libs.gson"),
+    Relocation.of("com.google.gson.reflect", "com.myplugin.libs.gson.reflect"),
+    Relocation.of("com.google.gson.stream", "com.myplugin.libs.gson.stream")
 );
 
 libraryManager.loadDependencies(dependencies, relocations);
@@ -59,15 +76,19 @@ libraryManager.loadDependencies(dependencies, relocations);
 // Create isolated class loader
 IsolatedClassLoader isolatedLoader = libraryManager.createNamedIsolatedClassLoader("gson-loader");
 
-List<Dependency> gsonDeps = Arrays.asList(
+List<Dependency> gsonDeps = List.of(
     Dependency.of("com.google.code.gson", "gson", "2.10.1")
 );
-List<Relocation> gsonRelocations = Arrays.asList(
-    Relocation.of("com.google.gson", "com.google.gson.isolated")
+
+List<Relocation> gsonRelocations = List.of(
+    Relocation.of("com.google.gson", "com.myplugin.libs.gson")
 );
 
-// Load into isolated class loader
+// Load into isolated class loader with relocation
 libraryManager.loadDependencies(isolatedLoader, gsonDeps, gsonRelocations);
+
+// Use the relocated classes
+Class<?> gsonClass = isolatedLoader.loadClass("com.myplugin.libs.gson.Gson");
 ```
 
 ## Working with Relocated Classes
@@ -78,8 +99,8 @@ libraryManager.loadDependencies(isolatedLoader, gsonDeps, gsonRelocations);
 // After relocation, use the new package name
 try {
     // Original: com.google.gson.Gson
-    // Relocated: com.google.gson.relocated.Gson
-    Class<?> gsonClass = Class.forName("com.google.gson.relocated.Gson");
+    // Relocated: com.myplugin.libs.gson.Gson
+    Class<?> gsonClass = Class.forName("com.myplugin.libs.gson.Gson");
     Object gson = gsonClass.getDeclaredConstructor().newInstance();
     
     // Use reflection to work with relocated classes
@@ -90,18 +111,7 @@ try {
 }
 ```
 
-## Best Practices
-
-### Naming Conventions
-
-```java
-// Good: Descriptive suffixes
-Relocation.of("com.google.gson", "com.google.gson.relocated");
-Relocation.of("org.yaml", "org.yaml.relocated");
-
-// Good: Version-specific names
-Relocation.of("com.google.gson", "com.google.gson.v2_10_1");
-```
+## Relocation Implementation Details
 
 ### Automatic Caching
 
@@ -111,29 +121,89 @@ Quark automatically caches relocated JARs to avoid repeated processing:
 // First call - JAR is relocated and cached
 libraryManager.loadDependencies(dependencies, relocations);
 
-// Second call - Uses cached relocated JAR
+// Second call - Uses cached relocated JAR (much faster)
 libraryManager.loadDependencies(dependencies, relocations);
+```
+
+### Relocation Dependencies
+
+Relocation requires additional dependencies that are loaded automatically:
+
+- **ASM 9.7**: For bytecode manipulation
+- **jar-relocator 1.7**: For performing the actual relocation
+
+These are loaded into an isolated class loader to avoid conflicts.
+
+## Best Practices
+
+### Naming Conventions
+
+```java
+// Good: Use your plugin/organization namespace
+Relocation.of("com.google.gson", "com.myplugin.libs.gson");
+Relocation.of("org.yaml", "com.myplugin.libs.yaml");
+
+// Good: Version-specific names for multiple versions
+Relocation.of("com.google.gson", "com.myplugin.libs.gson.v2_10");
+
+// Avoid: Generic suffixes that might conflict
+// Relocation.of("com.google.gson", "com.google.gson.relocated");
+```
+
+### Performance Considerations
+
+```java
+// Reuse relocations for multiple dependency loads
+List<Relocation> commonRelocations = List.of(
+    Relocation.of("com.google.gson", "com.myplugin.libs.gson")
+);
+
+// Apply to multiple dependency sets
+libraryManager.loadDependencies(configDeps, commonRelocations);
+libraryManager.loadDependencies(utilityDeps, commonRelocations);
 ```
 
 ## Troubleshooting
 
 ### Common Issues
 
-- **ClassNotFoundException**: Use the correct relocated package name
-- **Method not found**: Relocated classes might have different signatures
-- **Serialization issues**: Relocated classes might not be compatible with existing data
+- **ClassNotFoundException**: Ensure you're using the correct relocated package name
+- **NoSuchMethodError**: Relocated classes might have different method signatures
+- **Serialization issues**: Relocated classes might not be compatible with existing serialized data
+- **Reflection errors**: Update reflection code to use relocated class names
 
 ### Debug Relocation
 
 ```java
-// Enable debug logging
+// Enable debug logging to see relocation process
 libraryManager.setLogLevel(LogLevel.DEBUG);
 
-// Check loaded dependencies
+// Check what dependencies were loaded and where
 Map<Dependency, Path> loaded = libraryManager.getLoadedDependencies();
 for (Map.Entry<Dependency, Path> entry : loaded.entrySet()) {
-    if (entry.getValue().toString().contains("relocated")) {
-        System.out.println("Relocated: " + entry.getKey() + " -> " + entry.getValue());
+    Path jarPath = entry.getValue();
+    if (jarPath.toString().contains("relocated")) {
+        System.out.println("Relocated JAR: " + entry.getKey().getCoordinates() + " -> " + jarPath);
     }
+}
+
+// Verify relocation effectiveness
+Relocation relocation = Relocation.of("com.google.gson", "com.myplugin.libs.gson");
+if (relocation.isEffective()) {
+    System.out.println("Relocation is effective: " + relocation.getDescription());
+} else {
+    System.out.println("Relocation would have no effect");
+}
+```
+
+### Error Handling
+
+```java
+try {
+    libraryManager.loadDependencies(dependencies, relocations);
+} catch (RelocationHandler.RelocationException e) {
+    logger.error("Relocation failed: " + e.getMessage(), e);
+    // Fallback: load without relocation
+    libraryManager.loadDependencies(dependencies);
 }
 ```

@@ -11,14 +11,18 @@ Quark provides comprehensive dependency management with runtime Maven dependency
 ### Simple Loading Methods
 
 ```java
-// Load single dependency
+// Load single dependency by coordinates
 libraryManager.loadDependency("com.google.code.gson", "gson", "2.10.1");
 
 // Load using coordinates string
 libraryManager.loadDependency("org.yaml:snakeyaml:2.0");
 
+// Load dependency from coordinates string
+Dependency dependency = Dependency.fromCoordinates("com.google.code.gson:gson:2.10.1");
+libraryManager.loadDependency(dependency);
+
 // Load multiple dependencies
-List<Dependency> dependencies = Arrays.asList(
+List<Dependency> dependencies = List.of(
     Dependency.of("com.google.code.gson", "gson", "2.10.1"),
     Dependency.of("org.yaml", "snakeyaml", "2.0")
 );
@@ -49,12 +53,40 @@ libraryManager.loadDependency(dependency);
 // Load main JAR
 libraryManager.loadDependency("com.example:library:1.0.0");
 
-// Load sources JAR
+// Load sources JAR using coordinates
 libraryManager.loadDependency("com.example:library:1.0.0:sources");
 
-// Using builder
-Dependency withSources = Dependency.of("com.example", "library", "1.0.0")
-    .withClassifier("sources");
+// Using builder for classifier
+Dependency withSources = Dependency.builder()
+    .groupId("com.example")
+    .artifactId("library")
+    .version("1.0.0")
+    .classifier("sources")
+    .build();
+```
+
+### Dependency Information and Utilities
+
+```java
+Dependency dep = Dependency.of("com.example", "library", "1.0.0");
+
+// Get coordinate representations
+String coords = dep.getCoordinates();           // "com.example:library:1.0.0"
+String groupArtifact = dep.getGroupArtifactId(); // "com.example:library"
+
+// Get file information
+String jarFileName = dep.getJarFileName();      // "library-1.0.0.jar"
+String pomFileName = dep.getPomFileName();      // "library-1.0.0.pom"
+
+// Get repository paths
+String repoPath = dep.getRepositoryPath();      // "com/example/library/1.0.0"
+
+// Create variations
+Dependency newVersion = Dependency.builder()
+    .groupId(dep.getGroupId())
+    .artifactId(dep.getArtifactId())
+    .version("2.0.0")
+    .build();
 ```
 
 ## Dependency Resolution Configuration
@@ -65,29 +97,66 @@ Dependency withSources = Dependency.of("com.example", "library", "1.0.0")
 // Limit transitive dependency depth
 libraryManager.maxTransitiveDepth(2);
 
-// Exclude specific group IDs
+// Exclude specific group IDs from resolution
 libraryManager.excludeGroupIds("javax.servlet", "log4j");
 
-// Apply optimization defaults
-libraryManager.optimizeDependencyDownloads();
-```
+// Exclude specific artifact patterns
+libraryManager.excludeArtifacts("*:commons-logging", "org.slf4j:*");
 
-### Exclusions and Filters
-
-```java
 // Skip optional dependencies
 libraryManager.skipOptionalDependencies(true);
 
 // Skip test dependencies  
 libraryManager.skipTestDependencies(true);
 
-// Exclude artifact patterns
-libraryManager.excludeArtifacts("*:commons-logging", "org.slf4j:*");
+// Include dependency management from POMs
+libraryManager.includeDependencyManagement(true);
 ```
 
-## Dependency Information
+### Advanced Configuration
 
-### Check Loaded Dependencies
+```java
+// Apply optimization defaults for faster downloads
+libraryManager.optimizeDependencyDownloads();
+
+// Set log level for debugging
+libraryManager.setLogLevel(LogLevel.DEBUG);
+```
+
+## Isolated Class Loading
+
+### Creating Named Isolated Class Loaders
+
+```java
+// Create named isolated class loader
+IsolatedClassLoader isolatedLoader = libraryManager.createNamedIsolatedClassLoader("gson-loader");
+
+// Load dependencies into isolated loader
+List<Dependency> gsonDeps = List.of(
+    Dependency.of("com.google.code.gson", "gson", "2.10.1")
+);
+libraryManager.loadDependencies(isolatedLoader, gsonDeps);
+
+// Load class from isolated loader
+Class<?> gsonClass = isolatedLoader.loadClass("com.google.gson.Gson");
+
+// Don't forget to close
+isolatedLoader.close();
+```
+
+### Global Isolated Class Loader
+
+```java
+// Use the global isolated class loader
+IsolatedClassLoader globalLoader = libraryManager.getGlobalIsolatedClassLoader();
+
+// Load dependencies into global isolated loader
+libraryManager.loadDependencies(globalLoader, dependencies);
+```
+
+## Checking Loaded Dependencies
+
+### Dependency Status
 
 ```java
 // Check if dependency is loaded
@@ -96,26 +165,23 @@ if (libraryManager.isDependencyLoaded(gson)) {
     System.out.println("Gson is loaded!");
 }
 
-// Get all loaded dependencies
+// Get all loaded dependencies with their paths
 Map<Dependency, Path> loaded = libraryManager.getLoadedDependencies();
 for (Map.Entry<Dependency, Path> entry : loaded.entrySet()) {
-    System.out.println(entry.getKey() + " -> " + entry.getValue());
+    System.out.println(entry.getKey().getCoordinates() + " -> " + entry.getValue());
 }
 ```
 
-### Dependency Utilities
+## Gradle Integration
+
+### Loading from Gradle Metadata
 
 ```java
-Dependency dep = Dependency.of("com.example", "library", "1.0.0");
+// Load dependencies configured via Gradle plugin
+libraryManager.loadFromGradle();
 
-// Get coordinate representations
-String coords = dep.getCoordinates();           // "com.example:library:1.0.0"
-String groupArtifact = dep.getGroupArtifactId(); // "com.example:library"
-
-// Create variations
-Dependency newVersion = dep.withVersion("2.0.0");
-Dependency withClassifier = dep.withClassifier("sources");
-Dependency withScope = dep.withScope("test");
+// This will automatically load all dependencies and relocations
+// configured in your build file with the quark configuration
 ```
 
 ## Error Handling
@@ -127,7 +193,7 @@ try {
     libraryManager.loadDependency("com.example:nonexistent:1.0.0");
 } catch (LibraryManager.LibraryLoadException e) {
     logger.error("Failed to load dependency: " + e.getMessage());
-    // Handle appropriately
+    // Handle appropriately - maybe load fallback or disable feature
 }
 ```
 

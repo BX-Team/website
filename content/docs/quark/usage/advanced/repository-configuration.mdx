@@ -11,7 +11,7 @@ Quark supports multiple Maven repositories for dependency resolution, allowing a
 ### Google Maven Central Mirror (Recommended)
 
 ```java
-// Add Google Maven Central mirror (recommended)
+// Add Google Maven Central mirror (recommended for Maven Central access)
 libraryManager.addGoogleMavenCentralMirror();
 ```
 
@@ -20,7 +20,7 @@ libraryManager.addGoogleMavenCentralMirror();
 ### Other Built-in Repositories
 
 ```java
-// Sonatype OSS repository
+// Sonatype OSS repository (for SNAPSHOT versions)
 libraryManager.addSonatype();
 
 // JitPack repository (for Git-based projects)
@@ -48,6 +48,10 @@ libraryManager.addMavenCentral();
 ```java
 // Add custom repository by URL
 libraryManager.addRepository("https://custom-repo.com/maven/");
+
+// Add multiple repositories
+libraryManager.addRepository("https://repo1.example.com/maven/");
+libraryManager.addRepository("https://repo2.example.com/maven/");
 ```
 
 ### Fallback Repositories
@@ -65,6 +69,8 @@ Dependency dependency = Dependency.builder()
 libraryManager.loadDependency(dependency);
 ```
 
+This is useful when a dependency might not be available in your primary repositories.
+
 ## Repository Management
 
 ### Viewing Configured Repositories
@@ -74,6 +80,26 @@ libraryManager.loadDependency(dependency);
 Collection<Repository> repositories = libraryManager.getRepositories();
 
 for (Repository repo : repositories) {
-    System.out.println("Repository: " + repo.getUrl());
+    System.out.println("Repository URL: " + repo.getUrl());
 }
+
+// Get repository count from stats
+LibraryManager.LibraryManagerStats stats = libraryManager.getStats();
+System.out.println("Total repositories configured: " + stats.repositoryCount());
 ```
+
+### Repository Priority
+
+Repositories are checked in the order they were added:
+
+1. **Local repository** (if added with `addMavenLocal()`)
+2. **Primary repositories** (added with `addRepository()` or built-in methods)
+3. **Fallback repositories** (specified per-dependency)
+
+## Troubleshooting Repository Issues
+
+### Common Problems
+
+- **404 Not Found**: Dependency doesn't exist in configured repositories
+- **Connection timeouts**: Repository server is unreachable
+- **Authentication failures**: Private repositories require credentials

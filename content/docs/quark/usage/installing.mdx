@@ -1,0 +1,346 @@
+---
+title: Installing Quark
+description: How to install and use Quark in your project.
+icon: Keyboard
+---
+
+## With Gradle plugin (recommended)
+
+Quark provides a Gradle plugin that seamlessly integrates with your build script. To apply it:
+
+<Tabs groupId="language" items={['Gradle Kotlin', 'Gradle Groovy']}>
+  <Tab value={'Gradle Kotlin'}>
+    ```kotlin
+    plugins {
+        id("java-library")
+        id("com.gradleup.shadow") version "8.3.9"
+        id("org.bxteam.quark") version "1.1.0"
+    }
+    ```
+  </Tab>
+  <Tab value={'Gradle Groovy'}>
+    ```groovy
+    plugins {
+        id 'java-library'
+        id 'com.gradleup.shadow' version '8.3.9'
+        id 'org.bxteam.quark' version '1.1.0'
+    }
+    ```
+  </Tab>
+</Tabs>
+
+Then, add your dependencies using the `quark` configuration block:
+
+<Tabs groupId="language" items={['Gradle Kotlin', 'Gradle Groovy']}>
+  <Tab value={'Gradle Kotlin'}>
+    ```kotlin
+    dependencies {    
+        // Add your runtime dependencies using quark configuration
+        quark("com.google.code.gson:gson:2.10.1")
+        
+        // you can use the dependency notation and exclude modules as you
+        // would with other configurations
+        quark("com.google.inject:guice:7.0.0") {
+            exclude("com.google.guava", "guava")
+        }
+    }
+    ```
+  </Tab>
+  <Tab value={'Gradle Groovy'}>
+    ```groovy
+    dependencies {
+        // Add your runtime dependencies using quark configuration
+        quark "com.google.code.gson:gson:2.10.1"
+        
+        // you can use the dependency notation and exclude modules as you
+        // would with other configurations
+        quark("com.google.inject:guice:7.0.0") {
+            exclude group: "com.google.guava", module: "guava"
+        }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+After adding your dependencies, you need to configure the Quark extension, by specifying the platform and other settings:
+
+<Tabs groupId="language" items={['Gradle Kotlin', 'Gradle Groovy']}>
+  <Tab value={'Gradle Kotlin'}>
+    ```kotlin
+    quark {
+        // Specify the platform that will be used in your project (bukkit, paper, velocity or bungee)
+        platform = "your-platform"
+
+        // directory to download dependencies in
+        libsFolder = "libraries"
+
+        // repositories to fetch dependencies from
+        // 
+        // by default: includes maven central mirror
+        repositories {
+            // example repository
+            maven("https://jitpack.io/")
+
+            // optional: use all repositories declared in this
+            // file if you don't want to re-include everything here
+            includeProjectRepositories()
+        }
+      
+        // relocate libraries here
+        // com.google.code.gson --> org.bxteam.deps.gson
+        relocate("com.google.code.gson", "org.bxteam.deps.gson")
+    }
+    ```
+  </Tab>
+  <Tab value={'Gradle Groovy'}>
+    ```groovy
+    quark {
+        // Specify the platform that will be used in your project (bukkit, paper, velocity or bungee)
+        platform = "your-platform"
+
+        // directory to download dependencies in
+        libsFolder = "libraries"
+
+        // repositories to fetch dependencies from
+        // 
+        // by default: includes maven central mirror
+        repositories {
+            // example repository
+            maven "https://jitpack.io/"
+
+            // optional: use all repositories declared in this
+            // file if you don't want to re-include everything here
+            includeProjectRepositories()
+        }
+      
+        // relocate libraries here
+        // com.google.code.gson --> org.bxteam.deps.gson
+        relocate "com.google.code.gson", "org.bxteam.deps.gson"
+    }
+    ```
+  </Tab>
+</Tabs>
+
+Then, in your plugin, use the library manager with Gradle integration:
+
+```java
+public class YourPlugin extends JavaPlugin {
+    private BukkitLibraryManager libraryManager; // Replace with your library manager (Paper, BungeeCord, Velocity)
+
+    @Override
+    public void onLoad() {
+        libraryManager = new BukkitLibraryManager(this); // Replace with your library manager (Paper, BungeeCord, Velocity)
+        libraryManager.loadFromGradle();
+    }
+
+    @Override
+    public void onDisable() {
+        if (libraryManager != null) {
+            libraryManager.close();
+        }
+    }
+}
+```
+
+Finally, build with `shadowJar`:
+```shell
+./gradlew shadowJar
+```
+
+## With Maven
+
+Maven usage is not as seamless as the Gradle one. However, you can use the API
+provided by Quark to download dependencies at runtime:
+
+### Adding Dependencies
+
+To use Quark you need to add BX Team Repository to your repositories and Quark to your dependencies in your project.
+
+Depending on the build system you are using, add the following code to your project:
+
+#### Repository Configuration
+
+<Tabs groupId="language" items={['Gradle Kotlin', 'Gradle Groovy', 'Maven']}>
+  <Tab value={'Gradle Kotlin'}>
+    ```kotlin
+    maven("https://repo.bxteam.org/releases")
+    ```
+  </Tab>
+  <Tab value={'Gradle Groovy'}>
+    ```groovy
+    maven { url "https://repo.bxteam.org/releases" }
+    ```
+  </Tab>
+  <Tab value={'Maven'}>
+    ```xml
+    <repository>
+        <id>bx-team-releases</id>
+        <name>BX Team Maven repository</name>
+        <url>https://repo.bxteam.org/releases</url>
+    </repository>
+    ```
+  </Tab>
+</Tabs>
+
+#### Dependency Configuration
+
+<Tabs groupId="language" items={['Gradle Kotlin', 'Gradle Groovy', 'Maven']}>
+  <Tab value={'Gradle Kotlin'}>
+    ```kotlin
+    dependencies {
+        implementation("org.bxteam.quark:{platform}:1.1.0")
+    }
+    ```
+  </Tab>
+  <Tab value={'Gradle Groovy'}>
+    ```groovy
+    dependencies {
+        implementation "org.bxteam.quark:{platform}:1.1.0"
+    }
+    ```
+  </Tab>
+  <Tab value={'Maven'}>
+    ```xml
+    <dependency>
+        <groupId>org.bxteam.quark</groupId>
+        <artifactId>{platform}</artifactId>
+        <version>1.1.0</version>
+    </dependency>
+    ```
+  </Tab>
+</Tabs>
+
+<Callout title="Replacing {platform}" type="error">
+  Replace `{platform}` with the platform you want to use (See [platforms](/docs/quark/supported-platforms)).
+</Callout>
+
+### Library Manager Setup
+
+Quark provides platform-specific library managers that handle dependency loading for different Minecraft server platforms. Each platform has its own manager class that you'll need to initialize in your plugin.
+
+<Tabs items={['Bukkit', 'Paper', 'BungeeCord', 'Velocity']}>
+<Tab value="Bukkit">
+```java
+public class BukkitTestPlugin extends JavaPlugin {
+    private BukkitLibraryManager libraryManager;
+
+    @Override
+    public void onLoad() {
+        libraryManager = new BukkitLibraryManager(this);
+        libraryManager.addGoogleMavenCentralMirror();
+
+        libraryManager.loadDependency("com.google.code.gson", "gson", "2.10.1");
+    }
+
+    @Override
+    public void onDisable() {
+        if (libraryManager != null) {
+            libraryManager.close();
+        }
+    }
+}
+```
+</Tab>
+
+<Tab value="Paper">
+```java
+public class PaperTestPlugin extends JavaPlugin {
+    private PaperLibraryManager libraryManager;
+
+    @Override
+    public void onLoad() {
+        libraryManager = new PaperLibraryManager(this);
+        libraryManager.addGoogleMavenCentralMirror();
+
+        libraryManager.loadDependency("com.google.code.gson", "gson", "2.10.1");
+    }
+
+    @Override
+    public void onDisable() {
+        if (libraryManager != null) {
+            libraryManager.close();
+        }
+    }
+}
+```
+</Tab>
+
+<Tab value="BungeeCord">
+```java
+public class BungeeTestPlugin extends Plugin {
+    private BungeeLibraryManager libraryManager;
+
+    @Override
+    public void onLoad() {
+        libraryManager = new BungeeLibraryManager(this);
+        libraryManager.addGoogleMavenCentralMirror();
+
+        libraryManager.loadDependency("com.google.code.gson", "gson", "2.10.1");
+    }
+
+    @Override
+    public void onDisable() {
+        if (libraryManager != null) {
+            libraryManager.close();
+        }
+    }
+}
+```
+</Tab>
+
+<Tab value="Velocity">
+```java
+@Plugin(id = "velocity-test-plugin", name = "Velocity Test Plugin", version = "1.0.0")
+public class VelocityTestPlugin {
+    private final ProxyServer server;
+    private final Logger logger;
+    private final Path dataDirectory;
+    private final PluginManager pluginManager;
+
+    private VelocityLibraryManager<VelocityTestPlugin> libraryManager;
+
+    @Inject
+    public VelocityTestPlugin(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory, PluginManager pluginManager) {
+        this.server = server;
+        this.logger = logger;
+        this.dataDirectory = dataDirectory;
+        this.pluginManager = pluginManager;
+    }
+
+    @Subscribe
+    public void onProxyInitialization(ProxyInitializeEvent event) {
+        libraryManager = new VelocityLibraryManager<>(this, logger, dataDirectory, pluginManager);
+        libraryManager.addGoogleMavenCentralMirror();
+
+        libraryManager.loadDependency("com.google.code.gson", "gson", "2.10.1");
+    }
+
+    @Subscribe
+    public void onProxyShutdown(ProxyShutdownEvent event) {
+        if (libraryManager != null) {
+            libraryManager.close();
+        }
+    }
+}
+```
+</Tab>
+</Tabs>
+
+## Next Steps
+
+If you want to learn more, you can read next pages with advanced usage instructions.
+
+<Cards>
+  <Card title='Dependency Management' href='/docs/quark/usage/advanced/dependency-management'>
+    Load and manage Maven dependencies at runtime with Quark.
+  </Card>
+  <Card title='Package Relocation' href='/docs/quark/usage/advanced/package-relocation'>
+    Use package relocation to avoid namespace conflicts between libraries.
+  </Card>
+  <Card title='Repository Configuration' href='/docs/quark/usage/advanced/repository-configuration'>
+    Configure Maven repositories for dependency resolution in Quark.
+  </Card>
+  <Card title='Isolated Class Loaders' href='/docs/quark/usage/advanced/isolated-classloaders'>
+    Use isolated class loaders to prevent dependency conflicts.
+  </Card>
+</Cards>

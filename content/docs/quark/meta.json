@@ -8,12 +8,8 @@
     "supported-platforms",
     "examples",
 
-    "---Getting Started---",
-    "getting-started/dependencies",
-    "getting-started/configure-library",
-
     "---Usage---",
-    "usage/advanced",
-    "usage/api-reference"
+    "usage/installing",
+    "usage/advanced"
   ]
 }
