@@ -48,26 +48,6 @@ export default async function ResourcesPage() {
             </div>
           </section>
         ))}
-
-        <section className='mt-12 sm:mt-16'>
-          <h2 className='text-2xl font-semibold text-white'>External Tools</h2>
-          <p className='mt-2 mb-6 text-neutral-300'>Useful tools hosted by BX Team for the Minecraft community.</p>
-          <div className='grid grid-cols-[repeat(auto-fit,_minmax(240px,_1fr))] gap-6'>
-            <Link href='https://bin.bxteam.org/' passHref>
-              <Card className='p-5 transition-all hover:bg-neutral-800/50 hover:ring-1 hover:ring-neutral-700'>
-                <div className='flex items-start justify-between'>
-                  <div>
-                    <h3 className='font-semibold text-white'>ByteBin</h3>
-                    <p className='mt-2 text-sm text-neutral-400'>
-                      A simple web app for writing & sharing code with a clean UI and easy REST API.
-                    </p>
-                  </div>
-                  <LinkIcon size={18} className='text-neutral-400' />
-                </div>
-              </Card>
-            </Link>
-          </div>
-        </section>
       </div>
     </div>
   );
