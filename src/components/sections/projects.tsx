@@ -44,7 +44,7 @@ const projects: Project[] = [
     name: 'Quark',
     description:
       'A lightweight, runtime dependency management system for plugins running on Minecraft server platforms. ',
-    downloadUrl: '/docs/quark/getting-started/dependencies',
+    downloadUrl: '/docs/quark/usage/installing',
     docUrl: '/docs/quark',
     sourceUrl: 'https://github.com/BX-Team/Quark',
   },
