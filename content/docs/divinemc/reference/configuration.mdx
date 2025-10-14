@@ -83,7 +83,7 @@ export const divineMCConfig = {
       },
       "xaeromap": {
         "xaeromap-enable": false,
-        "xaero-map-server-id": 38530109
+        "xaero-map-server-id": "GENERATED"
       },
       "syncmatica": {
         "syncmatica-enable": false,
@@ -148,7 +148,11 @@ export const divineMCConfig = {
       "disable-leaf-decay": false
     },
     "bug": {
-      "fix-mc-258859": false
+      "fix-mc-258859": false,
+      "fix-mc-200418": false,
+      "fix-mc-2025": false,
+      "fix-mc-94054": false,
+      "fix-mc-183990": false
     }
   },
   "performance": {
@@ -177,6 +181,8 @@ export const divineMCConfig = {
       "optimized-dragon-respawn": false,
       "reduce-chunk-load-and-lookup": true,
       "create-snapshot-on-retrieving-block-state": true,
+      "sleeping-block-entity": false,
+      "equipment-tracking": false,
       "hopper-throttle-when-full": {
         "enabled": false,
         "skip-ticks": 0
@@ -188,7 +194,7 @@ export const divineMCConfig = {
       "maximum-activation-frequency": 20,
       "activation-distance-mod": 8,
       "dont-enable-if-in-water": false,
-      "blacked-entities": []
+      "blacked-entities": ["villager", "axolotl", "hoglin", "zombified_piglin", "goat"]
     },
     "virtual-threads": {
       "enabled": false,
@@ -197,7 +203,6 @@ export const divineMCConfig = {
       "tab-complete-scheduler": false,
       "async-executor": false,
       "command-builder-scheduler": false,
-      "profile-lookup-pool": false,
       "server-text-filter-pool": false
     }
   },
@@ -208,20 +213,20 @@ export const divineMCConfig = {
       "log-container-creation-stacktraces": false,
       "disable-hard-throw": false,
       "compatability-mode": false,
-      "use-per-world-tps-bar": true
+      "use-per-world-tps-bar": true,
+      "show-tps-of-server-instead-of-world": true
     },
     "regionized-chunk-ticking": {
       "enable": false,
       "executor-thread-count": 4,
-      "use-virtual-threads": false,
       "executor-thread-priority": 7
     },
     "pathfinding": {
       "enable": true,
-      "max-threads": 2,
+      "max-threads": 1,
       "keepalive": 60,
       "queue-size": 0,
-      "reject-policy": "CALLER_RUNS"
+      "reject-policy": "FLUSH_ALL"
     },
     "multithreaded-tracker": {
       "enable": true,
@@ -230,13 +235,9 @@ export const divineMCConfig = {
       "keepalive": 60,
       "queue-size": 0
     },
-    "join-thread": {
-      "enabled": false,
-      "thread-count": 1,
-      "use-virtual-threads": false
-    },
     "chunk-sending": {
-      "enable": true
+      "enable": true,
+      "max-threads": 1
     },
     "mob-spawning": {
       "enable": true
@@ -246,7 +247,7 @@ export const divineMCConfig = {
 
 export const configComments = {
   "world-settings.default": "Default world settings that apply to all worlds unless overridden",
-  "world-settings.default.unsupported-features.allow-entity-portal-with-passenger": "Enables or disables the fix of MC-67 bug: https://bugs-legacy.mojang.com/browse/MC-67",
+  "world-settings.default.unsupported-features.allow-entity-portal-with-passenger": "Fixes MC-67: https://bugs-legacy.mojang.com/browse/MC-67\nEntities with passengers cannot travel through portals",
   "world-settings.default.unsupported-features.allow-tripwire-dupe": "Bring back MC-59471, MC-129055 on 1.21.2+, which fixed in 1.21.2 snapshots 24w33a and 24w36a",
   "world-settings.default.gameplay-mechanics.projectiles.snowball.knockback": "Whether snowballs should knockback entities",
   "world-settings.default.gameplay-mechanics.projectiles.snowball.disable-saving": "Disable saving snowball entities to NBT",
@@ -308,7 +309,11 @@ export const configComments = {
   "fixes.gameplay.always-allow-weird-movement": "Means ignoring messages like 'moved too quickly' and 'moved wrongly'",
   "fixes.misc.force-minecraft-command": "Whether to force the use of vanilla commands over plugin commands.",
   "fixes.misc.disable-leaf-decay": "Disables leaf block decay.",
-  "fixes.bug.fix-mc-258859": "Fixes MC-258859, fixing slopes visual bug in biomes like Snowy Slopes, Frozen Peaks, Jagged Peaks, and including Terralith.",
+  "fixes.bug.fix-mc-258859": "Fixes MC-258859: https://bugs.mojang.com/browse/MC-258859\nFixes slopes visual bug in biomes like Snowy Slopes, Frozen Peaks, Jagged Peaks, and including Terralith.",
+  "fixes.bug.fix-mc-200418": "Fixes MC-200418: https://bugs.mojang.com/browse/MC-200418\nBaby zombie villagers stay as jockey variant.",
+  "fixes.bug.fix-mc-2025": "Fixes MC-2025: https://bugs.mojang.com/browse/MC-2025\nMobs going out of fenced areas/suffocate in blocks when loading chunks.",
+  "fixes.bug.fix-mc-94054": "Fixes MC-94054: https://bugs.mojang.com/browse/MC-94054\nCave spiders spin around when walking.",
+  "fixes.bug.fix-mc-183990": "Fixes MC-183990: https://bugs.mojang.com/browse/MC-183990\nAI of some mobs breaks when their target dies.",
   "performance.chunks.max-view-distance": "Changes the maximum view distance for the server, allowing clients to have render distances higher than 32",
   "performance.chunks.player-near-chunk-detection-range": "In certain checks, like if a player is near a chunk(primarily used for spawning), it checks if the player is within a certain\ncircular range of the chunk. This configuration allows configurability of the distance(in blocks) the player must be to pass the check.\n\nThis value is used in the calculation 'range/16' to get the distance in chunks any player must be to allow the check to pass.\nBy default, this range is computed to 8, meaning a player must be within an 8 chunk radius of a chunk position to pass.\nKeep in mind the result is rounded to the nearest whole number.",
   "performance.chunks.use-euclidean-distance-squared": "If enabled, euclidean distance squared for chunk task ordering will be used.",
@@ -327,6 +332,8 @@ export const configComments = {
   "performance.optimizations.optimized-dragon-respawn": "When enabled, improving performance and reducing lag during the dragon's resurrection event.",
   "performance.optimizations.reduce-chunk-load-and-lookup": "If enabled, optimizes chunk loading and block state lookups by reducing the number of chunk accesses required during operations such as Enderman teleportation.",
   "performance.optimizations.create-snapshot-on-retrieving-block-state": "Whether to create a snapshot (copy) of BlockState data when plugins retrieve them.\nIf false, plugins get direct BlockState access for better performance but risk data corruption from poor plugin design.",
+  "performance.optimizations.sleeping-block-entity": "When enabled, block entities will enter a sleep state when they are inactive.",
+  "performance.optimizations.equipment-tracking": "When enabled, skips repeated checks whether the equipment of an entity changed.",
   "performance.optimizations.hopper-throttle-when-full.enabled": "When enabled, hoppers will throttle if target container is full.",
   "performance.optimizations.hopper-throttle-when-full.skip-ticks": "The amount of ticks to skip when the hopper is throttled.",
   "performance.dab.enabled": "DAB is an optimization that reduces the frequency of brain ticks. Brain ticks are very intensive, which is why they\nare limited. DAB can be tuned to meet your preferred performance-experience tradeoff. The farther away entities\nare from players, the less frequently their brains will be ticked. While DAB does impact the AI goal selector\nbehavior of all entities, the only entities who's brain ticks are limited are: Villager, Axolotl, Hoglin, Zombified Piglin and Goat",
@@ -341,7 +348,6 @@ export const configComments = {
   "performance.virtual-threads.tab-complete-scheduler": "Uses virtual threads for the Tab Complete scheduler.",
   "performance.virtual-threads.async-executor": "Uses virtual threads for the MCUtil async executor.",
   "performance.virtual-threads.command-builder-scheduler": "Uses virtual threads for the Async Command Builder Thread Pool.",
-  "performance.virtual-threads.profile-lookup-pool": "Uses virtual threads for the Profile Lookup Pool, that is used for fetching player profiles.",
   "performance.virtual-threads.server-text-filter-pool": "Uses virtual threads for the server text filter pool.",
   "async.parallel-world-ticking.enable": "Enables Parallel World Ticking, which executes each world's tick in a separate thread while ensuring that all worlds complete their tick before the next cycle begins.\n\nRead more info about this feature at https://bxteam.org/docs/divinemc/features/parallel-world-ticking",
   "async.parallel-world-ticking.thread-count": "Number of threads to use for parallel world ticking",
@@ -349,9 +355,9 @@ export const configComments = {
   "async.parallel-world-ticking.disable-hard-throw": "Disables annoying 'not on main thread' throws. But, THIS IS NOT RECOMMENDED because you SHOULD FIX THE ISSUES THEMSELVES instead of RISKING DATA CORRUPTION! If you lose something, take the blame on yourself.",
   "async.parallel-world-ticking.compatability-mode": "Enables compatibility mode for plugins that are not compatible with Parallel World Ticking. This makes all async tasks run synchronously.",
   "async.parallel-world-ticking.use-per-world-tps-bar": "Enables per-world TPS bar, which shows the TPS of the world the player is currently in. TPS bar can be turned on/off with /tpsbar command.",
+  "async.parallel-world-ticking.show-tps-of-server-instead-of-world": "Enables showing the TPS of the entire server instead of the world in the TPS bar.",
   "async.regionized-chunk-ticking.enable": "Enables regionized chunk ticking, similar to like Folia works.\n\nRead more info about this feature at https://bxteam.org/docs/divinemc/features/regionized-chunk-ticking",
   "async.regionized-chunk-ticking.executor-thread-count": "The amount of threads to allocate to regionized chunk ticking.",
-  "async.regionized-chunk-ticking.use-virtual-threads": "If enabled, regionized chunk ticking will use virtual threads for the executor that was introduced in Java 21.",
   "async.regionized-chunk-ticking.executor-thread-priority": "Configures the thread priority of the executor",
   "async.pathfinding.enable": "Enable asynchronous pathfinding",
   "async.pathfinding.max-threads": "Maximum number of threads for pathfinding",
@@ -363,10 +369,8 @@ export const configComments = {
   "async.multithreaded-tracker.max-threads": "Maximum number of threads for entity tracking",
   "async.multithreaded-tracker.keepalive": "Thread keepalive time in seconds",
   "async.multithreaded-tracker.queue-size": "Queue size for entity tracking tasks",
-  "async.join-thread.enabled": "Enables async join thread, which offloads player setup and connection tasks to a separate thread\nThis can significantly improve MSPT when multiple players are joining simultaneously",
-  "async.join-thread.thread-count": "Number of threads to use for async join operations",
-  "async.join-thread.use-virtual-threads": "Whether to use virtual threads for async join operations (requires Java 21+)",
   "async.chunk-sending.enable": "Makes chunk sending asynchronous, which can significantly reduce main thread load when many players are loading chunks.",
+  "async.chunk-sending.max-threads": "Maximum number of threads for chunk sending",
   "async.mob-spawning.enable": "Enables optimization that will offload much of the computational effort involved with spawning new mobs to a different thread."
 };
 
