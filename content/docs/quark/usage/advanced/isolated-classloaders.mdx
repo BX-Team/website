@@ -29,7 +29,7 @@ List<Dependency> dependencies = List.of(
     Dependency.of("org.yaml", "snakeyaml", "2.0")
 );
 
-libraryManager.loadDependencies(isolatedLoader, dependencies);
+libraryManager.loadDependencies(isolatedLoader, dependencies, Collections.emptyList());
 
 // Use classes from the isolated loader
 Class<?> gsonClass = isolatedLoader.loadClass("com.google.gson.Gson");
@@ -39,6 +39,23 @@ Object gson = gsonClass.getDeclaredConstructor().newInstance();
 isolatedLoader.close();
 ```
 
+### Alternative: Named Isolated Class Loaders (Auto-create)
+
+```java
+// Load dependencies into a named isolated class loader (auto-created if doesn't exist)
+List<Dependency> dependencies = List.of(
+    Dependency.of("com.google.code.gson", "gson", "2.10.1")
+);
+
+List<Relocation> relocations = Collections.emptyList();
+
+libraryManager.loadDependenciesIsolated("my-feature", dependencies, relocations);
+
+// Retrieve the class loader
+IsolatedClassLoader isolatedLoader = libraryManager.getIsolatedClassLoader("my-feature");
+Class<?> gsonClass = isolatedLoader.loadClass("com.google.gson.Gson");
+```
+
 ### Global Isolated Class Loader
 
 ```java
@@ -46,7 +63,11 @@ isolatedLoader.close();
 IsolatedClassLoader globalLoader = libraryManager.getGlobalIsolatedClassLoader();
 
 // Load dependencies into global isolated loader
-libraryManager.loadDependencies(globalLoader, dependencies);
+List<Dependency> dependencies = List.of(
+    Dependency.of("org.yaml", "snakeyaml", "2.0")
+);
+
+libraryManager.loadDependencies(globalLoader, dependencies, Collections.emptyList());
 
 // Access classes (no need to close global loader)
 Class<?> yamlClass = globalLoader.loadClass("org.yaml.snakeyaml.Yaml");
@@ -98,6 +119,17 @@ public class GsonJsonProcessor implements JsonProcessor {
 }
 ```
 
+### Defining Classes at Runtime
+
+```java
+// Define a class from bytecode
+InputStream classBytes = getClassBytesFromSomewhere();
+Class<?> definedClass = isolatedLoader.defineClass("com.example.MyClass", classBytes);
+
+// The InputStream will be automatically closed
+Object instance = definedClass.getDeclaredConstructor().newInstance();
+```
+
 ## Combining with Relocation
 
 ### Isolated + Relocated Dependencies
@@ -105,6 +137,11 @@ public class GsonJsonProcessor implements JsonProcessor {
 ```java
 // Create isolated loader
 IsolatedClassLoader isolatedLoader = libraryManager.createNamedIsolatedClassLoader("gson-v2");
+
+// Define dependencies
+List<Dependency> dependencies = List.of(
+    Dependency.of("com.google.code.gson", "gson", "2.10.1")
+);
 
 // Define relocations
 List<Relocation> relocations = List.of(
@@ -120,28 +157,13 @@ Class<?> gsonClass = isolatedLoader.loadClass("com.myplugin.gson.v2.Gson");
 
 ## Class Loader Management
 
-### Checking Class Loader Status
-
-```java
-// Check if class loader is closed
-if (!isolatedLoader.isClosed()) {
-    // Safe to use
-    Class<?> clazz = isolatedLoader.loadClass("com.example.MyClass");
-}
-
-// Get path count (if supported)
-int pathCount = isolatedLoader.getPathCount();
-if (pathCount > 0) {
-    System.out.println("Class loader has " + pathCount + " paths");
-}
-```
-
 ### Resource Management
 
 ```java
 // Use try-with-resources for automatic cleanup
 try (IsolatedClassLoader loader = libraryManager.createNamedIsolatedClassLoader("temp")) {
-    libraryManager.loadDependencies(loader, dependencies);
+    List<Dependency> deps = List.of(Dependency.of("com.example", "library", "1.0"));
+    libraryManager.loadDependencies(loader, deps, Collections.emptyList());
     
     // Use the loader
     Class<?> clazz = loader.loadClass("com.example.MyClass");
@@ -153,25 +175,62 @@ try (IsolatedClassLoader loader = libraryManager.createNamedIsolatedClassLoader(
 ### Managing Multiple Loaders
 
 ```java
-// Keep track of multiple isolated loaders
-Map<String, IsolatedClassLoader> loaders = new HashMap<>();
-
 // Create specialized loaders
-loaders.put("json", libraryManager.createNamedIsolatedClassLoader("json-processing"));
-loaders.put("xml", libraryManager.createNamedIsolatedClassLoader("xml-processing"));
-loaders.put("database", libraryManager.createNamedIsolatedClassLoader("database-drivers"));
+IsolatedClassLoader jsonLoader = libraryManager.createNamedIsolatedClassLoader("json-processing");
+IsolatedClassLoader xmlLoader = libraryManager.createNamedIsolatedClassLoader("xml-processing");
+IsolatedClassLoader dbLoader = libraryManager.createNamedIsolatedClassLoader("database-drivers");
 
 // Load different dependencies into each
-libraryManager.loadDependencies(loaders.get("json"), List.of(
-    Dependency.of("com.google.code.gson", "gson", "2.10.1")
-));
+libraryManager.loadDependencies(jsonLoader, 
+    List.of(Dependency.of("com.google.code.gson", "gson", "2.10.1")),
+    Collections.emptyList()
+);
 
-libraryManager.loadDependencies(loaders.get("xml"), List.of(
-    Dependency.of("com.fasterxml.jackson.dataformat", "jackson-dataformat-xml", "2.15.2")
-));
+libraryManager.loadDependencies(xmlLoader, 
+    List.of(Dependency.of("com.fasterxml.jackson.dataformat", "jackson-dataformat-xml", "2.15.2")),
+    Collections.emptyList()
+);
 
-// Clean up all loaders
-loaders.values().forEach(IsolatedClassLoader::close);
+// Retrieve loaders later by ID
+IsolatedClassLoader retrievedLoader = libraryManager.getIsolatedClassLoader("json-processing");
+
+// Clean up when done
+jsonLoader.close();
+xmlLoader.close();
+dbLoader.close();
+```
+
+### Checking Class Loader Existence
+
+```java
+// Check if a named class loader exists
+IsolatedClassLoader loader = libraryManager.getIsolatedClassLoader("my-feature");
+if (loader != null) {
+    // Loader exists, use it
+    Class<?> clazz = loader.loadClass("com.example.MyClass");
+}
+```
+
+## Loading from Gradle Metadata
+
+### Into Named Isolated Class Loader
+
+```java
+// Load Gradle metadata into a named isolated class loader
+libraryManager.loadFromGradleIsolated("gradle-deps");
+
+// Retrieve the class loader
+IsolatedClassLoader loader = libraryManager.getIsolatedClassLoader("gradle-deps");
+```
+
+### Into Specific Isolated Class Loader
+
+```java
+// Create an isolated class loader
+IsolatedClassLoader isolatedLoader = libraryManager.createNamedIsolatedClassLoader("my-loader");
+
+// Load Gradle metadata into it
+libraryManager.loadFromGradle(isolatedLoader);
 ```
 
 ## Statistics and Monitoring
@@ -179,9 +238,9 @@ loaders.values().forEach(IsolatedClassLoader::close);
 ```java
 // Get statistics about isolated class loaders
 LibraryManager.LibraryManagerStats stats = libraryManager.getStats();
-System.out.println("Active isolated class loaders: " + stats.isolatedClassLoaderCount());
+System.out.println("Active isolated class loaders: " + stats.getIsolatedClassLoaderCount());
 
-// This count includes both named and global isolated class loaders
+// This count includes all named isolated class loaders (not the global one)
 ```
 
 ## Best Practices
@@ -192,3 +251,22 @@ System.out.println("Active isolated class loaders: " + stats.isolatedClassLoader
 - **Plugin systems**: To isolate plugin dependencies from each other
 - **Optional features**: For features that can be enabled/disabled at runtime
 - **Temporary operations**: For one-time operations that need specific dependencies
+
+### Resource Management
+
+Always close isolated class loaders when they're no longer needed to prevent memory leaks:
+
+```java
+// Manual cleanup
+IsolatedClassLoader loader = libraryManager.createNamedIsolatedClassLoader("temp");
+try {
+    // Use loader
+} finally {
+    loader.close();
+}
+
+// Or use try-with-resources (recommended)
+try (IsolatedClassLoader loader = libraryManager.createNamedIsolatedClassLoader("temp")) {
+    // Use loader
+}
+```
