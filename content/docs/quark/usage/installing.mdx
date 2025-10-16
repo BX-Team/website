@@ -14,7 +14,7 @@ Quark provides a Gradle plugin that seamlessly integrates with your build script
     plugins {
         id("java-library")
         id("com.gradleup.shadow") version "8.3.9"
-        id("org.bxteam.quark") version "1.1.0"
+        id("org.bxteam.quark") version "1.2.0"
     }
     ```
   </Tab>
@@ -23,7 +23,7 @@ Quark provides a Gradle plugin that seamlessly integrates with your build script
     plugins {
         id 'java-library'
         id 'com.gradleup.shadow' version '8.3.9'
-        id 'org.bxteam.quark' version '1.1.0'
+        id 'org.bxteam.quark' version '1.2.0'
     }
     ```
   </Tab>
@@ -132,13 +132,6 @@ public class YourPlugin extends JavaPlugin {
         libraryManager = new BukkitLibraryManager(this); // Replace with your library manager (Paper, BungeeCord, Velocity)
         libraryManager.loadFromGradle();
     }
-
-    @Override
-    public void onDisable() {
-        if (libraryManager != null) {
-            libraryManager.close();
-        }
-    }
 }
 ```
 
@@ -187,14 +180,14 @@ Depending on the build system you are using, add the following code to your proj
   <Tab value={'Gradle Kotlin'}>
     ```kotlin
     dependencies {
-        implementation("org.bxteam.quark:{platform}:1.1.0")
+        implementation("org.bxteam.quark:{platform}:1.2.0")
     }
     ```
   </Tab>
   <Tab value={'Gradle Groovy'}>
     ```groovy
     dependencies {
-        implementation "org.bxteam.quark:{platform}:1.1.0"
+        implementation "org.bxteam.quark:{platform}:1.2.0"
     }
     ```
   </Tab>
@@ -203,7 +196,7 @@ Depending on the build system you are using, add the following code to your proj
     <dependency>
         <groupId>org.bxteam.quark</groupId>
         <artifactId>{platform}</artifactId>
-        <version>1.1.0</version>
+        <version>1.2.0</version>
     </dependency>
     ```
   </Tab>
@@ -230,13 +223,6 @@ public class BukkitTestPlugin extends JavaPlugin {
 
         libraryManager.loadDependency("com.google.code.gson", "gson", "2.10.1");
     }
-
-    @Override
-    public void onDisable() {
-        if (libraryManager != null) {
-            libraryManager.close();
-        }
-    }
 }
 ```
 </Tab>
@@ -253,13 +239,6 @@ public class PaperTestPlugin extends JavaPlugin {
 
         libraryManager.loadDependency("com.google.code.gson", "gson", "2.10.1");
     }
-
-    @Override
-    public void onDisable() {
-        if (libraryManager != null) {
-            libraryManager.close();
-        }
-    }
 }
 ```
 </Tab>
@@ -275,13 +254,6 @@ public class BungeeTestPlugin extends Plugin {
         libraryManager.addGoogleMavenCentralMirror();
 
         libraryManager.loadDependency("com.google.code.gson", "gson", "2.10.1");
-    }
-
-    @Override
-    public void onDisable() {
-        if (libraryManager != null) {
-            libraryManager.close();
-        }
     }
 }
 ```
@@ -312,13 +284,6 @@ public class VelocityTestPlugin {
         libraryManager.addGoogleMavenCentralMirror();
 
         libraryManager.loadDependency("com.google.code.gson", "gson", "2.10.1");
-    }
-
-    @Subscribe
-    public void onProxyShutdown(ProxyShutdownEvent event) {
-        if (libraryManager != null) {
-            libraryManager.close();
-        }
     }
 }
 ```
