@@ -1,6 +1,6 @@
-import { AvailableConfig } from '../../config';
-import { GenerateOperatingSystem } from '../generate/GenerateOperatingSystem';
-import { EnvironmentOption } from './EnvironmentOption';
+import type { AvailableConfig } from '../../config';
+import type { GenerateOperatingSystem } from '../generate/GenerateOperatingSystem';
+import type { EnvironmentOption } from './EnvironmentOption';
 
 interface File {
   name?: string;

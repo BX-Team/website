@@ -1,8 +1,7 @@
-import { AvailableServerType } from '../../environment/serverType';
-import { AvailableExtraFlags } from '../../flags';
-import { AvailableFlags } from '../../flags';
-import { Generate } from '../generate/Generate';
-import { EnvironmentOption } from './EnvironmentOption';
+import type { AvailableServerType } from '../../environment/serverType';
+import type { AvailableExtraFlags, AvailableFlags } from '../../flags';
+import type { Generate } from '../generate/Generate';
+import type { EnvironmentOption } from './EnvironmentOption';
 
 export interface ServerTypeOption extends EnvironmentOption {
   flags: AvailableFlags[];

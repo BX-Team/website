@@ -1,9 +1,9 @@
 'use client';
 
-import { siteConfig } from '@/config/site';
 import { Github, MessageCircle } from 'lucide-react';
-import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { siteConfig } from '@/config/site';
 
 const COMMUNITIES = [
   {

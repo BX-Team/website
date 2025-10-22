@@ -1,9 +1,8 @@
-import type { ReactNode } from 'react';
+import { DocsLayout } from 'fumadocs-ui/layouts/notebook';
 
 import Image from 'next/image';
-
+import type { ReactNode } from 'react';
 import { baseOptions } from '@/app/layout.config';
-import { DocsLayout } from 'fumadocs-ui/layouts/notebook';
 import { source } from '@/lib/source';
 
 export default function Layout({ children }: { children: ReactNode }) {

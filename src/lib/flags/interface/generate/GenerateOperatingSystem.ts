@@ -1,4 +1,4 @@
-import { Generate } from './Generate';
+import type { Generate } from './Generate';
 
 export interface GenerateOperatingSystemResult {
   script: string;

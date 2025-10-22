@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
 import { ChevronDown, ChevronRight, Search, X } from 'lucide-react';
+import type React from 'react';
+import { useMemo, useState } from 'react';
 
 interface ConfigViewerProps {
   config: Record<string, any>;

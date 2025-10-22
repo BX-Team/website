@@ -1,4 +1,4 @@
-import { AvailableConfig } from '../../config';
+import type { AvailableConfig } from '../../config';
 
 export interface EnvironmentOption {
   icon: any;

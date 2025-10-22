@@ -3,7 +3,7 @@
 import { Box, Code, RefreshCw, SquareTerminal } from 'lucide-react';
 
 import { useState } from 'react';
-
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -12,12 +12,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
+import { Toaster } from '@/components/ui/sonner';
 import { serverType } from '@/lib/flags/environment/serverType';
 import { extraFlags } from '@/lib/flags/flags';
-import { generateResult } from '@/lib/flags/generateResult';
 import type { ExtraFlagType, flagsSchema } from '@/lib/flags/generateResult';
-import { Toaster } from '@/components/ui/sonner';
-import { toast } from 'sonner';
+import { generateResult } from '@/lib/flags/generateResult';
 
 const defaults: flagsSchema = {
   operatingSystem: 'linux',

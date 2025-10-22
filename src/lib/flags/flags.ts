@@ -2,7 +2,7 @@ import type { AvailableConfig } from './config';
 import type { AvailableOperatingSystem } from './environment/operatingSystem';
 import type { AvailableServerType } from './environment/serverType';
 import type { ExtraFlagType } from './generateResult';
-import { Generate } from './interface/generate/Generate';
+import type { Generate } from './interface/generate/Generate';
 
 export type AvailableFlags = keyof typeof flags;
 export type AvailableExtraFlags = keyof typeof extraFlags;

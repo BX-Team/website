@@ -1,9 +1,7 @@
 import { RootProvider } from 'fumadocs-ui/provider/next';
 import type { Metadata, Viewport } from 'next';
-
-import type { ReactNode } from 'react';
-
 import { Inter } from 'next/font/google';
+import type { ReactNode } from 'react';
 
 import { siteConfig } from '@/config/site';
 

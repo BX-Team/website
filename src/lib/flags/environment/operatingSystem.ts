@@ -1,7 +1,7 @@
-import { AvailableConfig } from '../config';
-import { EnvironmentOptions } from '../interface/environment/EnvironmentOptions';
-import { OperatingSystemOption } from '../interface/environment/OperatingSystemOption';
-import { Generate } from '../interface/generate/Generate';
+import type { AvailableConfig } from '../config';
+import type { EnvironmentOptions } from '../interface/environment/EnvironmentOptions';
+import type { OperatingSystemOption } from '../interface/environment/OperatingSystemOption';
+import type { Generate } from '../interface/generate/Generate';
 
 export type AvailableOperatingSystem = keyof typeof operatingSystem;
 
