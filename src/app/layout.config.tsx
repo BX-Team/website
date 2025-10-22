@@ -15,7 +15,7 @@ export const baseOptions: BaseLayoutProps = {
     ),
     transparentMode: 'none',
   },
-  disableThemeSwitch: true,
+  themeSwitch: { enabled: false },
   githubUrl: siteConfig.links.github,
   links: [
     {

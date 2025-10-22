@@ -1,4 +1,4 @@
-import { RootProvider } from 'fumadocs-ui/provider';
+import { RootProvider } from 'fumadocs-ui/provider/next';
 import type { Metadata, Viewport } from 'next';
 
 import type { ReactNode } from 'react';
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: ['BX Team', 'Minecraft', 'DivineMC', 'NDailyRewards'],
+  keywords: ['BX Team', 'Minecraft', 'DivineMC', 'Quark', 'NDailyRewards'],
 };
 
 export default function Layout({ children }: { children: ReactNode }) {

@@ -1,28 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    ":preserveSemverRanges",
-    "group:allNonMajor",
-    ":automergeMinor",
-    ":automergePatch"
-  ],
-  "labels": [
-    "🔄 dependencies"
-  ],
-  "baseBranchPatterns": [
-    "master"
-  ],
-  "ignoreDeps": [
-    "@types/react",
-    "@types/react-dom",
-    "@types/node",
-    "typescript",
-    "lucide-react"
-  ],
-  "schedule": [
-    "before 4am on Monday"
-  ],
+  "extends": ["config:recommended", ":preserveSemverRanges", "group:allNonMajor", ":automergeMinor", ":automergePatch"],
+  "labels": ["🔄 dependencies"],
+  "baseBranchPatterns": ["master"],
+  "ignoreDeps": ["@types/react", "@types/react-dom", "@types/node", "typescript", "lucide-react"],
+  "schedule": ["before 4am on Monday"],
   "semanticCommitType": "build",
   "commitMessagePrefix": "chore(deps): "
 }
