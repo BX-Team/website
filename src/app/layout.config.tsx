@@ -53,15 +53,6 @@ export const baseOptions: BaseLayoutProps = {
             className: 'lg:col-start-3 lg:row-start-1 lg:col-span-1',
           },
         },
-        {
-          icon: <Cloudy />,
-          text: 'RealWorldSync',
-          description: 'Synchronize time and weather from the real world to the game.',
-          url: '/docs/realworldsync',
-          menu: {
-            className: 'lg:col-start-4 lg:row-start-1 lg:col-span-1',
-          },
-        },
       ],
     },
     {
