@@ -18,8 +18,6 @@ const sharedFlags: SharedFlags = {
     'benchmarkedG1GC',
     'benchmarkedZGC',
     'benchmarkedShenandoah',
-    'hillttys',
-    'obyduxs',
     'etils',
   ],
   proxy: ['none', 'proxy'],

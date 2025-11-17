@@ -17,8 +17,6 @@ export type SupportedFlagType =
   | 'benchmarkedG1GC'
   | 'benchmarkedZGC'
   | 'benchmarkedShenandoah'
-  | 'hillttys'
-  | 'obyduxs'
   | 'etils'
   | 'proxy'
   | 'none';

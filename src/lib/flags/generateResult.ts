@@ -11,8 +11,6 @@ export type AvailableFlags =
   | 'benchmarkedG1GC'
   | 'benchmarkedZGC'
   | 'benchmarkedShenandoah'
-  | 'hillttys'
-  | 'obyduxs'
   | 'etils'
   | 'proxy';
 
