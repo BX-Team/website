@@ -12,14 +12,7 @@ interface SharedFlags<T = AvailableFlags> {
 const sharedConfig: AvailableConfig[] = ['fileName', 'flags', 'memory', 'autoRestart', 'variables'];
 
 const sharedFlags: SharedFlags = {
-  bukkit: [
-    'none',
-    'aikars',
-    'benchmarkedG1GC',
-    'benchmarkedZGC',
-    'benchmarkedShenandoah',
-    'etils',
-  ],
+  bukkit: ['none', 'aikars', 'benchmarkedG1GC', 'benchmarkedZGC', 'benchmarkedShenandoah', 'etils'],
   proxy: ['none', 'proxy'],
 };
 
