@@ -21,6 +21,7 @@ export default async function Page(props: { params: Promise<{ slug?: string[] }>
     owner: 'BX-Team',
     repo: 'website',
     path: `content/docs/${page.data.info.path}`,
+    token: `Bearer ${process.env.GITHUB_TOKEN}`,
   });
 
   return (
