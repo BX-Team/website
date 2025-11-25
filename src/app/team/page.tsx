@@ -2,6 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { GradientBackground } from '@/components/ui/gradient-background';
+import { fetchFromGitHubWithRevalidation } from '@/lib/github';
 
 type TeamMember = {
   name: string;
@@ -99,20 +100,9 @@ function ContributorAvatar({ url, avatar, username }: { url: string; avatar: str
 
 export default async function TeamPage() {
   const repos = ['DivineMC', 'NDailyRewards', 'Quark', 'run-server-plugin', 'website'];
-  const responses = await Promise.all(
-    repos.map(repo =>
-      fetch(`https://api.github.com/repos/BX-Team/${repo}/contributors`, {
-        headers: { Accept: 'application/vnd.github.v3+json' },
-        next: { revalidate: 3600 },
-      }),
-    ),
+  const contributorsData = await Promise.all(
+    repos.map(repo => fetchFromGitHubWithRevalidation(`/repos/BX-Team/${repo}/contributors`, 3600)),
   );
-
-  if (responses.some(res => !res.ok)) {
-    throw new Error('Failed to fetch contributors');
-  }
-
-  const contributorsData = await Promise.all(responses.map(res => res.json()));
 
   const contributors = (
     Object.values(
