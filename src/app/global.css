@@ -3,13 +3,8 @@
 @import "fumadocs-ui/css/preset.css";
 @import "tw-animate-css";
 
-@source ".";
-@source "../components";
-
 @theme inline {
-  --default-mono-font-family: var(--font-mono);
-  --animate-marquee: marquee var(--duration) infinite linear;
-  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  --font-mono: var(--default-mono-font-family);
 
   @keyframes marquee {
     from {
@@ -39,11 +34,9 @@
     }
   }
 
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
   --animate-stroke: stroke 5s linear infinite;
-
-  --color-gradient-radial: radial-gradient(circle, var(--tw-gradient-stops));
-  --color-repeat-gradient-to-r: repeating-linear-gradient(to right, var(--tw-gradient-stops));
-  --color-repeat-gradient-to-br: repeating-linear-gradient(to bottom right, var(--tw-gradient-stops));
 }
 
 .ui {
@@ -59,12 +52,12 @@
   --ui-color: hsl(220, 91%, 54%);
 }
 
-body {
-  overscroll-behavior-y: none;
-  background-color: var(--color-fd-background);
-}
-
 .dark {
   --headless-color: hsl(250 100% 80%);
   --ui-color: hsl(217 92% 76%);
+}
+
+body {
+  overscroll-behavior-y: none;
+  background-color: var(--color-fd-background);
 }

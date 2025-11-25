@@ -1,5 +1,5 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { Atom, Cloudy, Cuboid, DollarSign, Drill } from 'lucide-react';
+import { Atom, Cuboid, DollarSign } from 'lucide-react';
 
 import Image from 'next/image';
 

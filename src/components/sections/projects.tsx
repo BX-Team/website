@@ -2,12 +2,6 @@ import { BookOpen, Download, Github } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 
 type Project = {
   name: string;
@@ -17,26 +11,12 @@ type Project = {
   sourceUrl: string;
 };
 
-function parseDownloadLinks(downloadUrl: string) {
-  const parts = downloadUrl.split(';').map(str => str.trim());
-  const regex = /\[([^\]]+)]\(([^)]+)\)/;
-  return parts.map(part => {
-    const match = part.match(regex);
-    if (match) {
-      return { label: match[1], url: match[2] };
-    } else {
-      return { label: 'Download', url: part };
-    }
-  });
-}
-
 const projects: Project[] = [
   {
     name: 'DivineMC',
     description:
       'Multi-functional fork of Purpur, which focuses on the flexibility of your server and its optimization.',
-    downloadUrl:
-      '[GitHub](https://github.com/BX-Team/DivineMC/releases);[MCJars](https://mcjars.app/DIVINEMC/versions)',
+    downloadUrl: '/downloads/divinemc',
     docUrl: '/docs/divinemc',
     sourceUrl: 'https://github.com/BX-Team/DivineMC',
   },
@@ -59,8 +39,6 @@ const projects: Project[] = [
 ];
 
 function ProjectCard({ name, description, downloadUrl, docUrl, sourceUrl }: Project) {
-  const downloadLinks = parseDownloadLinks(downloadUrl);
-
   return (
     <Card className='flex flex-col h-full p-6 transition-all duration-200 hover:ring-neutral-600/60'>
       <div className='flex-1'>
@@ -69,44 +47,18 @@ function ProjectCard({ name, description, downloadUrl, docUrl, sourceUrl }: Proj
       </div>
 
       <div className='mt-6 space-y-3'>
-        {downloadLinks.length > 1 ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button color='secondary' className='w-full'>
-                <Download className='mr-2 h-4 w-4' />
-                Download
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              {downloadLinks.map((link, index) => (
-                <DropdownMenuItem key={index}>
-                  <a
-                    href={link.url}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    aria-label={`Download ${link.label} for ${name}`}
-                    className='flex items-center'
-                  >
-                    {link.label}
-                  </a>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ) : (
-          <Button asChild color='secondary' className='w-full'>
-            <a
-              href={downloadLinks[0].url}
-              target='_self'
-              rel='noopener noreferrer'
-              aria-label={`Download ${name}`}
-              className='flex items-center justify-center'
-            >
-              <Download className='mr-2 h-4 w-4' />
-              {downloadLinks[0].label}
-            </a>
-          </Button>
-        )}
+        <Button asChild color='secondary' className='w-full'>
+          <a
+            href={downloadUrl}
+            target='_self'
+            rel='noopener noreferrer'
+            aria-label={`Download ${name}`}
+            className='flex items-center justify-center'
+          >
+            <Download className='mr-2 h-4 w-4' />
+            Download
+          </a>
+        </Button>
 
         <div className='flex gap-2'>
           <Button asChild color='outline' size='sm' className='flex-1'>

@@ -1,7 +1,4 @@
-import { LinkIcon } from 'lucide-react';
 import Link from 'next/link';
-import { DiscordIcon, GitHubIcon } from '@/components/icons';
-import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { GradientBackground } from '@/components/ui/gradient-background';
 
