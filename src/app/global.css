@@ -4,7 +4,7 @@
 @import "tw-animate-css";
 
 @theme inline {
-  --font-mono: var(--default-mono-font-family);
+  --default-mono-font-family: var(--font-mono);
 
   @keyframes marquee {
     from {
