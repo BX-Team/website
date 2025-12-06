@@ -1,17 +1,18 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { BuildCard } from './build-card';
+import { AtlasBuildCard } from './atlas-build-card';
 import { VersionSelector } from './version-selector';
 import { Loader2, AlertCircle } from 'lucide-react';
-import { type Build, type VersionInfo, fetchDivineMCBuilds } from '@/lib/mcjars';
+import { type Build, fetchBuilds } from '@/lib/atlas';
 
-interface BuildsListProps {
+interface AtlasBuildsListProps {
+  projectId: string;
+  projectName: string;
   initialVersions: string[];
-  versionInfo: Record<string, VersionInfo>;
 }
 
-export function BuildsList({ initialVersions, versionInfo }: BuildsListProps) {
+export function AtlasBuildsList({ projectId, projectName, initialVersions }: AtlasBuildsListProps) {
   const [selectedVersion, setSelectedVersion] = useState(initialVersions[0]);
   const [builds, setBuilds] = useState<Build[]>([]);
   const [loading, setLoading] = useState(false);
@@ -25,12 +26,9 @@ export function BuildsList({ initialVersions, versionInfo }: BuildsListProps) {
       setError(null);
 
       try {
-        const response = await fetchDivineMCBuilds(selectedVersion);
-        if (response.success) {
-          setBuilds(response.builds);
-        } else {
-          setError('Failed to load builds');
-        }
+        const buildsData = await fetchBuilds(projectId, selectedVersion);
+        // Sort builds by ID descending (newest first)
+        setBuilds(buildsData.sort((a, b) => b.id - a.id));
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load builds');
       } finally {
@@ -39,7 +37,7 @@ export function BuildsList({ initialVersions, versionInfo }: BuildsListProps) {
     }
 
     loadBuilds();
-  }, [selectedVersion]);
+  }, [projectId, selectedVersion]);
 
   return (
     <div>
@@ -47,7 +45,6 @@ export function BuildsList({ initialVersions, versionInfo }: BuildsListProps) {
         versions={initialVersions}
         selectedVersion={selectedVersion}
         onVersionChange={setSelectedVersion}
-        downloadCounts={versionInfo}
       />
 
       {loading && (
@@ -75,7 +72,7 @@ export function BuildsList({ initialVersions, versionInfo }: BuildsListProps) {
       {!loading && !error && builds.length > 0 && (
         <div className='space-y-4'>
           {builds.map(build => (
-            <BuildCard key={build.id} build={build} version={selectedVersion} />
+            <AtlasBuildCard key={build.id} build={build} projectName={projectName} version={selectedVersion} />
           ))}
         </div>
       )}
