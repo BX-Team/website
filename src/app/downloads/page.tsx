@@ -14,13 +14,6 @@ export default async function DownloadsPage() {
   let projects: Awaited<ReturnType<typeof fetchProjects>>['projects'] = [];
   let error: string | null = null;
 
-  // TODO: Move descriptions to atlas
-  const projectDescriptions: Record<string, string> = {
-    divinemc: 'Multi-functional fork of Purpur, which focuses on the flexibility of your server and its optimization.',
-    ndailyrewards:
-      'Simple and lightweight plugin that allows you to reward your players for playing on your server every day.',
-  };
-
   try {
     const response = await fetchProjects();
     projects = response.projects;
@@ -93,7 +86,7 @@ export default async function DownloadsPage() {
                               <h3 className='text-2xl font-bold text-white mb-2'>{project.project.name}</h3>
                             </Link>
                             <p className='text-sm text-neutral-400 leading-relaxed'>
-                              {projectDescriptions[project.project.id] || 'High-quality Minecraft server software'}
+                              {project.project.description || 'No description available.'}
                             </p>
                           </div>
                         </div>
