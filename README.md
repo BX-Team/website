@@ -1,4 +1,4 @@
-# BX Team Website [![Discord](https://img.shields.io/discord/931595732752953375.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/qNyybSSPm5) ![Vercel Deploy](https://deploy-badge.vercel.app/vercel/bxteamorg)
+# BX Team Website [![Discord](https://img.shields.io/discord/931595732752953375.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/qNyybSSPm5)
 
 This repository contains the source code for the main BX Team website, including the documentation pages. Website is published at [bxteam.org](https://bxteam.org).
 

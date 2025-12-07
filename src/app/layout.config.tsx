@@ -19,6 +19,11 @@ export const baseOptions: BaseLayoutProps = {
   githubUrl: siteConfig.links.github,
   links: [
     {
+      text: 'Downloads',
+      url: '/downloads',
+      active: 'nested-url',
+    },
+    {
       type: 'menu',
       text: 'Documentation',
       url: '/docs',
