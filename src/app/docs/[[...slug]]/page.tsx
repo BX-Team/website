@@ -7,7 +7,7 @@ import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/page
 
 import { notFound } from 'next/navigation';
 
-import WorkInProgress from '@/components/wip';
+import WorkInProgress from '@/components/docs/wip';
 import { source } from '@/lib/source';
 
 export default async function Page(props: { params: Promise<{ slug?: string[] }> }) {
