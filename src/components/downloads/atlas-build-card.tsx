@@ -1,6 +1,6 @@
 'use client';
 
-import { Download, Calendar, Package, GitCommit } from 'lucide-react';
+import { Download, Calendar, Package, GitCommit, ExternalLink } from 'lucide-react';
 import { type Build, formatDate, formatFileSize, getChannelColor } from '@/lib/atlas';
 import { Button } from '@/components/ui/button';
 
@@ -43,7 +43,7 @@ export function AtlasBuildCard({ build, projectName, version }: AtlasBuildCardPr
           className='cursor-pointer bg-white text-neutral-900 hover:bg-neutral-100/90'
         >
           <Download className='size-4' />
-          Download
+          <span className='ml-2'>Download</span>
         </Button>
       </div>
 
@@ -58,9 +58,15 @@ export function AtlasBuildCard({ build, projectName, version }: AtlasBuildCardPr
               <li key={commit.sha} className='text-sm text-neutral-400 pl-4 relative'>
                 <span className='absolute left-0 top-2 w-1.5 h-1.5 bg-neutral-600 rounded-full' />
                 <div className='flex items-start gap-2'>
-                  <code className='text-xs bg-neutral-800 px-1.5 py-0.5 rounded font-mono text-neutral-300'>
-                    {commit.sha.substring(0, 7)}
-                  </code>
+                  <a
+                    href={`https://github.com/BX-Team/${projectName}/commit/${commit.sha}`}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='inline-flex items-center gap-1 text-xs bg-neutral-800 px-1.5 py-0.5 rounded font-mono text-neutral-300 hover:bg-neutral-700 hover:text-white transition-colors'
+                  >
+                    <code>{commit.sha.substring(0, 7)}</code>
+                    <ExternalLink className='size-3' />
+                  </a>
                   <span>{commit.message}</span>
                 </div>
               </li>

@@ -1,7 +1,8 @@
-import { BookOpen, Download, Github } from 'lucide-react';
+import { BookOpen, Download, Github, ExternalLink } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import Link from 'next/link';
 
 type Project = {
   name: string;
@@ -40,38 +41,32 @@ const projects: Project[] = [
 
 function ProjectCard({ name, description, downloadUrl, docUrl, sourceUrl }: Project) {
   return (
-    <Card className='flex flex-col h-full p-6 transition-all duration-200 hover:ring-neutral-600/60'>
+    <Card className='flex flex-col h-full p-6 transition-all duration-200 hover:ring-neutral-600/60 hover:shadow-xl'>
       <div className='flex-1'>
-        <h3 className='font-medium text-neutral-100 text-lg'>{name}</h3>
-        <p className='mt-2 text-neutral-400 text-sm'>{description}</p>
+        <div className='flex items-start justify-between mb-3'>
+          <h3 className='font-medium text-neutral-100 text-lg'>{name}</h3>
+        </div>
+        <p className='mt-2 text-neutral-400 text-sm leading-relaxed'>{description}</p>
       </div>
 
       <div className='mt-6 space-y-3'>
-        <Button asChild color='secondary' className='w-full'>
-          <a
-            href={downloadUrl}
-            target='_self'
-            rel='noopener noreferrer'
-            aria-label={`Download ${name}`}
-            className='flex items-center justify-center'
-          >
+        <Button asChild color='primary' className='w-full'>
+          <Link href={downloadUrl} aria-label={`Download ${name}`} className='flex items-center justify-center'>
             <Download className='mr-2 h-4 w-4' />
             Download
-          </a>
+          </Link>
         </Button>
 
         <div className='flex gap-2'>
           <Button asChild color='outline' size='sm' className='flex-1'>
-            <a
+            <Link
               href={docUrl}
-              target='_self'
-              rel='noopener noreferrer'
               aria-label={`Read Documentation for ${name}`}
               className='flex items-center justify-center'
             >
               <BookOpen className='mr-1 h-3 w-3' />
               Docs
-            </a>
+            </Link>
           </Button>
           <Button asChild color='outline' size='sm' className='flex-1'>
             <a
@@ -100,12 +95,14 @@ export function Projects() {
 
   return (
     <section className='mx-auto max-w-7xl px-6 py-12 sm:px-8 lg:px-12 lg:py-16' id='projects'>
-      <header className='max-w-2xl text-left'>
+      <header className='max-w-2xl text-left mb-10'>
         <h2 className='font-semibold text-3xl text-white'>Our Projects</h2>
-        <p className='mt-3 text-lg text-neutral-300'>Explore our projects that are currently in development.</p>
+        <p className='mt-3 text-lg text-neutral-300'>
+          Explore our projects that we are currently developing and maintaining
+        </p>
       </header>
 
-      <div className={`mt-10 grid gap-6 ${getGridCols(projects.length)}`}>
+      <div className={`grid gap-6 ${getGridCols(projects.length)}`}>
         {projects.map(project => (
           <ProjectCard key={project.name} {...project} />
         ))}
