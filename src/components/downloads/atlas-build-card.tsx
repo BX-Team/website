@@ -17,11 +17,11 @@ export function AtlasBuildCard({ build, projectName, version }: AtlasBuildCardPr
 
   return (
     <div className='border border-neutral-800 rounded-lg p-6 hover:border-neutral-700 transition-all bg-neutral-900/30 backdrop-blur-sm'>
-      <div className='flex items-start justify-between mb-4'>
+      <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4'>
         <div className='flex-1'>
-          <div className='flex items-center gap-3 mb-2'>
+          <div className='flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2'>
             <h3 className='text-lg font-semibold text-white'>Build #{build.id}</h3>
-            <span className={`px-2 py-0.5 text-xs font-medium border rounded ${getChannelColor(build.channel)}`}>
+            <span className={`px-2 py-0.5 text-xs font-medium border rounded w-fit ${getChannelColor(build.channel)}`}>
               {build.channel}
             </span>
           </div>
@@ -40,7 +40,7 @@ export function AtlasBuildCard({ build, projectName, version }: AtlasBuildCardPr
           onClick={handleDownload}
           color='primary'
           size='default'
-          className='cursor-pointer bg-white text-neutral-900 hover:bg-neutral-100/90'
+          className='cursor-pointer bg-white text-neutral-900 hover:bg-neutral-100/90 w-full sm:w-auto'
         >
           <Download className='size-4' />
           <span className='ml-2'>Download</span>
