@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronDown, Check, AlertTriangle, XCircle } from 'lucide-react';
+import { ChevronDown, Check, AlertTriangle, XCircle, FlaskConical } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import * as Popover from '@radix-ui/react-popover';
 import type { VersionWithBuilds } from '@/lib/atlas';
@@ -11,6 +11,9 @@ interface VersionSelectorProps {
   selectedVersion: string;
   onVersionChange: (version: string) => void;
   versionsMetadata?: VersionWithBuilds[];
+  experimentalVersion?: string;
+  showExperimental?: boolean;
+  onToggleExperimental?: (checked: boolean) => void;
 }
 
 export function VersionSelector({
@@ -18,6 +21,9 @@ export function VersionSelector({
   selectedVersion,
   onVersionChange,
   versionsMetadata,
+  experimentalVersion,
+  showExperimental,
+  onToggleExperimental,
 }: VersionSelectorProps) {
   const [open, setOpen] = useState(false);
 
@@ -43,10 +49,27 @@ export function VersionSelector({
   };
 
   const selectedStatus = getVersionStatus(selectedVersion);
+  const isExperimental = selectedVersion === experimentalVersion;
 
   return (
     <div className='mb-6'>
-      <label className='block text-sm font-medium text-neutral-300 mb-2'>Minecraft Version</label>
+      <div className='flex items-center justify-between mb-2'>
+        <label className='text-sm font-medium text-neutral-300'>Minecraft Version</label>
+        {experimentalVersion && onToggleExperimental && (
+          <button
+            onClick={() => onToggleExperimental(!showExperimental)}
+            className={cn(
+              'flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all',
+              showExperimental
+                ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30 hover:bg-blue-500/25'
+                : 'bg-blue-500/10 text-blue-400 border border-blue-500/20 hover:bg-blue-500/15',
+            )}
+          >
+            <FlaskConical className='size-4' />
+            <span>Toggle Experimental Builds</span>
+          </button>
+        )}
+      </div>
       <Popover.Root open={open} onOpenChange={setOpen}>
         <Popover.Trigger asChild>
           <button
@@ -59,7 +82,13 @@ export function VersionSelector({
           >
             <div className='flex items-center gap-2'>
               <span className='font-medium'>{selectedVersion}</span>
-              {selectedStatus && selectedStatus !== 'SUPPORTED' && (
+              {isExperimental && (
+                <span className='px-2 py-0.5 text-xs font-medium rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center gap-1'>
+                  <FlaskConical className='size-3' />
+                  Experimental
+                </span>
+              )}
+              {!isExperimental && selectedStatus && selectedStatus !== 'SUPPORTED' && (
                 <span
                   className={cn(
                     'px-2 py-0.5 text-xs font-medium rounded',
@@ -83,6 +112,7 @@ export function VersionSelector({
             <div className='p-1'>
               {versions.map(version => {
                 const status = getVersionStatus(version);
+                const isExp = version === experimentalVersion;
                 return (
                   <button
                     key={version}
@@ -99,7 +129,13 @@ export function VersionSelector({
                   >
                     <div className='flex items-center gap-2'>
                       <span className='font-medium'>{version}</span>
-                      {status && status !== 'SUPPORTED' && (
+                      {isExp && (
+                        <span className='flex items-center gap-1 px-1.5 py-0.5 text-xs rounded bg-blue-500/10 text-blue-400 border border-blue-500/20'>
+                          <FlaskConical className='size-3' />
+                          Experimental
+                        </span>
+                      )}
+                      {!isExp && status && status !== 'SUPPORTED' && (
                         <span
                           className={cn(
                             'flex items-center gap-1 px-1.5 py-0.5 text-xs rounded',

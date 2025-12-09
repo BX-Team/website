@@ -2,11 +2,13 @@ export interface Project {
   id: string;
   name: string;
   description?: string;
+  latestVersion: string;
+  experimentalVersion?: string;
 }
 
 export interface ProjectWithVersions {
   project: Project;
-  versions: string[];
+  version_groups: Record<string, string[]>;
 }
 
 export interface JavaVersion {
@@ -136,7 +138,7 @@ export async function fetchBuilds(
 ): Promise<Build[]> {
   const url = new URL(
     `${ATLAS_API_BASE}/projects/${projectId}/versions/${versionId}/builds`,
-    typeof window !== 'undefined' ? window.location.origin : 'https://bx-team.space',
+    typeof window !== 'undefined' ? window.location.origin : 'https://bxteam.org',
   );
   if (channel) {
     url.searchParams.set('channel', channel);
@@ -221,17 +223,19 @@ export function getChannelColor(channel: 'ALPHA' | 'BETA' | 'STABLE'): string {
 }
 
 /**
- * Sort versions semantically (descending)
+ * Get all versions from version groups (flattened and in order)
  */
-export function sortVersions(versions: string[]): string[] {
-  return versions.sort((a, b) => {
-    const aParts = a.split('.').map(Number);
-    const bParts = b.split('.').map(Number);
-    for (let i = 0; i < Math.max(aParts.length, bParts.length); i++) {
-      const aNum = aParts[i] || 0;
-      const bNum = bParts[i] || 0;
-      if (aNum !== bNum) return bNum - aNum;
-    }
-    return 0;
+export function getAllVersions(versionGroups: Record<string, string[]>): string[] {
+  return Object.values(versionGroups).flat();
+}
+
+/**
+ * Get version groups in descending order (1.21, 1.20, 1.19...)
+ */
+export function getOrderedVersionGroups(versionGroups: Record<string, string[]>): [string, string[]][] {
+  return Object.entries(versionGroups).sort((a, b) => {
+    const aNum = parseFloat(a[0]);
+    const bNum = parseFloat(b[0]);
+    return bNum - aNum;
   });
 }

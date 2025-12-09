@@ -1,5 +1,5 @@
 import { Download, ArrowRight, Clock, GitCommit, Package } from 'lucide-react';
-import { fetchProjects, fetchLatestBuild, getChannelColor } from '@/lib/atlas';
+import { fetchProjects, fetchLatestBuild, getChannelColor, getAllVersions } from '@/lib/atlas';
 import { Button } from '@/components/ui/button';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -20,9 +20,12 @@ export default async function DownloadsPage() {
 
     const projectsWithBuilds = await Promise.all(
       projects.map(async project => {
-        if (project.versions.length > 0) {
+        const versions = getAllVersions(project.version_groups);
+        const latestVersion = project.project.latestVersion || versions[0];
+
+        if (latestVersion) {
           try {
-            const latestBuild = await fetchLatestBuild(project.project.id, project.versions[0]);
+            const latestBuild = await fetchLatestBuild(project.project.id, latestVersion);
             return { ...project, latestBuild };
           } catch {
             return { ...project, latestBuild: null };

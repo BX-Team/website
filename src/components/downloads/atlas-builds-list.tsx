@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { AtlasBuildCard } from './atlas-build-card';
 import { VersionSelector } from './version-selector';
-import { Loader2, AlertCircle, AlertTriangle, XCircle } from 'lucide-react';
+import { Loader2, AlertCircle, AlertTriangle, XCircle, FlaskConical } from 'lucide-react';
 import { type Build, type VersionWithBuilds, fetchBuilds } from '@/lib/atlas';
 
 interface AtlasBuildsListProps {
@@ -11,13 +11,24 @@ interface AtlasBuildsListProps {
   projectName: string;
   initialVersions: string[];
   versionsMetadata?: VersionWithBuilds[];
+  experimentalVersion?: string;
 }
 
-export function AtlasBuildsList({ projectId, projectName, initialVersions, versionsMetadata }: AtlasBuildsListProps) {
+export function AtlasBuildsList({
+  projectId,
+  projectName,
+  initialVersions,
+  versionsMetadata,
+  experimentalVersion,
+}: AtlasBuildsListProps) {
   const [selectedVersion, setSelectedVersion] = useState(initialVersions[0]);
+  const [showExperimental, setShowExperimental] = useState(false);
   const [builds, setBuilds] = useState<Build[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const availableVersions =
+    showExperimental && experimentalVersion ? [experimentalVersion, ...initialVersions] : initialVersions;
 
   useEffect(() => {
     async function loadBuilds() {
@@ -28,7 +39,7 @@ export function AtlasBuildsList({ projectId, projectName, initialVersions, versi
 
       try {
         const buildsData = await fetchBuilds(projectId, selectedVersion);
-        setBuilds(buildsData.sort((a, b) => b.id - a.id));
+        setBuilds(buildsData);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load builds');
       } finally {
@@ -45,15 +56,37 @@ export function AtlasBuildsList({ projectId, projectName, initialVersions, versi
   };
 
   const versionStatus = getVersionStatus();
+  const isExperimentalVersion = selectedVersion === experimentalVersion;
 
   return (
     <div>
       <VersionSelector
-        versions={initialVersions}
+        versions={availableVersions}
         selectedVersion={selectedVersion}
         onVersionChange={setSelectedVersion}
         versionsMetadata={versionsMetadata}
+        experimentalVersion={experimentalVersion}
+        showExperimental={showExperimental}
+        onToggleExperimental={checked => {
+          setShowExperimental(checked);
+          if (!checked && selectedVersion === experimentalVersion) {
+            setSelectedVersion(initialVersions[0]);
+          }
+        }}
       />
+
+      {isExperimentalVersion && (
+        <div className='flex items-start gap-3 p-4 mb-4 bg-blue-500/10 border border-blue-500/20 rounded-lg'>
+          <FlaskConical className='size-5 shrink-0 text-blue-400 mt-0.5' />
+          <div>
+            <h4 className='text-sm font-semibold text-blue-400 mb-1'>Experimental Build</h4>
+            <p className='text-sm text-blue-400/90'>
+              This is an experimental build and may contain bugs or unstable features. Use at your own risk. Not
+              recommended for production servers. Make sure to back up your data before using this version.
+            </p>
+          </div>
+        </div>
+      )}
 
       {versionStatus === 'DEPRECATED' && (
         <div className='flex items-start gap-3 p-4 mb-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg'>

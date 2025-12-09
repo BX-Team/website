@@ -4,7 +4,7 @@ import {
   fetchProject,
   fetchLatestBuild,
   fetchVersions,
-  sortVersions,
+  getAllVersions,
   formatFileSize,
   type VersionWithBuilds,
 } from '@/lib/atlas';
@@ -48,16 +48,16 @@ export default async function ProjectDownloadsPage({ params }: ProjectPageProps)
 
   try {
     projectData = await fetchProject(projectId);
-    versions = sortVersions([...projectData.versions]);
+    versions = getAllVersions(projectData.version_groups);
 
     try {
       versionsMetadata = await fetchVersions(projectId);
-    } catch { }
+    } catch {}
 
-    if (versions.length > 0) {
+    if (projectData.project.latestVersion) {
       try {
-        latestBuild = await fetchLatestBuild(projectId, versions[0]);
-      } catch { }
+        latestBuild = await fetchLatestBuild(projectId, projectData.project.latestVersion);
+      } catch {}
     }
   } catch (err) {
     error = err instanceof Error ? err.message : 'Failed to load project';
@@ -192,6 +192,7 @@ export default async function ProjectDownloadsPage({ params }: ProjectPageProps)
                 projectName={projectData.project.name}
                 initialVersions={versions}
                 versionsMetadata={versionsMetadata}
+                experimentalVersion={projectData.project.experimentalVersion}
               />
             </div>
           ) : (
