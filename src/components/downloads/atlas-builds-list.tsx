@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { AtlasBuildCard } from './atlas-build-card';
 import { VersionSelector } from './version-selector';
 import { Loader2, AlertCircle, AlertTriangle, XCircle, FlaskConical } from 'lucide-react';
@@ -23,8 +24,14 @@ export function AtlasBuildsList({
   versionsMetadata,
   experimentalVersion,
 }: AtlasBuildsListProps) {
-  const [selectedVersion, setSelectedVersion] = useState(defaultVersion);
-  const [showExperimental, setShowExperimental] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const urlVersion = searchParams.get('version');
+  const initialSelectedVersion = urlVersion && initialVersions.includes(urlVersion) ? urlVersion : defaultVersion;
+
+  const [selectedVersion, setSelectedVersion] = useState(initialSelectedVersion);
+  const [showExperimental, setShowExperimental] = useState(urlVersion === experimentalVersion);
   const [builds, setBuilds] = useState<Build[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -33,6 +40,13 @@ export function AtlasBuildsList({
 
   const availableVersions =
     showExperimental && experimentalVersion ? [experimentalVersion, ...stableVersions] : stableVersions;
+
+  const handleVersionChange = (version: string) => {
+    setSelectedVersion(version);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('version', version);
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
 
   useEffect(() => {
     async function loadBuilds() {
@@ -67,14 +81,14 @@ export function AtlasBuildsList({
       <VersionSelector
         versions={availableVersions}
         selectedVersion={selectedVersion}
-        onVersionChange={setSelectedVersion}
+        onVersionChange={handleVersionChange}
         versionsMetadata={versionsMetadata}
         experimentalVersion={experimentalVersion}
         showExperimental={showExperimental}
         onToggleExperimental={checked => {
           setShowExperimental(checked);
           if (!checked && selectedVersion === experimentalVersion) {
-            setSelectedVersion(initialVersions[0]);
+            handleVersionChange(defaultVersion);
           }
         }}
       />
