@@ -10,6 +10,7 @@ interface AtlasBuildsListProps {
   projectId: string;
   projectName: string;
   initialVersions: string[];
+  defaultVersion: string;
   versionsMetadata?: VersionWithBuilds[];
   experimentalVersion?: string;
 }
@@ -18,17 +19,20 @@ export function AtlasBuildsList({
   projectId,
   projectName,
   initialVersions,
+  defaultVersion,
   versionsMetadata,
   experimentalVersion,
 }: AtlasBuildsListProps) {
-  const [selectedVersion, setSelectedVersion] = useState(initialVersions[0]);
+  const [selectedVersion, setSelectedVersion] = useState(defaultVersion);
   const [showExperimental, setShowExperimental] = useState(false);
   const [builds, setBuilds] = useState<Build[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const stableVersions = experimentalVersion ? initialVersions.filter(v => v !== experimentalVersion) : initialVersions;
+
   const availableVersions =
-    showExperimental && experimentalVersion ? [experimentalVersion, ...initialVersions] : initialVersions;
+    showExperimental && experimentalVersion ? [experimentalVersion, ...stableVersions] : stableVersions;
 
   useEffect(() => {
     async function loadBuilds() {

@@ -191,6 +191,7 @@ export default async function ProjectDownloadsPage({ params }: ProjectPageProps)
                 projectId={projectId}
                 projectName={projectData.project.name}
                 initialVersions={versions}
+                defaultVersion={projectData.project.latestVersion}
                 versionsMetadata={versionsMetadata}
                 experimentalVersion={projectData.project.experimentalVersion}
               />
