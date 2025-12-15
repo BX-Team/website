@@ -1,62 +1,29 @@
 {
-  "name": "website",
+  "name": "@bx-team/monorepo",
   "private": true,
   "scripts": {
-    "build": "next build",
-    "dev": "next dev --turbopack",
-    "start": "next start",
-    "lint": "next lint",
-    "format": "biome format .",
-    "format:fix": "biome format --write .",
-    "check": "biome check .",
-    "check:fix": "biome check --write .",
-    "typecheck": "tsc --noEmit",
-    "postinstall": "fumadocs-mdx",
-    "preinstall": "npx only-allow bun"
-  },
-  "dependencies": {
-    "@radix-ui/react-avatar": "^1.1.11",
-    "@radix-ui/react-checkbox": "^1.3.3",
-    "@radix-ui/react-label": "^2.1.8",
-    "@radix-ui/react-popover": "^1.1.15",
-    "@radix-ui/react-scroll-area": "^1.2.10",
-    "@radix-ui/react-select": "^2.2.6",
-    "@radix-ui/react-slider": "^1.3.6",
-    "@radix-ui/react-slot": "^1.2.4",
-    "@theguild/remark-mermaid": "^0.3.0",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "fumadocs-core": "16.2.4",
-    "fumadocs-mdx": "14.1.0",
-    "fumadocs-ui": "16.2.4",
-    "lucide-react": "^0.503.0",
-    "next": "16.0.10",
-    "next-themes": "^0.4.6",
-    "react": "19.2.1",
-    "react-dom": "19.2.1",
-    "sonner": "^2.0.7",
-    "tailwind-merge": "^3.4.0",
-    "zod": "^4.1.13"
+    "atlas:dev": "bun --filter @bx-team/atlas dev",
+    "atlas:build": "bun --filter @bx-team/atlas build",
+    "atlas:start": "bun --filter @bx-team/atlas start",
+    "atlas:db:generate": "bun --filter @bx-team/atlas db:generate",
+    "atlas:db:migrate": "bun --filter @bx-team/atlas db:migrate",
+    "atlas:db:push": "bun --filter @bx-team/atlas db:push",
+    "atlas:db:studio": "bun --filter @bx-team/atlas db:studio",
+    "website:dev": "bun --filter @bx-team/website dev",
+    "website:build": "bun --filter @bx-team/website build",
+    "website:start": "bun --filter @bx-team/website start",
+    "biome:format": "biome format .",
+    "biome:format:fix": "biome format --write .",
+    "biome:check": "biome check .",
+    "biome:check:fix": "biome check --write .",
+    "postinstall": "bun --filter '*' postinstall",
+    "preinstall": "bun x only-allow bun"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.7",
-    "@fumadocs/cli": "^1.0.3",
-    "@tailwindcss/postcss": "^4.1.17",
-    "@types/mdx": "^2.0.13",
-    "@types/node": "22.14.0",
-    "@types/react": "19.2.2",
-    "@types/react-dom": "19.2.2",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.17",
-    "tw-animate-css": "^1.4.0",
-    "typescript": "^5.9.3"
+    "@biomejs/biome": "^2.3.9"
   },
-  "overrides": {
-    "@types/react": "19.2.2",
-    "@types/react-dom": "19.2.2"
-  },
-  "engines": {
-    "node": "20.x"
-  },
-  "packageManager": "bun@1.3.3"
+  "workspaces": [
+    "apps/*"
+  ],
+  "packageManager": "bun@1.3.4"
 }

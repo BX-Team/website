@@ -72,8 +72,14 @@ $ bun install
 
 3. Start the development server.
 
+**For Website:**
 ```bash
-$ bun dev
+$ bun website:dev
 ```
 
-This will start a local development server and show you a link to the local website. The majority of changes will be instantly reflected live without the need to restart the development server or reload the page in your browser. Edit away!
+**For Atlas:**
+```bash
+$ bun atlas:dev
+```
+
+This will start a local development server and show you a link to the local application. The majority of changes will be instantly reflected live without the need to restart the development server or reload the page in your browser. Edit away!
