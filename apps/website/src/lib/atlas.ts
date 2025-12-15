@@ -61,12 +61,7 @@ export interface ProjectsResponse {
   projects: ProjectWithVersions[];
 }
 
-const ATLAS_API_BASE =
-  typeof window !== 'undefined'
-    ? '/api/atlas/v2'
-    : process.env.NEXT_PUBLIC_ATLAS_API_URL
-      ? `${process.env.NEXT_PUBLIC_ATLAS_API_URL}/v2`
-      : 'https://api.bxteam.org/v2';
+const ATLAS_API_BASE = 'https://api.bxteam.org/v2';
 
 /**
  * Fetch all available projects
