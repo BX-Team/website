@@ -51,3 +51,14 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           secrets: |
             "github_token=${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Trigger Deployment
+        run: |
+          curl -X 'POST' \
+          '${{ secrets.DOKPLOY_DOMAIN }}/api/application.deploy' \
+          -H 'accept: application/json' \
+          -H 'x-api-key: ${{ secrets.DOKPLOY_API_KEY }}' \
+          -H 'Content-Type: application/json' \
+          -d '{
+            "applicationId": "${{ secrets.WEBSITE_APPLICATION_ID }}"
+          }'
