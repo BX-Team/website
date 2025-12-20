@@ -236,25 +236,25 @@ const ConfigViewer = ({ config, comments = {}, title = 'Configuration' }: Config
 
   return (
     <div className='bg-fd-card border border-fd-border rounded-lg shadow-sm overflow-hidden'>
-      <div className='border-b border-fd-border p-6'>
-        <div className='flex flex-col sm:flex-row sm:items-center justify-between gap-4'>
+      <div className='border-b border-fd-border px-4 py-3'>
+        <div className='flex flex-col sm:flex-row sm:items-center justify-between gap-3'>
           <h3 className='text-lg font-semibold text-fd-foreground'>{title}</h3>
-          <div className='flex gap-1.5'>
+          <div className='flex gap-2'>
             <button
               onClick={() => setVisibleComments(new Set(Object.keys(comments)))}
-              className='px-2 py-1 text-xs bg-fd-primary/10 text-fd-primary rounded hover:bg-fd-primary/20 transition-all duration-200 font-medium hover:scale-105'
+              className='px-3 py-1.5 text-xs bg-fd-foreground text-fd-background rounded-md hover:bg-fd-foreground/90 transition-colors duration-200 font-medium'
             >
               Show all comments
             </button>
             <button
               onClick={() => setVisibleComments(new Set())}
-              className='px-2 py-1 text-xs bg-fd-muted text-fd-muted-foreground rounded hover:bg-fd-muted/80 transition-all duration-200 font-medium hover:scale-105'
+              className='px-3 py-1.5 text-xs border border-fd-border text-fd-muted-foreground rounded-md hover:bg-fd-muted/50 transition-colors duration-200 font-medium'
             >
               Hide all comments
             </button>
           </div>
         </div>
-        <div className='relative mt-4'>
+        <div className='relative mt-3'>
           <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-fd-muted-foreground' />
           <input
             type='text'
