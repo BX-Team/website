@@ -20,7 +20,7 @@
     "preinstall": "bun x only-allow bun"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.9"
+    "@biomejs/biome": "^2.3.10"
   },
   "workspaces": [
     "apps/*"
