@@ -18,8 +18,6 @@ If you want information on settings in **paper.yml**, **purpur.yml**, **spigot.y
 
 - [Paper Configuration (paper.yml)](https://docs.papermc.io/paper/reference/paper-global-configuration)
 
-- [Pufferfish Configuration (pufferfish.yml)](https://docs.pufferfish.host/setup/pufferfish-fork-configuration)
-
 - [Purpur Configuration (purpur.yml)](https://purpurmc.org/docs/purpur/configuration)
 
 ## Configuration Viewer
@@ -120,17 +118,6 @@ export const divineMCConfig = {
       "log-level": "WARN",
       "only-log-thrown": true
     },
-    "raytrace-entity-tracker": {
-      "enabled": false,
-      "threads": 2,
-      "threads-priority": 7,
-      "skip-marker-armor-stands": true,
-      "check-interval-ms": 10,
-      "tracing-distance": 48,
-      "hitbox-limit": 50,
-      "skipped-entities": [],
-      "invert-skipped-entities": false
-    },
     "old-features": {
       "copper-bulb-1gt": false,
       "crafter-1gt": false
@@ -161,6 +148,7 @@ export const divineMCConfig = {
       "chunk-data-cache-limit": 32678,
       "max-view-distance": 32,
       "player-near-chunk-detection-range": 128,
+      "chunk-worker-algorithm": "MOONRISE",
       "use-euclidean-distance-squared": true,
       "end-biome-cache-enabled": false,
       "end-biome-cache-capacity": 1024,
@@ -212,7 +200,6 @@ export const divineMCConfig = {
       "thread-count": 4,
       "log-container-creation-stacktraces": false,
       "disable-hard-throw": false,
-      "compatability-mode": false,
       "use-per-world-tps-bar": true,
       "show-tps-of-server-instead-of-world": true
     },
@@ -240,7 +227,8 @@ export const divineMCConfig = {
       "max-threads": 1
     },
     "mob-spawning": {
-      "enable": true
+      "enable": true,
+      "async-natural-spawn": true
     }
   }
 };
@@ -292,15 +280,6 @@ export const configComments = {
   "misc.sentry.dsn": "The DSN for Sentry, a service that provides real-time crash reporting that helps you monitor and fix crashes in real time. Leave blank to disable. Obtain link at https://sentry.io",
   "misc.sentry.log-level": "Logs with a level higher than or equal to this level will be recorded.",
   "misc.sentry.only-log-thrown": "Only log Throwable exceptions to Sentry.",
-  "misc.raytrace-entity-tracker.enabled": "Raytrace Entity Tracker uses async ray-tracing to untrack entities players cannot see. Implementation of EntityCulling mod by tr7zw.",
-  "misc.raytrace-entity-tracker.threads": "The number of threads to use for raytrace entity tracker.",
-  "misc.raytrace-entity-tracker.threads-priority": "The priority of the threads used for raytrace entity tracker.\n0 - lowest, 10 - highest, 5 - normal",
-  "misc.raytrace-entity-tracker.skip-marker-armor-stands": "Whether to skip tracing entities with marker armor stand",
-  "misc.raytrace-entity-tracker.check-interval-ms": "The interval in milliseconds between each trace.",
-  "misc.raytrace-entity-tracker.tracing-distance": "The distance in blocks to track entities in the raytrace entity tracker.",
-  "misc.raytrace-entity-tracker.hitbox-limit": "The maximum size of bounding box to trace.",
-  "misc.raytrace-entity-tracker.skipped-entities": "List of entity types to skip in raytrace entity tracker.",
-  "misc.raytrace-entity-tracker.invert-skipped-entities": "If true, the entities in the skipped list will be tracked, and all other entities will be untracked.\nIf false, the entities in the skipped list will be untracked, and all other entities will be tracked.",
   "misc.old-features.copper-bulb-1gt": "Whether to delay the copper lamp by 1 tick when the redstone signal changes.",
   "misc.old-features.crafter-1gt": "Whether to reduce the frequency of the crafter outputting items to 1 tick.",
   "fixes.gameplay.fix-incorrect-bounce-logic": "Fixes incorrect bounce logic in SlimeBlock.",
@@ -316,6 +295,7 @@ export const configComments = {
   "fixes.bug.fix-mc-183990": "Fixes MC-183990: https://bugs.mojang.com/browse/MC-183990\nAI of some mobs breaks when their target dies.",
   "performance.chunks.max-view-distance": "Changes the maximum view distance for the server, allowing clients to have render distances higher than 32",
   "performance.chunks.player-near-chunk-detection-range": "In certain checks, like if a player is near a chunk(primarily used for spawning), it checks if the player is within a certain\ncircular range of the chunk. This configuration allows configurability of the distance(in blocks) the player must be to pass the check.\n\nThis value is used in the calculation 'range/16' to get the distance in chunks any player must be to allow the check to pass.\nBy default, this range is computed to 8, meaning a player must be within an 8 chunk radius of a chunk position to pass.\nKeep in mind the result is rounded to the nearest whole number.",
+  "performance.chunks.chunk-worker-algorithm": "Algorithm used to determine the number of worker threads for chunk loading and generation.\n\nAvailable algorithms:\n - MOONRISE: Paper's default algorithm. Conservative approach, uses fewer threads (CPU cores / 2).\n - C2ME: More aggressive thread allocation than MOONRISE. Considers both CPU cores and available memory. May use more threads on high-end systems.\n - C2ME_NEW: Modern C2ME algorithm. Balanced approach between MOONRISE and C2ME. Optimized for current hardware, slightly less aggressive than old C2ME.",
   "performance.chunks.use-euclidean-distance-squared": "If enabled, euclidean distance squared for chunk task ordering will be used.",
   "performance.chunks.end-biome-cache-enabled": "Enables the end biome cache, which can accelerate The End worldgen.",
   "performance.chunks.end-biome-cache-capacity": "The cache capacity for the end biome cache. Only used if end-biome-cache-enabled is true.",
@@ -353,7 +333,6 @@ export const configComments = {
   "async.parallel-world-ticking.thread-count": "Number of threads to use for parallel world ticking",
   "async.parallel-world-ticking.log-container-creation-stacktraces": "Log container creation stacktraces for debugging",
   "async.parallel-world-ticking.disable-hard-throw": "Disables annoying 'not on main thread' throws. But, THIS IS NOT RECOMMENDED because you SHOULD FIX THE ISSUES THEMSELVES instead of RISKING DATA CORRUPTION! If you lose something, take the blame on yourself.",
-  "async.parallel-world-ticking.compatability-mode": "Enables compatibility mode for plugins that are not compatible with Parallel World Ticking. This makes all async tasks run synchronously.",
   "async.parallel-world-ticking.use-per-world-tps-bar": "Enables per-world TPS bar, which shows the TPS of the world the player is currently in. TPS bar can be turned on/off with /tpsbar command.",
   "async.parallel-world-ticking.show-tps-of-server-instead-of-world": "Enables showing the TPS of the entire server instead of the world in the TPS bar.",
   "async.regionized-chunk-ticking.enable": "Enables regionized chunk ticking, similar to like Folia works.\n\nRead more info about this feature at https://bxteam.org/docs/divinemc/features/regionized-chunk-ticking",
@@ -371,7 +350,8 @@ export const configComments = {
   "async.multithreaded-tracker.queue-size": "Queue size for entity tracking tasks",
   "async.chunk-sending.enable": "Makes chunk sending asynchronous, which can significantly reduce main thread load when many players are loading chunks.",
   "async.chunk-sending.max-threads": "Maximum number of threads for chunk sending",
-  "async.mob-spawning.enable": "Enables optimization that will offload much of the computational effort involved with spawning new mobs to a different thread."
+  "async.mob-spawning.enable": "Enables optimization that will offload much of the computational effort involved with spawning new mobs to a different thread.",
+  "async.mob-spawning.async-natural-spawn": "Enables offloading of natural spawning to a different thread"
 };
 
 <ConfigViewer config={divineMCConfig} comments={configComments} title="DivineMC Configuration" />
