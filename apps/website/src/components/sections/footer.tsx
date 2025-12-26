@@ -1,10 +1,18 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Snowflake } from 'lucide-react';
 
 import { siteConfig } from '@/config/site';
+import { Button } from '@/components/ui/button';
 import { DiscordIcon, GitHubIcon } from '../icons';
+
+function isWinterSeason(): boolean {
+  const month = new Date().getMonth();
+  return month === 11 || month === 0 || month === 1;
+}
 
 interface LinkItem {
   href: string;
@@ -88,6 +96,24 @@ function LinkColumn({ title, links }: LinkColumnProps) {
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const [snowEnabled, setSnowEnabled] = useState(true);
+  const [isWinter, setIsWinter] = useState(false);
+
+  useEffect(() => {
+    setIsWinter(isWinterSeason());
+
+    const stored = localStorage.getItem('snowEnabled');
+    if (stored !== null) {
+      setSnowEnabled(stored === 'true');
+    }
+  }, []);
+
+  const toggleSnow = () => {
+    const newValue = !snowEnabled;
+    setSnowEnabled(newValue);
+    localStorage.setItem('snowEnabled', String(newValue));
+    window.dispatchEvent(new Event('snowToggle'));
+  };
 
   return (
     <footer className='bg-background/50 border-t border-neutral-800/80 backdrop-blur-xl'>
@@ -136,6 +162,18 @@ export function Footer() {
           <p className='text-neutral-400'>
             &copy; {currentYear} BX Team. Not affiliated with Mojang Studios or Microsoft.
           </p>
+          {isWinter && (
+            <Button
+              color='ghost'
+              size='sm'
+              onClick={toggleSnow}
+              className='gap-2'
+              aria-label={snowEnabled ? 'Turn off snow' : 'Turn on snow'}
+            >
+              <Snowflake className={snowEnabled ? 'h-4 w-4' : 'h-4 w-4 opacity-50'} />
+              {snowEnabled ? 'Turn off snow' : 'Turn on snow'}
+            </Button>
+          )}
         </div>
       </div>
     </footer>
