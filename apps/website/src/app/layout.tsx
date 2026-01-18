@@ -6,7 +6,6 @@ import type { ReactNode } from 'react';
 import { siteConfig } from '@/config/site';
 
 import './global.css';
-import SnowEffect from '@/components/snow';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -31,7 +30,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     <html lang='en' className={inter.className} suppressHydrationWarning>
       <body className='dark flex min-h-screen flex-col'>
         <RootProvider theme={{ enabled: false }}>
-          <SnowEffect /> {children}
+          {children}
         </RootProvider>
       </body>
     </html>
