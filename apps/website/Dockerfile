@@ -1,25 +1,41 @@
+# Prune stage - create minimal workspace
+FROM oven/bun:1 AS pruner
+
+WORKDIR /app
+
+# Install turbo globally
+RUN bun add -g turbo@2.8.3
+
+# Copy monorepo files
+COPY . .
+
+# Prune workspace for website app
+RUN turbo prune @bx-team/website --docker
+
 # Build stage
 FROM oven/bun:1 AS builder
 
 WORKDIR /app
 
-# Copy root package.json and workspace configuration
-COPY package.json bun.lock ./
-COPY apps/website/package.json ./apps/website/
+# Copy pruned lockfile and package.json files
+COPY --from=pruner /app/out/json/ .
 
 # Install dependencies
-RUN bun install --filter @bx-team/website --ignore-scripts
+RUN bun install --ignore-scripts
 
-# Copy application source
-COPY apps/website ./apps/website
+# Copy pruned source code
+COPY --from=pruner /app/out/full/ .
+
+# Copy turbo config
+COPY turbo.json turbo.json
 
 # Run postinstall scripts
-WORKDIR /app/apps/website
-RUN bun run postinstall
+RUN bun add -g turbo@2.8.3
+RUN turbo run postinstall --filter=@bx-team/website
 
 # Build the application
 RUN --mount=type=secret,id=github_token \
-    GITHUB_TOKEN=$(cat /run/secrets/github_token) bun run build
+    GITHUB_TOKEN=$(cat /run/secrets/github_token) turbo run build --filter=@bx-team/website
 
 # Production stage
 FROM oven/bun:1-slim

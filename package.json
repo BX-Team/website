@@ -2,16 +2,19 @@
   "name": "@bx-team/monorepo",
   "private": true,
   "scripts": {
-    "atlas:dev": "bun --filter @bx-team/atlas dev",
-    "atlas:build": "bun --filter @bx-team/atlas build",
-    "atlas:start": "bun --filter @bx-team/atlas start",
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "start": "turbo run start",
+    "atlas:dev": "turbo run dev --filter=@bx-team/atlas",
+    "atlas:build": "turbo run build --filter=@bx-team/atlas",
+    "atlas:start": "turbo run start --filter=@bx-team/atlas",
     "atlas:db:generate": "bun --filter @bx-team/atlas db:generate",
     "atlas:db:migrate": "bun --filter @bx-team/atlas db:migrate",
     "atlas:db:push": "bun --filter @bx-team/atlas db:push",
     "atlas:db:studio": "bun --filter @bx-team/atlas db:studio",
-    "website:dev": "bun --filter @bx-team/website dev",
-    "website:build": "bun --filter @bx-team/website build",
-    "website:start": "bun --filter @bx-team/website start",
+    "website:dev": "turbo run dev --filter=@bx-team/website",
+    "website:build": "turbo run build --filter=@bx-team/website",
+    "website:start": "turbo run start --filter=@bx-team/website",
     "biome:format": "biome format .",
     "biome:format:fix": "biome format --write .",
     "biome:check": "biome check .",
@@ -20,7 +23,8 @@
     "preinstall": "bun x only-allow bun"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.14"
+    "@biomejs/biome": "^2.3.14",
+    "turbo": "^2.8.3"
   },
   "workspaces": [
     "apps/*"

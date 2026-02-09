@@ -1,21 +1,37 @@
+# Prune stage - create minimal workspace
+FROM oven/bun:1 AS pruner
+
+WORKDIR /app
+
+# Install turbo globally
+RUN bun add -g turbo@2.8.3
+
+# Copy monorepo files
+COPY . .
+
+# Prune workspace for atlas app
+RUN turbo prune @bx-team/atlas --docker
+
 # Build stage
 FROM oven/bun:1 AS builder
 
 WORKDIR /app
 
-# Copy root package.json and workspace configuration
-COPY package.json bun.lock ./
-COPY apps/atlas/package.json ./apps/atlas/
+# Copy pruned lockfile and package.json files
+COPY --from=pruner /app/out/json/ .
 
 # Install dependencies
-RUN bun install --filter @bx-team/atlas
+RUN bun install --ignore-scripts
 
-# Copy application source
-COPY apps/atlas ./apps/atlas
+# Copy pruned source code
+COPY --from=pruner /app/out/full/ .
+
+# Copy turbo config
+COPY turbo.json turbo.json
 
 # Build the application
-WORKDIR /app/apps/atlas
-RUN bun run build
+RUN bun add -g turbo@2.8.3
+RUN turbo run build --filter=@bx-team/atlas
 
 # Production stage
 FROM oven/bun:1-slim

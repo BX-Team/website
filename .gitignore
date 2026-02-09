@@ -27,5 +27,8 @@ next-env.d.ts
 # Fumadocs files
 .source
 
+# Turborepo cache
+.turbo
+
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
