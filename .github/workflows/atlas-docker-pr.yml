@@ -1,0 +1,32 @@
+name: Test Build Atlas Docker Image (PR)
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'apps/atlas/**'
+      - '.github/workflows/atlas-docker.yml'
+      - '.github/workflows/atlas-docker-pr.yml'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository_owner }}/atlas
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./apps/atlas/Dockerfile
+          push: false
