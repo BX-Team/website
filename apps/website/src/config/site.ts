@@ -6,7 +6,6 @@ export const siteConfig = {
   links: {
     discord: 'https://discord.gg/qNyybSSPm5',
     github: 'https://github.com/BX-Team',
-    status: 'https://status.bxteam.org',
     maven: 'https://repo.bxteam.org',
     projects: {
       divinemc: 'https://github.com/BX-Team/DivineMC',
