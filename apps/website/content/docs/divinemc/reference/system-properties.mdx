@@ -10,7 +10,6 @@ These arguments should be specified after the `-jar` file in your startup comman
 
 | Argument | Description | Default Value |
 |----------|-------------|---------------|
-| `-add-plugin-dir="<path-to-folder>"` | Specify paths to directories containing extra plugin jars to be loaded in addition to those in the plugins folder. This argument can be specified multiple times, once for each extra plugin directory path. | `extra` |
 | `-help-location="<path-to-file>"` | Location of the help file | `help.yml` |
 | `-banned-players="<path-to-file>"` | Location of banned players file | `banned-players.json` |
 | `-banned-ips="<path-to-file>"` | Location of banned IPs file | `banned-ips.json` |
@@ -21,9 +20,6 @@ These arguments should be specified after the `-jar` file in your startup comman
 ### Examples
 
 ```bash
-# Add extra plugins directory
-java -jar divinemc.jar -add-plugin-dir="/path/to/extra/plugins"
-
 # Configure custom file locations
 java -jar divinemc.jar -banned-players="/path/to/banned.json" -whitelist="/path/to/whitelist.json"
 ```
