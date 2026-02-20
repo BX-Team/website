@@ -23,8 +23,8 @@
     "preinstall": "bun x only-allow bun"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.1",
-    "turbo": "^2.8.9"
+    "@biomejs/biome": "^2.4.3",
+    "turbo": "^2.8.10"
   },
   "workspaces": [
     "apps/*"
