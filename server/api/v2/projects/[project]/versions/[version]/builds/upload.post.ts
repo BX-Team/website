@@ -1,7 +1,7 @@
 import { db, schema } from '@nuxthub/db';
 import { eq, and, desc } from 'drizzle-orm';
 import { createHash } from 'node:crypto';
-import { blob } from '@nuxthub/blob'
+import { blob } from '@nuxthub/blob';
 
 interface UploadBuildMetadata {
   buildNumber?: number;
@@ -40,7 +40,10 @@ export default defineEventHandler(async event => {
     .limit(1);
 
   if (!version) {
-    throw createError({ statusCode: 404, statusMessage: `Version '${versionKey}' not found for project '${projectKey}'` });
+    throw createError({
+      statusCode: 404,
+      statusMessage: `Version '${versionKey}' not found for project '${projectKey}'`,
+    });
   }
 
   let buildNumber = metadata.buildNumber;

@@ -18,7 +18,10 @@ export default defineEventHandler(async event => {
     .limit(1);
 
   if (!version) {
-    throw createError({ statusCode: 404, statusMessage: `Version '${versionKey}' not found for project '${projectKey}'` });
+    throw createError({
+      statusCode: 404,
+      statusMessage: `Version '${versionKey}' not found for project '${projectKey}'`,
+    });
   }
 
   const [build] = await db
@@ -29,7 +32,10 @@ export default defineEventHandler(async event => {
     .limit(1);
 
   if (!build) {
-    throw createError({ statusCode: 404, statusMessage: `No builds found for version '${versionKey}' of project '${projectKey}'` });
+    throw createError({
+      statusCode: 404,
+      statusMessage: `No builds found for version '${versionKey}' of project '${projectKey}'`,
+    });
   }
 
   const buildCommits = await db.select().from(schema.commits).where(eq(schema.commits.buildId, build.id));

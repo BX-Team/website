@@ -28,7 +28,10 @@ export default defineEventHandler(async event => {
     .limit(1);
 
   if (existingVersion) {
-    throw createError({ statusCode: 409, statusMessage: `Version '${body.key}' already exists for project '${projectKey}'` });
+    throw createError({
+      statusCode: 409,
+      statusMessage: `Version '${body.key}' already exists for project '${projectKey}'`,
+    });
   }
 
   const [version] = await db

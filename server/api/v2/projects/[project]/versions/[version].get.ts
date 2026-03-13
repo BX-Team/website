@@ -18,7 +18,10 @@ export default defineEventHandler(async event => {
     .limit(1);
 
   if (!version) {
-    throw createError({ statusCode: 404, statusMessage: `Version '${versionKey}' not found for project '${projectKey}'` });
+    throw createError({
+      statusCode: 404,
+      statusMessage: `Version '${versionKey}' not found for project '${projectKey}'`,
+    });
   }
 
   const versionBuilds = await db.select().from(schema.builds).where(eq(schema.builds.versionId, version.id));

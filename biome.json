@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**", "!**/bun.lock", "!**/content/docs"]
+    "includes": ["**", "!**/bun.lock", "!**/*.json", "!**/content"]
   },
   "formatter": {
     "enabled": true,
@@ -19,7 +19,7 @@
     "lineWidth": 120,
     "attributePosition": "auto",
     "bracketSpacing": true,
-    "includes": ["**", "!**/bun.lock", "!**/content/docs"]
+    "includes": ["**", "!**/bun.lock", "!**/*.json", "!**/content"]
   },
   "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
