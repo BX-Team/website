@@ -1,34 +1,24 @@
-# Based on https://raw.githubusercontent.com/github/gitignore/main/Node.gitignore
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+
+# Node dependencies
+node_modules
 
 # Logs
 logs
-_.log
-npm-debug.log_
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
-.pnpm-debug.log*
+*.log
 
-# Dependency directories
-node_modules/
+# Misc
+.DS_Store
+.fleet
+.idea
 
-# dotenv environment variable files
+# Local env files
 .env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
-
-# Next.js files
-.next
-out
-next-env.d.ts
-
-# Fumadocs files
-.source
-
-# Turborepo cache
-.turbo
-
-# Stores VSCode versions used for testing VSCode extensions
-.vscode-test
+.env.*
+!.env.example
