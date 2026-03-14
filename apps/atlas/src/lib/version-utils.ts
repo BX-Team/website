@@ -6,7 +6,7 @@ export interface ParsedVersion {
   preNumber: number;
 }
 
-export function parseVersion(version: string): ParsedVersion {
+export function parseVersion(version: string): ParsedVersion { // TODO: Support new version formats (26.1)
   const match = version.match(/^(\d+)\.(\d+)(?:\.(\d+))?(?:-(pre|rc)(\d+))?$/);
 
   if (!match) {

@@ -10,9 +10,9 @@ export interface BuildQueueMessage {
 }
 
 export type Env = {
-  HYPERDRIVE: Hyperdrive;
   API_SECRET_KEY: string;
   R2_PUBLIC_URL: string;
+  HYPERDRIVE: Hyperdrive;
   BUCKET: R2Bucket;
   BUILD_QUEUE: Queue<BuildQueueMessage>;
   RATE_LIMITER: RateLimit;
