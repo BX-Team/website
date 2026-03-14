@@ -1,0 +1,50 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "atlas",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-03-14",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  },
+	"vars": {
+		"R2_PUBLIC_URL": "https://files.bxteam.org"
+	},
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+      "id": "10148ef8943c4a9caadfc9471c39cd4f"
+    }
+  ],
+  "r2_buckets": [
+    {
+			"binding": "BUCKET",
+      "bucket_name": "builds",
+    }
+  ],
+  "queues": {
+    "producers": [
+      {
+				"binding": "BUILD_QUEUE",
+        "queue": "atlas",
+      }
+    ],
+    "consumers": [
+      {
+        "queue": "atlas",
+        "max_batch_size": 100,
+        "max_batch_timeout": 30
+      }
+    ]
+  },
+	"ratelimits": [
+    {
+      "name": "RATE_LIMITER",
+      "namespace_id": "1001",
+      "simple": {
+        "limit": 50,
+        "period": 60
+      }
+    }
+  ]
+}

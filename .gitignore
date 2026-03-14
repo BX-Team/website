@@ -30,5 +30,8 @@ next-env.d.ts
 # Turborepo cache
 .turbo
 
+# Wrangler
+.wrangler
+
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test

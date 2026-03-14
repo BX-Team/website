@@ -62,18 +62,3 @@ export const downloads = pgTable('downloads', {
   sha256: text('sha256').notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
-
-export type Project = typeof projects.$inferSelect;
-export type NewProject = typeof projects.$inferInsert;
-
-export type Version = typeof versions.$inferSelect;
-export type NewVersion = typeof versions.$inferInsert;
-
-export type Build = typeof builds.$inferSelect;
-export type NewBuild = typeof builds.$inferInsert;
-
-export type Commit = typeof commits.$inferSelect;
-export type NewCommit = typeof commits.$inferInsert;
-
-export type Download = typeof downloads.$inferSelect;
-export type NewDownload = typeof downloads.$inferInsert;

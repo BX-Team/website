@@ -1,23 +1,10 @@
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { Client } from 'pg';
 import * as schema from './schema';
+import type { Env } from '../types';
 
-let db: ReturnType<typeof drizzle>;
-
-export function getDb() {
-  if (!db) {
-    if (!process.env.DATABASE_URL) {
-      throw new Error('DATABASE_URL environment variable is not set');
-    }
-    const client = postgres(process.env.DATABASE_URL, {
-      connect_timeout: 10,
-      idle_timeout: 30,
-      max_lifetime: 60 * 30,
-      max: 10,
-    });
-    db = drizzle(client, { schema });
-  }
-  return db;
+export async function getDb(env: Env) {
+  const client = new Client({ connectionString: env.HYPERDRIVE.connectionString });
+  await client.connect();
+  return drizzle(client, { schema });
 }
-
-export { db } from './lazy-db';
