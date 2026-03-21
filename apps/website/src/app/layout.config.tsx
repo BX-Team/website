@@ -72,7 +72,7 @@ export const baseOptions: BaseLayoutProps = {
     },
     {
       text: 'Status',
-      url: '/status',
+      url: siteConfig.links.status,
       active: 'nested-url',
     },
     {

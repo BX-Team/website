@@ -7,6 +7,7 @@ export const siteConfig = {
     discord: 'https://discord.gg/qNyybSSPm5',
     github: 'https://github.com/BX-Team',
     maven: 'https://repo.bxteam.org',
+    status: 'https://status.bxteam.org',
     projects: {
       divinemc: 'https://github.com/BX-Team/DivineMC',
     },
