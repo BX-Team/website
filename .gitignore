@@ -27,9 +27,6 @@ next-env.d.ts
 # Fumadocs files
 .source
 
-# Turborepo cache
-.turbo
-
 # Wrangler
 .wrangler
 

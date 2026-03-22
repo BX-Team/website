@@ -4,8 +4,6 @@ This monorepo contains the source code for BX Team projects:
 - **Website** - Main website with documentation, published at [bxteam.org](https://bxteam.org)
 - **Atlas** - API service for project builds and downloads
 
-Built with [Turborepo](https://turborepo.dev) for fast, cached builds.
-
 ## Getting Started
 
 How to get docs running on your local machine for development.
@@ -58,9 +56,9 @@ $ bun website:build  # Build website only
 $ bun atlas:build    # Build Atlas only
 ```
 
-Turborepo automatically caches build outputs, so subsequent builds will be much faster if nothing changed.
-
-For production deployment, we use docker images. See `Dockerfile` in each project folder for more details.
+> [!NOTE]
+> Atlas hosted on Cloudflare using R2, Queue, Hyperdrive, and Rate Limits
+> Website is built using a Dockerfile and runs as an image on our own infrastructure
 
 ## Contributing
 
