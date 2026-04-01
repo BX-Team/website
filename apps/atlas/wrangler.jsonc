@@ -8,9 +8,9 @@
   "observability": {
     "enabled": true
   },
-	"vars": {
-		"R2_PUBLIC_URL": "https://files.bxteam.org"
-	},
+  "vars": {
+    "R2_PUBLIC_URL": "https://files.bxteam.org"
+  },
   "hyperdrive": [
     {
       "binding": "HYPERDRIVE",
@@ -19,15 +19,15 @@
   ],
   "r2_buckets": [
     {
-			"binding": "BUCKET",
-      "bucket_name": "builds",
+      "binding": "BUCKET",
+      "bucket_name": "builds"
     }
   ],
   "queues": {
     "producers": [
       {
-				"binding": "BUILD_QUEUE",
-        "queue": "atlas",
+        "binding": "BUILD_QUEUE",
+        "queue": "atlas"
       }
     ],
     "consumers": [
@@ -38,7 +38,7 @@
       }
     ]
   },
-	"ratelimits": [
+  "ratelimits": [
     {
       "name": "RATE_LIMITER",
       "namespace_id": "1001",

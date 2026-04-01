@@ -22,14 +22,14 @@ app.use(
 
 app.use(
   rateLimiter<{ Bindings: Env }>({
-    binding: (c) => c.env.RATE_LIMITER,
-    keyGenerator: (c) => c.req.header("cf-connecting-ip") ?? "",
-  })
+    binding: c => c.env.RATE_LIMITER,
+    keyGenerator: c => c.req.header('cf-connecting-ip') ?? '',
+  }),
 );
 
 app.route('/v2', v2);
 
-app.notFound((c) => c.json({ ok: false, error: 'Not Found', message: 'The requested resource does not exist' }, 404));
+app.notFound(c => c.json({ ok: false, error: 'Not Found', message: 'The requested resource does not exist' }, 404));
 
 app.onError((err, c) => {
   console.error('Unhandled error:', err);
