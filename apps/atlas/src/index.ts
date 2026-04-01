@@ -29,6 +29,13 @@ app.use(
 
 app.route('/v2', v2);
 
+app.notFound((c) => c.json({ ok: false, error: 'Not Found', message: 'The requested resource does not exist' }, 404));
+
+app.onError((err, c) => {
+  console.error('Unhandled error:', err);
+  return c.json({ ok: false, error: 'Internal Server Error', message: 'An unexpected error occurred' }, 500);
+});
+
 app.get(
   '/docs',
   swaggerUI({
