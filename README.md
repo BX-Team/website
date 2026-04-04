@@ -57,7 +57,7 @@ $ bun atlas:build    # Build Atlas only
 ```
 
 > [!NOTE]
-> Atlas hosted on Cloudflare using R2, Queue, Hyperdrive, and Rate Limits
+> Atlas hosted on Cloudflare using R2, Queue, Hyperdrive, and Rate Limits<br>
 > Website is built using a Dockerfile and runs as an image on our own infrastructure
 
 ## Contributing
