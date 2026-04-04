@@ -75,7 +75,7 @@ const ConfigViewer = ({ config, comments = {}, title = 'Configuration' }: Config
   const renderComment = (comment?: string, path?: string, depth: number = 0) => {
     if (!comment || !path || !visibleComments.has(path)) return null;
 
-    const indentSpaces = '  '.repeat(depth);
+    const _indentSpaces = '  '.repeat(depth);
 
     return (
       <div

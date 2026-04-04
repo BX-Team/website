@@ -1,6 +1,6 @@
+import { docs } from 'collections/server';
 import { loader } from 'fumadocs-core/source';
 import { icons } from 'lucide-react';
-import { docs } from 'collections/server';
 import { createElement } from 'react';
 
 export const source = loader({

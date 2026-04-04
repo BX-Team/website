@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { AlertCircle, AlertTriangle, FlaskConical, Loader2, XCircle } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
+import { type Build, fetchBuilds, type VersionWithBuilds } from '@/lib/atlas';
 import { AtlasBuildCard } from './atlas-build-card';
 import { VersionSelector } from './version-selector';
-import { Loader2, AlertCircle, AlertTriangle, XCircle, FlaskConical } from 'lucide-react';
-import { type Build, type VersionWithBuilds, fetchBuilds } from '@/lib/atlas';
 
 interface AtlasBuildsListProps {
   projectId: string;

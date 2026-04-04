@@ -1,6 +1,6 @@
-import { Download, Calendar, Package, GitCommit, ExternalLink } from 'lucide-react';
-import { type Build, formatDate, formatFileSize, getChannelColor } from '@/lib/atlas';
+import { Calendar, Download, ExternalLink, GitCommit, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { type Build, formatDate, formatFileSize, getChannelColor } from '@/lib/atlas';
 
 interface AtlasBuildCardProps {
   build: Build;

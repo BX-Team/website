@@ -1,5 +1,5 @@
-import { Link } from 'react-router';
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
+import { Link } from 'react-router';
 import { Card } from '@/components/ui/card';
 import { GradientBackground } from '@/components/ui/gradient-background';
 import { baseOptions } from '@/lib/layout.shared';

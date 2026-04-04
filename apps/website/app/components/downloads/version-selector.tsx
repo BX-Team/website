@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { ChevronDown, Check, AlertTriangle, XCircle, FlaskConical } from 'lucide-react';
-import { cn } from '@/lib/cn';
 import * as Popover from '@radix-ui/react-popover';
+import { AlertTriangle, Check, ChevronDown, FlaskConical, XCircle } from 'lucide-react';
+import { useState } from 'react';
 import type { VersionWithBuilds } from '@/lib/atlas';
+import { cn } from '@/lib/cn';
 
 interface VersionSelectorProps {
   versions: string[];

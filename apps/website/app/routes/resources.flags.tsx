@@ -1,7 +1,7 @@
+import { HomeLayout } from 'fumadocs-ui/layouts/home';
 import { Box, Code, RefreshCw, SquareTerminal } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { HomeLayout } from 'fumadocs-ui/layouts/home';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -76,7 +76,7 @@ export default function FlagsPage() {
 
   const handleFileNameBlur = () => {
     if (config.fileName && !config.fileName.endsWith('.jar')) {
-      handleInputChange('fileName', config.fileName + '.jar');
+      handleInputChange('fileName', `${config.fileName}.jar`);
     }
   };
 

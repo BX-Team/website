@@ -1,6 +1,6 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { siteConfig } from '@/config/site';
 import { Atom, Cuboid, DollarSign } from 'lucide-react';
+import { siteConfig } from '@/config/site';
 
 export const gitConfig = {
   user: 'BX-Team',

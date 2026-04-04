@@ -1,9 +1,9 @@
+import { HomeLayout } from 'fumadocs-ui/layouts/home';
 import { ArrowLeft, BookOpen, Download, Info } from 'lucide-react';
 import { Link, useLoaderData } from 'react-router';
-import { HomeLayout } from 'fumadocs-ui/layouts/home';
 import { AtlasBuildsList } from '@/components/downloads/atlas-builds-list';
-import { Button } from '@/components/ui/button';
 import { GitHubIcon } from '@/components/icons';
+import { Button } from '@/components/ui/button';
 import {
   fetchLatestBuild,
   fetchProject,

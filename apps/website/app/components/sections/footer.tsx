@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
-import { siteConfig } from '@/config/site';
 import { DiscordIcon, GitHubIcon } from '@/components/icons';
+import { siteConfig } from '@/config/site';
 
 interface LinkItem {
   href: string;
@@ -55,11 +55,11 @@ function LinkColumn({ title, links }: LinkColumnProps) {
   return (
     <section className='space-y-3'>
       <h3 className='text-sm font-medium'>{title}</h3>
-      <ul role='list' className='space-y-1.5'>
+      <ul className='space-y-1.5'>
         {links.map(({ href, label }) => {
           const isExternal = href.startsWith('http');
           return (
-            <li key={href} role='listitem'>
+            <li key={href}>
               {isExternal ? (
                 <a
                   href={href}

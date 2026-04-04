@@ -1,6 +1,6 @@
-import { Download, ArrowRight, Clock, GitCommit, Package } from 'lucide-react';
-import { Link, useLoaderData } from 'react-router';
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
+import { ArrowRight, Clock, Download, GitCommit, Package } from 'lucide-react';
+import { Link, useLoaderData } from 'react-router';
 import { Button } from '@/components/ui/button';
 import { fetchLatestBuild, fetchProjects, formatFileSize, getAllVersions, getChannelColor } from '@/lib/atlas';
 import { baseOptions } from '@/lib/layout.shared';

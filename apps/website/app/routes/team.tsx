@@ -1,5 +1,5 @@
-import { useLoaderData } from 'react-router';
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
+import { useLoaderData } from 'react-router';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';

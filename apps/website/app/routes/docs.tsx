@@ -1,13 +1,13 @@
-import type { Route } from './+types/docs';
+import browserCollections from 'collections/browser';
+import { getGithubLastEdit } from 'fumadocs-core/content/github';
+import { useFumadocsLoader } from 'fumadocs-core/source/client';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle, PageLastUpdate } from 'fumadocs-ui/layouts/docs/page';
-import { source } from '@/lib/source';
-import browserCollections from 'collections/browser';
-import { baseOptions, gitConfig } from '@/lib/layout.shared';
-import { useFumadocsLoader } from 'fumadocs-core/source/client';
-import { getPageImagePath } from '@/lib/og';
 import { useMDXComponents } from '@/components/mdx';
-import { getGithubLastEdit } from 'fumadocs-core/content/github';
+import { baseOptions, gitConfig } from '@/lib/layout.shared';
+import { getPageImagePath } from '@/lib/og';
+import { source } from '@/lib/source';
+import type { Route } from './+types/docs';
 
 export async function loader({ params }: Route.LoaderArgs) {
   const slugs = params['*'].split('/').filter(v => v.length > 0);
