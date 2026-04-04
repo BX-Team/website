@@ -3,9 +3,8 @@ import { getGithubLastEdit } from 'fumadocs-core/content/github';
 import { useFumadocsLoader } from 'fumadocs-core/source/client';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle, PageLastUpdate } from 'fumadocs-ui/layouts/docs/page';
-import { useMDXComponents } from '@/components/mdx';
+import { useMDXComponents as getMDXComponents } from "@/components/mdx";
 import { baseOptions, gitConfig } from '@/lib/layout.shared';
-import { getPageImagePath } from '@/lib/og';
 import { source } from '@/lib/source';
 import type { Route } from './+types/docs';
 
@@ -24,7 +23,6 @@ export async function loader({ params }: Route.LoaderArgs) {
   return {
     path: page.path,
     pageTree: await source.serializePageTree(source.getPageTree()),
-    imagePath: getPageImagePath(slugs),
     lastModifiedTime: lastModifiedTime?.toISOString() ?? null,
   };
 }
@@ -33,10 +31,8 @@ const clientLoader = browserCollections.docs.createClientLoader({
   component(
     { toc, frontmatter, default: Mdx },
     {
-      imagePath,
       lastModifiedTime,
     }: {
-      imagePath: string;
       lastModifiedTime: string | null;
     },
   ) {
@@ -50,11 +46,10 @@ const clientLoader = browserCollections.docs.createClientLoader({
       >
         <title>{frontmatter.title}</title>
         <meta name='description' content={frontmatter.description} />
-        <meta property='og:image' content={imagePath} />
         <DocsTitle>{frontmatter.title}</DocsTitle>
         <DocsDescription>{frontmatter.description}</DocsDescription>
         <DocsBody>
-          <Mdx components={useMDXComponents()} />
+          <Mdx components={getMDXComponents()} />
           {lastModifiedTime && <PageLastUpdate date={new Date(lastModifiedTime)} />}
         </DocsBody>
       </DocsPage>
@@ -63,7 +58,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
 });
 
 export default function Page({ loaderData }: Route.ComponentProps) {
-  const { path, pageTree, imagePath, lastModifiedTime } = useFumadocsLoader(loaderData);
+  const { path, pageTree, lastModifiedTime } = useFumadocsLoader(loaderData);
 
   return (
     <DocsLayout
@@ -79,7 +74,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
         ),
       }}
     >
-      {clientLoader.useContent(path, { imagePath, lastModifiedTime })}
+      {clientLoader.useContent(path, { lastModifiedTime })}
     </DocsLayout>
   );
 }
