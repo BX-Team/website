@@ -1,8 +1,1 @@
-export type AvailableConfig =
-  | 'fileName'
-  | 'flags'
-  | 'extraFlags'
-  | 'memory'
-  | 'gui'
-  | 'autoRestart'
-  | 'variables';
+export type AvailableConfig = 'fileName' | 'flags' | 'extraFlags' | 'memory' | 'gui' | 'autoRestart' | 'variables';

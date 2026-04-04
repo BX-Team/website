@@ -1,11 +1,4 @@
-import {
-  isRouteErrorResponse,
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from 'react-router';
+import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 import { RootProvider } from 'fumadocs-ui/provider/react-router';
 import type { Route } from './+types/root';
 import './app.css';
@@ -27,15 +20,15 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang='en' suppressHydrationWarning>
       <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charSet='utf-8' />
+        <meta name='viewport' content='width=device-width, initial-scale=1' />
         <Meta />
         <Links />
       </head>
-      <body className="dark flex flex-col min-h-screen">
-        <RootProvider theme={{enabled: false}}>{children}</RootProvider>
+      <body className='dark flex flex-col min-h-screen'>
+        <RootProvider theme={{ enabled: false }}>{children}</RootProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -62,11 +55,11 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="pt-16 p-4 w-full max-w-[1400px] mx-auto">
+    <main className='pt-16 p-4 w-full max-w-[1400px] mx-auto'>
       <h1>{message}</h1>
       <p>{details}</p>
       {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
+        <pre className='w-full p-4 overflow-x-auto'>
           <code>{stack}</code>
         </pre>
       )}

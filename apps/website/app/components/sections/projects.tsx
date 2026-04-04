@@ -53,7 +53,13 @@ function ProjectCard({ name, description, downloadUrl, docUrl, sourceUrl }: Proj
       <div className='mt-6 space-y-3'>
         <Button asChild color='primary' className='w-full'>
           {isExternalDownload ? (
-            <a href={downloadUrl} target='_blank' rel='noopener noreferrer' aria-label={`Download ${name}`} className='flex items-center justify-center'>
+            <a
+              href={downloadUrl}
+              target='_blank'
+              rel='noopener noreferrer'
+              aria-label={`Download ${name}`}
+              className='flex items-center justify-center'
+            >
               <Download className='mr-2 h-4 w-4' />
               Download
             </a>
@@ -67,7 +73,11 @@ function ProjectCard({ name, description, downloadUrl, docUrl, sourceUrl }: Proj
 
         <div className='flex gap-2'>
           <Button asChild color='outline' size='sm' className='flex-1'>
-            <Link to={docUrl} aria-label={`Read Documentation for ${name}`} className='flex items-center justify-center'>
+            <Link
+              to={docUrl}
+              aria-label={`Read Documentation for ${name}`}
+              className='flex items-center justify-center'
+            >
               <BookOpen className='mr-1 h-3 w-3' />
               Docs
             </Link>

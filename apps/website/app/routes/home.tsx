@@ -8,7 +8,11 @@ import { baseOptions } from '@/lib/layout.shared';
 export function meta(_args: unknown) {
   return [
     { title: 'BX Team' },
-    { name: 'description', content: 'BX Team is an open source community that focuses on development and maintenance of high-quality Minecraft server software.' },
+    {
+      name: 'description',
+      content:
+        'BX Team is an open source community that focuses on development and maintenance of high-quality Minecraft server software.',
+    },
   ];
 }
 

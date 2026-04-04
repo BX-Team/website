@@ -1,12 +1,6 @@
 import type { Route } from './+types/docs';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
-import {
-  DocsBody,
-  DocsDescription,
-  DocsPage,
-  DocsTitle,
-  PageLastUpdate,
-} from 'fumadocs-ui/layouts/docs/page';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle, PageLastUpdate } from 'fumadocs-ui/layouts/docs/page';
 import { source } from '@/lib/source';
 import browserCollections from 'collections/browser';
 import { baseOptions, gitConfig } from '@/lib/layout.shared';
@@ -16,7 +10,7 @@ import { useMDXComponents } from '@/components/mdx';
 import { getGithubLastEdit } from 'fumadocs-core/content/github';
 
 export async function loader({ params }: Route.LoaderArgs) {
-  const slugs = params['*'].split('/').filter((v) => v.length > 0);
+  const slugs = params['*'].split('/').filter(v => v.length > 0);
   const page = source.getPage(slugs);
   if (!page) throw new Response('Not found', { status: 404 });
 
@@ -47,16 +41,16 @@ const clientLoader = browserCollections.docs.createClientLoader({
     },
   ) {
     return (
-      <DocsPage 
-      toc={toc}
-      tableOfContent={{
-        single: false,
-        style: 'clerk',
-      }}
+      <DocsPage
+        toc={toc}
+        tableOfContent={{
+          single: false,
+          style: 'clerk',
+        }}
       >
         <title>{frontmatter.title}</title>
-        <meta name="description" content={frontmatter.description} />
-        <meta property="og:image" content={imagePath} />
+        <meta name='description' content={frontmatter.description} />
+        <meta property='og:image' content={imagePath} />
         <DocsTitle>{frontmatter.title}</DocsTitle>
         <DocsDescription>{frontmatter.description}</DocsDescription>
         <DocsBody>
@@ -80,7 +74,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
         title: (
           <div className='flex items-center gap-2'>
             <img src='/logo.png' alt='BX Team Logo' width={22} height={22} />
-            <span className="text-sm">BX Team Documentation</span>
+            <span className='text-sm'>BX Team Documentation</span>
           </div>
         ),
       }}
