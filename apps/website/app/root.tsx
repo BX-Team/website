@@ -34,8 +34,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="flex flex-col min-h-screen">
-        <RootProvider>{children}</RootProvider>
+      <body className="dark flex flex-col min-h-screen">
+        <RootProvider theme={{enabled: false}}>{children}</RootProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

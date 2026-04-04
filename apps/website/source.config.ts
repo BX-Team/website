@@ -9,4 +9,17 @@ export const docs = defineDocs({
   },
 });
 
-export default defineConfig();
+export default defineConfig({
+  mdxOptions: {
+    rehypeCodeOptions: {
+      lazy: true,
+      engine: 'oniguruma',
+      langs: ['ts', 'js', 'html', 'tsx', 'mdx'],
+      inline: 'tailing-curly-colon',
+      themes: {
+        light: 'catppuccin-latte',
+        dark: 'catppuccin-mocha',
+      },
+    },
+  },
+});

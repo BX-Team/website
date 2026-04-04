@@ -1,30 +1,24 @@
-import type { Route } from './+types/home';
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
-import { Link } from 'react-router';
+import { Community } from '@/components/sections/community';
+import { Footer } from '@/components/sections/footer';
+import { Hero } from '@/components/sections/hero';
+import { Projects } from '@/components/sections/projects';
 import { baseOptions } from '@/lib/layout.shared';
 
-export function meta({}: Route.MetaArgs) {
+export function meta(_args: unknown) {
   return [
-    { title: 'New React Router App' },
-    { name: 'description', content: 'Welcome to React Router!' },
+    { title: 'BX Team' },
+    { name: 'description', content: 'BX Team is an open source community that focuses on development and maintenance of high-quality Minecraft server software.' },
   ];
 }
 
 export default function Home() {
   return (
     <HomeLayout {...baseOptions()}>
-      <div className="p-4 flex flex-col items-center justify-center text-center flex-1">
-        <h1 className="text-xl font-bold mb-2">Fumadocs on React Router.</h1>
-        <p className="text-fd-muted-foreground mb-4">
-          The truly flexible docs framework on React.js.
-        </p>
-        <Link
-          className="text-sm bg-fd-primary text-fd-primary-foreground rounded-full font-medium px-4 py-2.5"
-          to="/docs"
-        >
-          Open Docs
-        </Link>
-      </div>
+      <Hero />
+      <Projects />
+      <Community />
+      <Footer />
     </HomeLayout>
   );
 }
