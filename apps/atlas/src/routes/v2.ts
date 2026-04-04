@@ -71,7 +71,11 @@ const VersionWithBuildsSchema = v.object({
 
 const ProjectParam = v.object({ project: v.string() });
 const ProjectVersionParam = v.object({ project: v.string(), version: v.string() });
-const ProjectVersionBuildParam = v.object({ project: v.string(), version: v.string(), build: v.string() });
+const ProjectVersionBuildParam = v.object({
+  project: v.string(),
+  version: v.string(),
+  build: v.pipe(v.string(), v.regex(/^\d+$/, 'Build number must be a positive integer')),
+});
 
 // --- Helpers ---
 
