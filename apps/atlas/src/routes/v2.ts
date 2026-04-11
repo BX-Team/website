@@ -1,10 +1,10 @@
+import { and, desc, eq } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { bearerAuth } from 'hono/bearer-auth';
-import { eq, and, desc } from 'drizzle-orm';
-import * as v from 'valibot';
 import { describeRoute, resolver, validator } from 'hono-openapi';
+import * as v from 'valibot';
 import { getDb } from '../db';
-import { projects, versions, builds, commits, downloads } from '../db/schema';
+import { builds, commits, downloads, projects, versions } from '../db/schema';
 import { groupVersions } from '../lib/version-utils';
 import type { Env } from '../types';
 

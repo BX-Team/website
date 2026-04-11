@@ -1,4 +1,4 @@
-import { pgTable, serial, text, timestamp, integer, pgEnum } from 'drizzle-orm/pg-core';
+import { integer, pgEnum, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
 
 export const channelEnum = pgEnum('channel', ['ALPHA', 'BETA', 'STABLE']);
 

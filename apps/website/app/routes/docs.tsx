@@ -3,7 +3,7 @@ import { getGithubLastEdit } from 'fumadocs-core/content/github';
 import { useFumadocsLoader } from 'fumadocs-core/source/client';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle, PageLastUpdate } from 'fumadocs-ui/layouts/docs/page';
-import { useMDXComponents as getMDXComponents } from "@/components/mdx";
+import { useMDXComponents as getMDXComponents } from '@/components/mdx';
 import { baseOptions, gitConfig } from '@/lib/layout.shared';
 import { source } from '@/lib/source';
 import type { Route } from './+types/docs';

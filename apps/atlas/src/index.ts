@@ -1,12 +1,12 @@
+import { swaggerUI } from '@hono/swagger-ui';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { openAPIRouteHandler } from 'hono-openapi';
-import { v2 } from './routes/v2';
-import { getDb } from './db';
-import { builds, downloads, commits } from './db/schema';
-import type { Env, BuildQueueMessage } from './types';
-import { swaggerUI } from '@hono/swagger-ui';
 import { rateLimiter } from 'hono-rate-limiter';
+import { getDb } from './db';
+import { builds, commits, downloads } from './db/schema';
+import { v2 } from './routes/v2';
+import type { BuildQueueMessage, Env } from './types';
 
 const app = new Hono<{ Bindings: Env }>();
 
