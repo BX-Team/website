@@ -5,9 +5,17 @@
   "compatibility_date": "2026-04-07",
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": false,
+  "preview_urls": false,
   "observability": {
     "enabled": true
   },
+  "routes": [
+    {
+      "pattern": "api.bxteam.org",
+      "zone_name": "bxteam.org",
+      "custom_domain": true
+    }
+  ],
   "vars": {
     "R2_PUBLIC_URL": "https://files.bxteam.org"
   },
