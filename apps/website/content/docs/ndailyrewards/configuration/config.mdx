@@ -13,6 +13,7 @@ description: This page details the various configuration settings exposed by NDa
 
 export const ndailyRewardsConfig = {
   "check-updates": true,
+  "debug": false,
   "database": {
     "type": "sqlite",
     "sqlite": {
@@ -46,6 +47,7 @@ export const ndailyRewardsConfig = {
     "cooldown": 24,
     "reset-time": 24,
     "unlock-after-midnight": false,
+    "timezone": "system",
     "days": {
       "1": {
         "position": 10,
@@ -196,6 +198,7 @@ export const ndailyRewardsConfig = {
 
 export const configComments = {
   "check-updates": "Whether the plugin should check for updates on startup",
+  "debug": "Enable verbose debug logging. Useful for diagnosing reward actions, database issues, and placeholder behavior. Leave off in production.",
   "database": "Database configuration settings",
   "database.type": "Select the database type to use. Supported: sqlite (default, stores data in local file), mariadb (allows remote database)",
   "database.sqlite": "SQLite database configuration",
@@ -222,9 +225,10 @@ export const configComments = {
   "rewards": "Rewards system configuration",
   "rewards.reset-when-all-claimed": "When a player reaches the day limit, should it reset to the first day?",
   "rewards.first-join-reward": "Whether the reward should be available when player joins server for the first time",
-  "rewards.cooldown": "How many hours the player has to wait to claim the reward again",
-  "rewards.reset-time": "Time in hours for which rewards will be reset if player has not collected the reward",
+  "rewards.cooldown": "Time the player has to wait before claiming the next reward (in hours)",
+  "rewards.reset-time": "Time without claiming a reward after which the player's streak resets to day 1 (in hours)",
   "rewards.unlock-after-midnight": "Should next day unlock after midnight?",
+  "rewards.timezone": "Timezone for `unlock-after-midnight` and `has claimed today` checks.\nUse `system` to use the server machine's JVM default, or a TZ database name.",
   "rewards.days": "Daily reward configurations. Available actions:\n[console] - execute statement from console\n[player] - execute as player command\n[message] - send message to player\n[actionbar] - show text in actionbar\n[title] - send primary title\n[subtitle] - send secondary title\n[sound] - play sound (format: sound:volume:pitch)\n[permission] {permission} - check if player has permission\n[luck] {0-100} - execute with specified chance\n[close] - close inventory\nSupports PlaceholderAPI placeholders",
   "rewards.days.1.position": "Position in GUI (first slot is 0)",
   "rewards.days.1.lore": "Lore lines to display in GUI",
