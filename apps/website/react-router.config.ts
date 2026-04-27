@@ -11,7 +11,7 @@ export default {
   },
   async prerender({ getStaticPaths }) {
     const paths: string[] = [];
-    const excluded: string[] = ['/api/search'];
+    const excluded: string[] = ['/api/search', '/downloads'];
 
     for (const path of getStaticPaths()) {
       if (!excluded.includes(path)) paths.push(path);
