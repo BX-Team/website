@@ -20,7 +20,7 @@
     "@react-router/serve": "^7.14.0",
     "class-variance-authority": "^0.7.1",
     "fumadocs-core": "16.8.5",
-    "fumadocs-mdx": "14.3.2",
+    "fumadocs-mdx": "15.0.4",
     "fumadocs-ui": "16.8.5",
     "isbot": "^5.1.38",
     "lucide-react": "^0.577.0",
